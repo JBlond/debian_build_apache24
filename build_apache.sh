@@ -6,6 +6,7 @@ cd openssl-1.0.2
 make depend
 make
 sudo make install
+cd ..
 wget http://artfiles.org/apache.org/httpd/httpd-2.4.12.tar.gz
 tar xvfz httpd-2.4.12.tar.gz
 cd httpd-2.4.12/srclib
@@ -28,6 +29,7 @@ cd ..
 ./buildconf
 ./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --enable-lua --enable-deflate --enable-headers --enable-expires --enable-ssl=shared --enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=$HOME/apache24/httpd-2.4.10/srclib/zlib --enable-module=ssl --enable-fcgid --with-included-apr
 make
+sudo make install
 cd mod_fcgid
 svn up
 APXS=/opt/apache2/bin/apxs ./configure.apxs
