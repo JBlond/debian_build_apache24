@@ -1,7 +1,7 @@
 cd $HOME/apache24
-wget http://www.openssl.org/source/openssl-1.0.2.tar.gz
-tar xfz openssl-1.0.2.tar.gz
-cd openssl-1.0.2
+wget http://www.openssl.org/source/openssl-1.0.1l.tar.gz
+tar xfz openssl-1.0.1l.tar.gz
+cd openssl-1.0.1l
 ./config --prefix=/usr zlib-dynamic --openssldir=/etc/ssl shared no-ssl2
 make depend
 make
