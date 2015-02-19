@@ -15,7 +15,7 @@ tar xvfz apr-1.5.1.tar.gz
 mv apr-1.5.1 apr
 wget http://mirror.netcologne.de/apache.org/apr/apr-util-1.5.4.tar.gz
 tar xvfz apr-util-1.5.4.tar.gz
-mv apr-util-1.5.4 apr-util 
+mv apr-util-1.5.4 apr-util
 wget http://mirror.netcologne.de/apache.org/apr/apr-iconv-1.2.1.tar.gz
 tar xvfz apr-iconv-1.2.1.tar.gz
 mv apr-iconv-1.2.1 apr-iconv
