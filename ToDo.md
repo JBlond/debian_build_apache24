@@ -1,7 +1,9 @@
 # ToDo:
 
-- Option Installation as daemon
-	Add below #!/bin/sh in apachectl
+- Option Installation as daemon on wheezy
+
+Add below #!/bin/sh in /opt/apache/bin/apachectl
+
 ```
 	### BEGIN INIT INFO
 	# Provides:          apachectl

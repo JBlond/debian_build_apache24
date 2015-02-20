@@ -1,3 +1,38 @@
 # debian build apache2.4.x with mod fcgid and OpenSSL
 
 Build apache 2.4 on debian from scratch with a semi automatic setup.
+
+
+```
+#clone
+git clone https://github.com/JBlond/debian_build_apache24.git
+cd debian_build_apache24
+
+# on a fresh system
+./preparesystem.sh
+
+#then
+#./build_apache.sh
+```
+
+The new apache will be installed in /opt/apache2
+
+To start apache
+
+```
+sudo /opt/apache2/bin/httpd -k start
+```
+
+To stop apache
+
+```
+sudo /opt/apache2/bin/httpd -k stop
+```
+
+To restart apache
+
+```
+sudo /opt/apache2/bin/httpd -k graceful
+```
+
+To install on wheezy as a daemon see the [a ToDo.md](ToDo.md) file
