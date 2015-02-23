@@ -34,5 +34,3 @@ To restart apache
 ```
 sudo /opt/apache2/bin/httpd -k graceful
 ```
-
-To install on wheezy as a daemon see the [a ToDo.md](ToDo.md) file
