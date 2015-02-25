@@ -6,5 +6,6 @@ sudo aptitude install liblua5.1-dev
 sudo aptitude install autoconf
 sudo aptitude install libtool
 sudo aptitude install libpcre3-dev
+sudo aptitude install libxml2-dev
 sudo aptitude install subversion
 svn checkout http://svn.apache.org/repos/asf/httpd/mod_fcgid/trunk mod_fcgid
