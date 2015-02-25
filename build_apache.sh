@@ -79,7 +79,7 @@ cd ..
 make
 sudo make install
 
-cd mod_fcgid
+cd "$HOME/apache24/mod_fcgid"
 svn up
 APXS=/opt/apache2/bin/apxs ./configure.apxs
 make
