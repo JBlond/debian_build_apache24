@@ -12,7 +12,7 @@ cd debian_build_apache24
 ./preparesystem.sh
 
 #then
-#./build_apache.sh
+./build_apache.sh
 ```
 
 The new apache will be installed in /opt/apache2
@@ -36,6 +36,20 @@ sudo /opt/apache2/bin/httpd -k graceful
 ```
 
 Proof [SSL config](ssl.conf)
+
+To update an existing installation just run build_apache.sh again.
+
+Install as daemon
+
+```
+./install_as_daemon.sh
+```
+
+Uninstall daemon
+
+```
+./uninstall_daemon.sh
+```
 
 # PHP setup
 [PHP Setup](php.md)
