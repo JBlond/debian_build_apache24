@@ -34,3 +34,8 @@ To restart apache
 ```
 sudo /opt/apache2/bin/httpd -k graceful
 ```
+
+Proof [SSL config](ssl.conf)
+
+# PHP setup
+[PHP Setup](php.md)
