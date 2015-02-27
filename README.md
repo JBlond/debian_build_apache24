@@ -53,3 +53,10 @@ Uninstall daemon
 
 # PHP setup
 [PHP Setup](php.md)
+
+#Notice
+
+When you start Apache you get in the error.log the warning:
+this version of mod_ssl was compiled against a newer library (OpenSSL 1.0.1l 15 Jan 2015, version currently loaded is OpenSSL 1.0.1e 11 Feb 2013)
+
+That is a false warning you won't get rid of this SSL warning. It is that the debian people only patch the software instead and do not increase the version number. In this case the libssl-dev.
