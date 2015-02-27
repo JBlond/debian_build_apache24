@@ -1,4 +1,4 @@
-<h1>Install PHP over fcgid</h1>h1>
+<h1>Install PHP over fcgid</h1>
 
 <h2>On x86 and x64</h2>
 
