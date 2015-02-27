@@ -75,7 +75,7 @@ fi
 
 cd ..
 ./buildconf
-./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --enable-lua --enable-deflate --enable-headers --enable-expires --enable-ssl=shared --enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=$HOME/apache24/httpd-2.4.10/srclib/zlib --enable-module=ssl --enable-fcgid --with-included-apr
+./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --enable-lua --enable-deflate --enable-headers --enable-expires --enable-ssl=shared --enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=$HOME/apache24/httpd-$HTTPD_VERSION/srclib/zlib --enable-module=ssl --enable-fcgid --with-included-apr
 make
 sudo make install
 
