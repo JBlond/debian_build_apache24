@@ -51,6 +51,22 @@ Uninstall daemon
 ./uninstall_daemon.sh
 ```
 
+# httpd apache MPMs
+
+This builds all available mpms. You can load them in httpd.conf. event mpm is loaded set in httpd.conf by this script. There can be only one mpm at the time. It is not advised to change the mpm during restart. For that stop and start apache.
+
+```
+LoadModule mpm_event_module modues/mod_mpm_event.so
+```
+
+```
+LoadModule mpm_worker_module modues/mod_mpm_worker.so
+```
+
+```
+LoadModule mpm_prefork_module modues/mod_mpm_prefork.so
+```
+
 # PHP setup
 [PHP Setup](php.md)
 
