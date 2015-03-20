@@ -35,6 +35,12 @@ To restart apache
 sudo /opt/apache2/bin/httpd -k graceful
 ```
 
+troubleshooting apache config
+
+```
+sudo /opt/apache/bin/httpd -S
+```
+
 Proof [SSL config](ssl.conf)
 
 To update an existing installation just run build_apache.sh again.
