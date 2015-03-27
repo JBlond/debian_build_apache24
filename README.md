@@ -38,7 +38,7 @@ sudo /opt/apache2/bin/httpd -k graceful
 troubleshooting apache config
 
 ```
-sudo /opt/apache/bin/httpd -S
+sudo /opt/apache2/bin/httpd -S
 ```
 
 Proof [SSL config](ssl.conf)
