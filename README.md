@@ -7,7 +7,14 @@ Build apache 2.4 on debian from scratch with a semi automatic setup.
 #clone
 git clone https://github.com/JBlond/debian_build_apache24.git
 cd debian_build_apache24
+```
 
+if you are on RedHat / CentOS / fedora
+```
+git checkout redhat
+```
+
+```
 # on a fresh system
 ./preparesystem.sh
 
