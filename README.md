@@ -14,6 +14,11 @@ if you are on RedHat / CentOS / fedora
 git checkout redhat
 ```
 
+if you are on openSUSE
+```
+git checkout opensuse
+```
+
 ```
 # on a fresh system
 ./preparesystem.sh
