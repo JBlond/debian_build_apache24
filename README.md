@@ -9,7 +9,7 @@ git clone https://github.com/JBlond/debian_build_apache24.git
 cd debian_build_apache24
 ```
 
-if you are on RedHat / CentOS / fedora
+if you are on RedHat / CentOS / fedora / scientific linux
 ```
 git checkout redhat
 ```
