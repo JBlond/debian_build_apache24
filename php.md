@@ -10,9 +10,6 @@ sudo nano /etc/apt/sources.list
 deb http://packages.dotdeb.org wheezy all
 deb-src http://packages.dotdeb.org wheezy all
 
-deb http://dotdeb.netmirror.org/ stable all
-deb-src http://dotdeb.netmirror.org/ stable all
-
 deb http://packages.dotdeb.org wheezy-php56 all
 deb-src http://packages.dotdeb.org wheezy-php56 all
 ```
