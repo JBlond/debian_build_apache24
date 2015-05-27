@@ -2,6 +2,8 @@
 
 <h2>On x86 and x64</h2>
 
+The step adding dot deb is not needed in Jessie. Only wheezy
+
 ```
 sudo nano /etc/apt/sources.list
 ```
@@ -19,6 +21,10 @@ wget http://www.dotdeb.org/dotdeb.gpg
 sudo apt-key add dotdeb.gpg
 sudo aptitude update
 sudo aptitude dist-upgrade
+```
+<h3>Install PHP as CGI</h3>
+
+```
 sudo aptitude install php5-cgi php5-cli php5-curl php5-gd php5-mcrypt
 ```
 
