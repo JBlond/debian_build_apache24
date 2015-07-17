@@ -1,6 +1,6 @@
 cd "$HOME/apache24"
 
-SSL_VERSION="1.0.1p"
+SSL_VERSION="1.0.2d"
 HTTPD_VERSION="2.4.16"
 APR_VERSION="1.5.2"
 APRU_VERSION="1.5.4"
@@ -23,7 +23,7 @@ then
 fi
 
 cd openssl-$SSL_VERSION
-./config --prefix=/usr zlib-dynamic --openssldir=/etc/ssl shared no-ssl2
+./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl2 no-ec2m no-rc5 no-idea threads zlib-dynamic shared enable-ec_nistp_64_gcc_128
 make depend
 make
 sudo make install
@@ -73,9 +73,14 @@ then
 	mv pcre-$PCRE_VERSION pcre
 fi
 
-cd ..
+cd apr
+./configure --with-crypto
+make
+
+cd ../..
 ./buildconf
-./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --enable-lua --enable-deflate --enable-headers --enable-expires --enable-ssl=shared --enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=$HOME/apache24/httpd-$HTTPD_VERSION/srclib/zlib --enable-module=ssl --enable-fcgid --with-included-apr
+export LDFLAGS="-Wl,-rpath,/opt/openssl/lib"
+./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --enable-lua --enable-deflate --enable-headers --enable-expires --enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --with-crypto --enable-module=ssl --enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=$HOME/apache24/httpd-$HTTPD_VERSION/srclib/zlib --enable-fcgid --with-included-apr
 make
 sudo make install
 
