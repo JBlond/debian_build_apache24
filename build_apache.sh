@@ -23,7 +23,7 @@ then
 fi
 
 cd openssl-$SSL_VERSION
-./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl2 no-ec2m no-rc5 no-idea threads zlib-dynamic shared enable-ec_nistp_64_gcc_128
+./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl2 no-ec2m no-rc5 no-idea threads zlib-dynamic shared
 make depend
 make
 sudo make install

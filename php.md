@@ -25,7 +25,7 @@ sudo aptitude dist-upgrade
 <h3>Install PHP as CGI</h3>
 
 ```
-sudo aptitude install php5-cgi php5-cli php5-curl php5-gd php5-mcrypt
+sudo aptitude install php5-cgi php5-cli php5-curl php5-gd php5-mcrypt php5-mysqlnd
 ```
 
 List the dotdeb installed binaries
@@ -36,6 +36,6 @@ sudo dpkg -l |grep dotdeb
 
 <h2>On arm just</h2>
 ```
-sudo aptitude install php5-cgi php5-cli php5-curl php5-gd php5-mcrypt
+sudo aptitude install php5-cgi php5-cli php5-curl php5-gd php5-mcrypt php5-mysqlnd
 ```
 [PHP Example config](php_example.conf)
