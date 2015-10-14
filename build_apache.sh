@@ -7,6 +7,7 @@ APRU_VERSION="1.5.4"
 APRI_VERSION="1.2.1"
 ZLIB_VERSION="1.2.8"
 PCRE_VERSION="8.37"
+HTTP2_VERSION="1.3.4"
 
 SSL_FILE="openssl-$SSL_VERSION.tar.gz"
 HTTPD_FILE="httpd-$HTTPD_VERSION.tar.gz"
@@ -15,18 +16,33 @@ APRU_FILE="apr-util-$APRU_VERSION.tar.gz"
 APRI_FILE="apr-iconv-$APRI_VERSION.tar.gz"
 ZLIB_FILE="zlib-$ZLIB_VERSION.tar.gz"
 PCRE_FILE="pcre-$PCRE_VERSION.tar.gz"
+HTTP2_FILE="nghttp2-$HTTP2_VERSION.tar.gz"
 
 if [ ! -f "$SSL_FILE" ]
 then
 	wget http://www.openssl.org/source/$SSL_FILE
 	tar xfz $SSL_FILE
+	cd openssl-$SSL_VERSION
+	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl2 no-ec2m no-rc5 no-idea threads zlib-dynamic shared
+	make depend
+	make
+	sudo make install
 fi
 
-cd openssl-$SSL_VERSION
-./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl2 no-ec2m no-rc5 no-idea threads zlib-dynamic shared
-make depend
-make
-sudo make install
+
+
+cd "$HOME/apache24"
+
+if [ ! -f "$HTTP2_FILE" ]
+then
+	wget https://github.com/tatsuhiro-t/nghttp2/releases/download/v$HTTP2_VERSION/$HTTP2_FILE
+	tar xfz $HTTP2_FILE
+	cd nghttp2-$HTTP2_VERSION
+	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib"
+	./configure --prefix=/opt/nghttp2
+	make
+	sudo make install
+fi
 
 cd "$HOME/apache24"
 
@@ -80,7 +96,7 @@ make
 cd ../..
 ./buildconf
 export LDFLAGS="-Wl,-rpath,/opt/openssl/lib"
-./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --enable-lua --enable-deflate --enable-headers --enable-expires --enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --with-crypto --enable-module=ssl --enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=$HOME/apache24/httpd-$HTTPD_VERSION/srclib/zlib --enable-fcgid --with-included-apr
+./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --enable-lua --enable-deflate --enable-headers --enable-expires --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --with-crypto --enable-module=ssl --enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=$HOME/apache24/httpd-$HTTPD_VERSION/srclib/zlib --enable-fcgid --with-included-apr
 make
 sudo make install
 
