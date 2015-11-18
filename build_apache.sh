@@ -1,3 +1,4 @@
+#!/bin/bash
 cd "$HOME/apache24"
 
 SSL_VERSION="1.0.2d"

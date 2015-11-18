@@ -1,3 +1,4 @@
+#!/bin/bash
 mkdir $HOME/apache24
 cd $HOME/apache24
 sudo aptitude install build-essential
