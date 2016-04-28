@@ -31,5 +31,5 @@ sudo dpkg -l |grep dotdeb
 ```
 
 
-```
-[PHP Example config](php7_example.conf)
+
+[PHP 7 Example config](php7_example.conf)
