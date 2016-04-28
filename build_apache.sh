@@ -64,14 +64,14 @@ fi
 
 if [ ! -f "${APRU_FILE}" ]
 then
-	wget http://mirror.netcologne.de/apache.org/apr/${APRU_FILE}
+	wget http://www.carfab.com/apachesoftware/apr/${APRU_FILE}
 	tar xvfz ${APRU_FILE}
 	mv apr-util-${APRU_VERSION} apr-util
 fi
 
 if [ ! -f "${APRI_FILE}" ]
 then
-	wget http://mirror.netcologne.de/apache.org/apr/${APRI_FILE}
+	wget http://www.carfab.com/apachesoftware/apr/${APRI_FILE}
 	tar xvfz ${APRI_FILE}
 	mv apr-iconv-${APRI_VERSION} apr-iconv
 fi
