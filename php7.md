@@ -36,5 +36,5 @@ If you need more php extenstions look at the output of
 sudo apt-cache search php7
 ```
 
-```
+
 [PHP Example config](php7_example.conf)
