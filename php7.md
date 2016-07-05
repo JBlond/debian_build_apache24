@@ -22,7 +22,7 @@ sudo aptitude dist-upgrade
 <h3>Install PHP as CGI</h3>
 
 ```
-sudo aptitude install php7.0-cgi php7.0-cli php7.0-common php7.0-curl php7.0-gd php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-opcache
+sudo aptitude install php7.0-cgi php7.0-cli php7.0-common php7.0-curl php7.0-gd php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-opcache php7.0-xml
 ```
 
 List the dotdeb installed binaries
