@@ -1,14 +1,14 @@
 #!/bin/bash
 cd "${HOME}/apache24"
 
-SSL_VERSION="1.0.2k"
-HTTPD_VERSION="2.4.25"
-APR_VERSION="1.5.2"
-APRU_VERSION="1.5.4"
+SSL_VERSION="1.1.0f"
+HTTPD_VERSION="2.4.26"
+APR_VERSION="1.6.2"
+APRU_VERSION="1.6.0"
 APRI_VERSION="1.2.1"
 ZLIB_VERSION="1.2.11"
 PCRE_VERSION="8.38"
-HTTP2_VERSION="1.17.0"
+HTTP2_VERSION="1.23.1"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -49,7 +49,7 @@ cd "${HOME}/apache24"
 
 if [ ! -f "${HTTPD_FILE}" ]
 then
-	wget http://artfiles.org/apache.org/httpd/${HTTPD_FILE}
+	wget http://www.apache.org/dist/httpd//${HTTPD_FILE}
 	tar xvfz ${HTTPD_FILE}
 fi
 
