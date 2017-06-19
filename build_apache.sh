@@ -93,6 +93,7 @@ then
 fi
 
 if [ ! -f "${BROTLI_FILE}"]
+then
 	wget https://github.com/kjdev/apache-mod-brotli/archive/v${BROTLI_FILE}
 	tar xvfz ${BROTLI_FILE}
 	mv apache-mod-brotli-${BROTLI_VERSION} brotli
