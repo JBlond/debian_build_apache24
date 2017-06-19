@@ -9,6 +9,7 @@ APRI_VERSION="1.2.1"
 ZLIB_VERSION="1.2.11"
 PCRE_VERSION="8.38"
 HTTP2_VERSION="1.23.1"
+BROTLI_VERSION="0.4.0"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -18,6 +19,7 @@ APRI_FILE="apr-iconv-${APRI_VERSION}.tar.gz"
 ZLIB_FILE="zlib-${ZLIB_VERSION}.tar.gz"
 PCRE_FILE="pcre-${PCRE_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
+BROTLI_FILE="${BROTLI_VERSION}.tar.gz"
 
 if [ ! -f "${SSL_FILE}" ]
 then
@@ -90,6 +92,12 @@ then
 	mv pcre-${PCRE_VERSION} pcre
 fi
 
+if [ ! -f "${BROTLI_FILE}"]
+	wget https://github.com/kjdev/apache-mod-brotli/archive/v${BROTLI_FILE}
+	tar xvfz ${BROTLI_FILE}
+	mv apache-mod-brotli-${BROTLI_VERSION} brotli
+fi
+
 cd apr
 ./configure --with-crypto
 make
@@ -97,7 +105,7 @@ make
 cd ../..
 ./buildconf
 export LDFLAGS="-Wl,-rpath,/opt/openssl/lib"
-./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --enable-lua --enable-deflate --enable-headers --enable-expires --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --with-crypto --enable-module=ssl --enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid --with-included-apr
+./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --enable-lua --enable-deflate --enable-headers --enable-expires --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --with-crypto --enable-module=ssl --enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid --with-included-apr --enable-brotli --with-brotli=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/brotli 
 make
 sudo make install
 
