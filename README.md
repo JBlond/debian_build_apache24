@@ -109,5 +109,5 @@ For more information see https://icing.github.io/mod_h2/howto.html
 # PHP setup
 [PHP Setup](php.md)
 
-#PHP 7 setup
+# PHP 7 setup
 [PHP7 setup](php7.md)
