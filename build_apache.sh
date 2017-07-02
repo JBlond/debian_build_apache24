@@ -92,7 +92,7 @@ then
 	mv pcre-${PCRE_VERSION} pcre
 fi
 
-if [ ! -f "${BROTLI_FILE}"]
+if [ ! -f "${BROTLI_FILE}" ]
 then
 	wget https://github.com/kjdev/apache-mod-brotli/archive/v${BROTLI_FILE}
 	tar xvfz ${BROTLI_FILE}
