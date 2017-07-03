@@ -9,7 +9,6 @@ APRI_VERSION="1.2.1"
 ZLIB_VERSION="1.2.11"
 PCRE_VERSION="8.40"
 HTTP2_VERSION="1.23.1"
-BROTLI_VERSION="0.4.0"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -19,7 +18,6 @@ APRI_FILE="apr-iconv-${APRI_VERSION}.tar.gz"
 ZLIB_FILE="zlib-${ZLIB_VERSION}.tar.gz"
 PCRE_FILE="pcre-${PCRE_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
-BROTLI_FILE="${BROTLI_VERSION}.tar.gz"
 
 if [ ! -f "${SSL_FILE}" ]
 then
@@ -92,13 +90,6 @@ then
 	mv pcre-${PCRE_VERSION} pcre
 fi
 
-if [ ! -f "${BROTLI_FILE}" ]
-then
-	wget https://github.com/kjdev/apache-mod-brotli/archive/v${BROTLI_FILE}
-	tar xvfz ${BROTLI_FILE}
-	mv apache-mod-brotli-${BROTLI_VERSION} brotli
-fi
-
 cd apr
 ./configure --with-crypto
 make
@@ -109,6 +100,21 @@ export LDFLAGS="-Wl,-rpath,/opt/openssl/lib"
 ./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --enable-lua --enable-deflate --enable-headers --enable-expires --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --with-crypto --enable-module=ssl --enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid --with-included-apr 
 make
 sudo make install
+
+currentver="$(cat /etc/debian_version)"
+requiredver="9.0"
+if [ "$(printf "$requiredver\n$currentver" | sort -V | head -n1)" == "$currentver" ] && [ "$currentver" != "$requiredver" ]; then 
+        echo "Mod_brotli requires Debian 9"
+else
+	cd "${HOME}/apache24"
+	sudo aptitude install brotli
+	git clone --depth=1 --recursive https://github.com/kjdev/apache-mod-brotli.git mod_brotli
+	cd mod_brotli
+	./autogen.sh
+	./configure --with-apxs=/opt/apache2/bin --with-apr=~/apache24/httpd-2.4.26/srclib/apr
+	make
+	sudo install -p -m 755 -D .libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
+fi
 
 cd "${HOME}/apache24/mod_fcgid"
 svn up
