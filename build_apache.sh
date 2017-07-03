@@ -107,7 +107,7 @@ if [ "$(printf "$requiredver\n$currentver" | sort -V | head -n1)" == "$currentve
         echo "Mod_brotli requires Debian 9"
 else
 	cd "${HOME}/apache24"
-	sudo aptitude install brotli
+	sudo aptitude -y install brotli
 	git clone --depth=1 --recursive https://github.com/kjdev/apache-mod-brotli.git mod_brotli
 	cd mod_brotli
 	./autogen.sh
