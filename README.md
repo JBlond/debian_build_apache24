@@ -106,6 +106,18 @@ Protocols h2c http/1.1
 
 For more information see https://icing.github.io/mod_h2/howto.html
 
+# mod_brotli
+
+brotli compression with deflate as fallback
+
+```
+LoadModule brotli_module modules/mod_brotli.so
+AddOutputFilterByType BROTLI;DEFLATE text/html text/plain text/xml text/php text/css text/js text/javascript text/javascript-x application/x-javascript font/truetype
+AddOutputFilterByType BROTLI;DEFLATE application/javascript application/rss+xml
+DeflateCompressionLevel 9
+```
+
+
 # PHP setup
 [PHP Setup](php.md)
 
