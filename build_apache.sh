@@ -2,13 +2,13 @@
 cd "${HOME}/apache24"
 
 SSL_VERSION="1.1.0f"
-HTTPD_VERSION="2.4.27"
+HTTPD_VERSION="2.4.28"
 APR_VERSION="1.6.2"
 APRU_VERSION="1.6.0"
 APRI_VERSION="1.2.1"
 ZLIB_VERSION="1.2.11"
 PCRE_VERSION="8.41"
-HTTP2_VERSION="1.23.1"
+HTTP2_VERSION="1.26.0"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -111,7 +111,7 @@ else
 	git clone --depth=1 --recursive https://github.com/kjdev/apache-mod-brotli.git mod_brotli
 	cd mod_brotli
 	./autogen.sh
-	./configure --with-apxs=/opt/apache2/bin --with-apr=~/apache24/httpd-2.4.26/srclib/apr
+	./configure --with-apxs=/opt/apache2/bin --with-apr=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr
 	make
 	sudo install -p -m 755 -D .libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
 fi
