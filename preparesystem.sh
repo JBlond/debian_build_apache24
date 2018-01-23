@@ -4,7 +4,7 @@ cd $HOME/apache24
 
 # debian
 which apt  > /dev/null 2>&1 && {
-	sudo apt update || echo aptitude update hit problems but continuing anyway...
+	sudo apt update || echo apt update hit problems but continuing anyway...
 	sudo apt -y install build-essential zlib1g-dev liblua5.1-dev autoconf libtool libpcre3-dev libxml2-dev subversion libexpat1-dev
 }
 
