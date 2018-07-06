@@ -7,8 +7,8 @@ APR_VERSION="1.6.3"
 APRU_VERSION="1.6.1"
 APRI_VERSION="1.2.2"
 ZLIB_VERSION="1.2.11"
-PCRE_VERSION="8.41"
-HTTP2_VERSION="1.31.1"
+PCRE_VERSION="8.42"
+HTTP2_VERSION="1.32.0"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -49,7 +49,7 @@ cd "${HOME}/apache24"
 
 if [ ! -f "${HTTPD_FILE}" ]
 then
-	wget http://www.apache.org/dist/httpd//${HTTPD_FILE}
+	wget http://www.apache.org/dist/httpd/${HTTPD_FILE}
 	tar xvfz ${HTTPD_FILE}
 fi
 
@@ -57,21 +57,21 @@ cd httpd-${HTTPD_VERSION}/srclib
 
 if [ ! -f "${APR_FILE}" ]
 then
-	wget http://www.apache.org/dist/apr//${APR_FILE}
+	wget http://www.apache.org/dist/apr/${APR_FILE}
 	tar xvfz ${APR_FILE}
 	mv apr-${APR_VERSION} apr
 fi
 
 if [ ! -f "${APRU_FILE}" ]
 then
-	wget http://www.apache.org/dist/apr//${APRU_FILE}
+	wget http://www.apache.org/dist/apr/${APRU_FILE}
 	tar xvfz ${APRU_FILE}
 	mv apr-util-${APRU_VERSION} apr-util
 fi
 
 if [ ! -f "${APRI_FILE}" ]
 then
-	wget http://www.apache.org/dist/apr//${APRI_FILE}
+	wget http://www.apache.org/dist/apr/${APRI_FILE}
 	tar xvfz ${APRI_FILE}
 	mv apr-iconv-${APRI_VERSION} apr-iconv
 fi
