@@ -21,6 +21,8 @@ HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
 
 if [ ! -f "${SSL_FILE}" ]
 then
+	echo -e " \e[32mOpenSSL"
+	echo
 	wget http://www.openssl.org/source/${SSL_FILE}
 	tar xfz ${SSL_FILE}
 	cd openssl-${SSL_VERSION}
@@ -36,6 +38,8 @@ cd "${HOME}/apache24"
 
 if [ ! -f "${HTTP2_FILE}" ]
 then
+	echo -e " \e[32mnghttp2"
+	echo
 	wget https://github.com/tatsuhiro-t/nghttp2/releases/download/v${HTTP2_VERSION}/${HTTP2_FILE}
 	tar xfz ${HTTP2_FILE}
 	cd nghttp2-${HTTP2_VERSION}
@@ -49,6 +53,8 @@ cd "${HOME}/apache24"
 
 if [ ! -f "${HTTPD_FILE}" ]
 then
+	echo -e " \e[32mDownload httpd"
+	echo
 	wget http://www.apache.org/dist/httpd/${HTTPD_FILE}
 	tar xvfz ${HTTPD_FILE}
 fi
@@ -57,6 +63,8 @@ cd httpd-${HTTPD_VERSION}/srclib
 
 if [ ! -f "${APR_FILE}" ]
 then
+	echo -e " \e[32mDownload APR"
+	echo
 	wget http://www.apache.org/dist/apr/${APR_FILE}
 	tar xvfz ${APR_FILE}
 	mv apr-${APR_VERSION} apr
@@ -64,6 +72,8 @@ fi
 
 if [ ! -f "${APRU_FILE}" ]
 then
+	echo -e " \e[32mDownload APR-UTIL"
+	echo
 	wget http://www.apache.org/dist/apr/${APRU_FILE}
 	tar xvfz ${APRU_FILE}
 	mv apr-util-${APRU_VERSION} apr-util
@@ -71,6 +81,8 @@ fi
 
 if [ ! -f "${APRI_FILE}" ]
 then
+	echo -e " \e[32mDownload APR-ICONV"
+	echo
 	wget http://www.apache.org/dist/apr/${APRI_FILE}
 	tar xvfz ${APRI_FILE}
 	mv apr-iconv-${APRI_VERSION} apr-iconv
@@ -78,6 +90,8 @@ fi
 
 if [ ! -f "${ZLIB_FILE}" ]
 then
+	echo -e " \e[32mDownload ZLIB"
+	echo
 	wget http://zlib.net/${ZLIB_FILE}
 	tar xvfz ${ZLIB_FILE}
 	mv zlib-${ZLIB_VERSION} zlib
@@ -85,16 +99,22 @@ fi
 
 if [ ! -f "${PCRE_FILE}" ]
 then
+	echo -e " \e[32mDownload PCRE"
+	echo
 	wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/${PCRE_FILE}
 	tar xvfz ${PCRE_FILE}
 	mv pcre-${PCRE_VERSION} pcre
 fi
 
 cd apr
+echo -e " \e[32mBUILD APR"
+echo
 ./configure --with-crypto
 make
 
 cd ../..
+echo -e " \e[32mBuild httpd"
+echo
 ./buildconf
 export LD_LIBRARY_PATH=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr:$LD_LIBRARY_PATH
 export LDFLAGS="-Wl,-rpath,/opt/openssl/lib"
@@ -107,6 +127,8 @@ requiredver="9.0"
 if [ "$(printf "$requiredver\n$currentver" | sort -V | head -n1)" == "$currentver" ] && [ "$currentver" != "$requiredver" ]; then 
         echo "Mod_brotli requires Debian 9"
 else
+	echo -e " \e[32mBuild brotli"
+	echo
 	cd "${HOME}/apache24"
 	sudo aptitude -y install brotli
 	git clone --depth=1 --recursive https://github.com/kjdev/apache-mod-brotli.git mod_brotli
@@ -118,6 +140,8 @@ else
 fi
 
 cd "${HOME}/apache24/mod_fcgid"
+echo -e " \e[32mBuild mod_fcgid"
+echo
 svn up
 APXS=/opt/apache2/bin/apxs ./configure.apxs
 make
