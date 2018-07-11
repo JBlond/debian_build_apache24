@@ -125,7 +125,7 @@ sudo make install
 currentver="$(cat /etc/debian_version)"
 requiredver="9.0"
 if [ "$(printf "$requiredver\n$currentver" | sort -V | head -n1)" == "$currentver" ] && [ "$currentver" != "$requiredver" ]; then 
-        echo "Mod_brotli requires Debian 9"
+        echo -e " \e[33mMod_brotli requires Debian 9"
 else
 	echo -e " \e[32mBuild brotli"
 	echo
