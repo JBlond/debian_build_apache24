@@ -21,7 +21,7 @@ ${SUDO} apt-get update
 <h3>Install PHP as CGI</h3>
 
 ```
-sudo aptitude install php7.0-cgi php7.0-cli php7.0-common php7.0-curl php7.0-gd php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-opcache php7.0-xml
+sudo apt install php7.2-cgi php7.2-cli php7.2-common php7.2-curl php7.2-gd php7.2-json php7.2-mbstring php7.2-mysql php7.2-opcache php7.2-xml
 ```
 
 If you need more php extenstions look at the output of 
