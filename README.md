@@ -117,9 +117,5 @@ AddOutputFilterByType BROTLI;DEFLATE application/javascript application/rss+xml
 DeflateCompressionLevel 9
 ```
 
-
-# PHP setup
-[PHP Setup](php.md)
-
 # PHP 7 setup
 [PHP7 setup](php7.md)
