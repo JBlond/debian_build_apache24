@@ -53,7 +53,25 @@ troubleshooting apache config
 sudo /opt/apache2/bin/httpd -S
 ```
 
-Proof [SSL config](ssl.conf)
+```
+<If "%{SERVER_PORT} == '443'">
+    <IfModule mod_headers.c>
+        Header always set Strict-Transport-Security "max-age=15553000; preload"
+    </IfModule>
+</If>
+SSLUseStapling On
+SSLSessionCache shmcb:/opt/apache2/logs/ssl_gcache_data(512000)
+SSLStaplingCache shmcb:/opt/apache2/logs/ssl_stapling_data(512000)
+SSLOptions +StrictRequire +StdEnvVars -ExportCertData
+SSLProtocol -all +TLSv1.1 +TLSv1.2
+SSLCompression Off
+SSLHonorCipherOrder On
+SSLCipherSuite ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA
+
+SSLOpenSSLConfCmd ECDHParameters secp384r1
+SSLOpenSSLConfCmd Curves sect571r1:sect571k1:secp521r1:sect409k1:sect409r1:secp384r1:sect283k1:sect283r1:secp256k1:prime256v1
+```
+For download [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/ssl.conf)
 
 To update an existing installation just run build_apache.sh again.
 
