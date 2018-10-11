@@ -1,4 +1,4 @@
-# debian build apache2.4.x with mod fcgid and OpenSSL
+# Build last apache2.4.x on Linux with mod fcgid and last OpenSSL
 
 Build apache 2.4 on debian from scratch with a semi automatic setup.
 
