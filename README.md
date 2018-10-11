@@ -71,9 +71,9 @@ For download [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_
 
 ## Update existing Installation
 
-To update an existing installation just
+To update an existing installation just run
 ```
-./run update.sh
+./update.sh
 ```
 
 ## Install as daemon
