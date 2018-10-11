@@ -4,6 +4,7 @@ Build apache 2.4 on debian from scratch with a semi automatic setup.
 
 This works also on RedHat / CentOS / fedora / scientific linux and openSUSE / SUSE
 
+On RedHat / fedora you might have to open your firewall [firewall](readhat_firewall.md) 
 
 ```
 #clone
