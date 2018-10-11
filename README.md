@@ -29,6 +29,8 @@ git checkout opensuse
 
 The new apache will be installed in /opt/apache2
 
+## Manage the Service
+
 To start apache
 
 ```
@@ -53,6 +55,8 @@ troubleshooting apache config
 sudo /opt/apache2/bin/httpd -S
 ```
 
+## Bulltet proof SSL Configuration
+
 ```
 <If "%{SERVER_PORT} == '443'">
     <IfModule mod_headers.c>
@@ -73,15 +77,17 @@ SSLOpenSSLConfCmd Curves sect571r1:sect571k1:secp521r1:sect409k1:sect409r1:secp3
 ```
 For download [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/ssl.conf)
 
-To update an existing installation just run build_apache.sh again.
+## Update existing Installation
 
-Install as daemon
+To update an existing installation just run update.sh .
+
+## Install as daemon
 
 ```
 ./install_as_daemon.sh
 ```
 
-Uninstall daemon
+## Uninstall daemon
 
 ```
 ./uninstall_daemon.sh
