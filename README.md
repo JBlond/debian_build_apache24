@@ -2,21 +2,13 @@
 
 Build apache 2.4 on debian from scratch with a semi automatic setup.
 
+This works also on RedHat / CentOS / fedora / scientific linux and openSUSE / SUSE
+
 
 ```
 #clone
 git clone https://github.com/JBlond/debian_build_apache24.git
 cd debian_build_apache24
-```
-
-if you are on RedHat / CentOS / fedora / scientific linux
-```
-git checkout redhat
-```
-
-if you are on openSUSE
-```
-git checkout opensuse
 ```
 
 ```
