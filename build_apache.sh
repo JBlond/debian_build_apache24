@@ -106,13 +106,7 @@ then
 	mv pcre-${PCRE_VERSION} pcre
 fi
 
-cd apr
-echo -e " \e[32mBUILD APR\e[0m"
-echo
-./configure --with-crypto
-make
-
-cd ../..
+cd ..
 echo -e " \e[32mBuild httpd\e[0m"
 echo
 ./buildconf
