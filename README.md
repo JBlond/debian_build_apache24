@@ -114,14 +114,9 @@ By default, the HTTP/2 protocol is not enabled anywhere in your server.
 You can add this for the server in general or for specific vhosts.
 
 ```
-# for a https server
 ProtocolsHonorOrder On
-Protocols h2 http/1.1
-...
-
-# for a http server
-ProtocolsHonorOrder On
-Protocols h2c http/1.1
+Protocols h2c h2 http/1.1
+H2Direct On 
 ```
 
 For more information see https://icing.github.io/mod_h2/howto.html
