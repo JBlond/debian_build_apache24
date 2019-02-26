@@ -26,31 +26,37 @@ The new apache will be installed in /opt/apache2
 
 To start apache
 
-```
+```BASH
 sudo /opt/apache2/bin/httpd -k start
 ```
 
 To stop apache
 
-```
+```BASH
 sudo /opt/apache2/bin/httpd -k stop
 ```
 
 To restart apache
 
-```
+```BASH
 sudo /opt/apache2/bin/httpd -k graceful
 ```
 
 troubleshooting apache config
 
-```
+```BASH
 sudo /opt/apache2/bin/httpd -S
+```
+
+### systemctl
+
+```BASH
+systemctl status apachectl
 ```
 
 ## Bulltet proof SSL Configuration
 
-```
+```XML
 <If "%{SERVER_PORT} == '443'">
     <IfModule mod_headers.c>
         Header always set Strict-Transport-Security "max-age=15553000; preload"
@@ -73,19 +79,20 @@ For download [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_
 ## Update existing Installation
 
 To update an existing installation just run
-```
+
+```BASH
 ./update.sh
 ```
 
 ## Install as daemon
 
-```
+```BASH
 ./install_as_daemon.sh
 ```
 
 ## Uninstall daemon
 
-```
+```BASH
 ./uninstall_daemon.sh
 ```
 
@@ -106,6 +113,7 @@ LoadModule mpm_prefork_module modues/mod_mpm_prefork.so
 ```
 
 # mod_h[ttp]2
+
 ```
 LoadModule http2_module modules/mod_http2.so
 ```
