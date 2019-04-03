@@ -39,7 +39,7 @@ uninstall:
 update:
 	@./update.sh
 
-stop:
+graceful:
 	@sudo /opt/apache2/bin/httpd -k graceful
 
 stop:
