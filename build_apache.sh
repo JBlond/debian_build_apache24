@@ -99,7 +99,7 @@ if [[ ! -f "${PCRE_FILE}" ]]
 then
 	echo -e " \e[32mDownload PCRE\e[0m"
 	echo
-	wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/${PCRE_FILE}
+	wget https://ftp.pcre.org/pub/pcre/${PCRE_FILE}
 	tar xvfz ${PCRE_FILE}
 	mv pcre-${PCRE_VERSION} pcre
 fi
