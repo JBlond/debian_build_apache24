@@ -5,7 +5,7 @@ cd $HOME/apache24
 # debian
 which apt  > /dev/null 2>&1 && {
 	sudo apt update || echo apt update hit problems but continuing anyway...
-	sudo apt -y install build-essential zlib1g-dev liblua5.1-dev autoconf libtool libpcre3-dev libxml2-dev subversion libexpat1-dev
+	sudo apt -y install wget build-essential zlib1g-dev liblua5.1-dev autoconf libtool libpcre3-dev libxml2-dev subversion libexpat1-dev
 }
 
 # centos
@@ -17,7 +17,7 @@ which yum  > /dev/null 2>&1 && {
 # opensuse
 which zypper  > /dev/null 2>&1 && {
 	sudo zypper install --type pattern devel_basis
-	sudo zypper install autoconf libnghttp2-devel libtool libxml2-devel lua-devel pcre3-devel python-devel subversion zlib-devel libexpat1-dev
+	sudo zypper install autoconf wget libnghttp2-devel libtool libxml2-devel lua-devel pcre3-devel python-devel subversion zlib-devel libexpat1-dev
 }
 
 
