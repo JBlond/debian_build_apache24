@@ -26,7 +26,7 @@ then
 	wget http://www.openssl.org/source/${SSL_FILE}
 	tar xfz ${SSL_FILE}
 	cd openssl-${SSL_VERSION}
-	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea threads zlib-dynamic shared
+	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea threads zlib-dynamic shared sctp
 	make depend
 	make
 	sudo make install
