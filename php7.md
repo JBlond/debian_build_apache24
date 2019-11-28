@@ -4,7 +4,7 @@
 
 
 
-
+** Note: If you update your debian version, you need to re-run the  echo into the php.list file. **
 
 ```
 
@@ -23,7 +23,9 @@ ${SUDO} apt-get update
 ```
 sudo apt install php7.2-cgi php7.2-cli php7.2-common php7.2-curl php7.2-gd php7.2-json php7.2-mbstring php7.2-mysql php7.2-opcache php7.2-xml
 # OR 7.3 or both ;)
-apt install php7.3-cgi php7.3-cli php7.3-common php7.3-curl php7.3-gd php7.3-json php7.3-mbstring php7.3-mysql php7.3-opcache php7.3-readline php7.3-xml php7.3-zip
+apt install php7.3-cgi php7.3-cli php7.3-common php7.3-curl php7.3-gd php7.3-json php7.3-mbstring php7.3-mysql php7.3-opcache php7.3-readline php7.3-xml php7.3-zip php7.3-redis
+##
+sudo apt install php7.4-cgi php7.4-cli php7.4-common php7.4-curl php7.4-gd php7.4-json php7.4-mbstring php7.4-mysql php7.4-opcache php7.4-readline php7.4-xml php7.4-zip php7.4-redis
 ```
 
 If you need more php extenstions look at the output of 
