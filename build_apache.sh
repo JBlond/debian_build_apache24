@@ -23,7 +23,7 @@ if [[ ! -f "${SSL_FILE}" ]]
 then
 	echo -e " \e[32mOpenSSL\e[0m"
 	echo
-	wget http://www.openssl.org/source/${SSL_FILE}
+	wget https://www.openssl.org/source/${SSL_FILE}
 	tar xfz ${SSL_FILE}
 	cd openssl-${SSL_VERSION}
 	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-weak-ssl-ciphers enable-ec_nistp_64_gcc_128 threads zlib-dynamic shared
@@ -53,7 +53,7 @@ if [[ ! -f "${HTTPD_FILE}" ]]
 then
 	echo -e " \e[32mDownload httpd\e[0m"
 	echo
-	wget http://www.apache.org/dist/httpd/${HTTPD_FILE}
+	wget https://www.apache.org/dist/httpd/${HTTPD_FILE}
 	tar xvfz ${HTTPD_FILE}
 fi
 
@@ -81,7 +81,7 @@ if [[ ! -f "${APRI_FILE}" ]]
 then
 	echo -e " \e[32mDownload APR-ICONV\e[0m"
 	echo
-	wget http://www.apache.org/dist/apr/${APRI_FILE}
+	wget https://www.apache.org/dist/apr/${APRI_FILE}
 	tar xvfz ${APRI_FILE}
 	mv apr-iconv-${APRI_VERSION} apr-iconv
 fi
