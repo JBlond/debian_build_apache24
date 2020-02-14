@@ -7,8 +7,8 @@ APR_VERSION="1.7.0"
 APRU_VERSION="1.6.1"
 APRI_VERSION="1.2.2"
 ZLIB_VERSION="1.2.11"
-PCRE_VERSION="8.43"
-HTTP2_VERSION="1.39.2"
+PCRE_VERSION="8.44"
+HTTP2_VERSION="1.40.0"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -63,7 +63,7 @@ if [[ ! -f "${APR_FILE}" ]]
 then
 	echo -e " \e[32mDownload APR\e[0m"
 	echo
-	wget http://www.apache.org/dist/apr/${APR_FILE}
+	wget https://www.apache.org/dist/apr/${APR_FILE}
 	tar xvfz ${APR_FILE}
 	mv apr-${APR_VERSION} apr
 fi
@@ -72,7 +72,7 @@ if [[ ! -f "${APRU_FILE}" ]]
 then
 	echo -e " \e[32mDownload APR-UTIL\e[0m"
 	echo
-	wget http://www.apache.org/dist/apr/${APRU_FILE}
+	wget https://www.apache.org/dist/apr/${APRU_FILE}
 	tar xvfz ${APRU_FILE}
 	mv apr-util-${APRU_VERSION} apr-util
 fi
