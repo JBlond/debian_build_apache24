@@ -22,6 +22,11 @@ cd debian_build_apache24
 
 The new apache will be installed in /opt/apache2
 
+## 32 bit and arm build
+
+This won't compile on 32 bit or arm based processor. If you want to use it on thoses systems like raspberry pi
+remove the parameter `enable-ec_nistp_64_gcc_128` from build_apache.sh for openssl config script.
+
 ## Manage the Service
 
 To start apache
