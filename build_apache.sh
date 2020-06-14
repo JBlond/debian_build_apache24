@@ -84,9 +84,6 @@ then
 	wget https://www.apache.org/dist/apr/${APRU_FILE}
 	tar xvfz ${APRU_FILE}
 	mv apr-util-${APRU_VERSION} apr-util
-	cd apr-util
-	./configure --with-apr=../apr --with-apr-iconv=../apr-iconv --with-crypto --with-openssl=/opt/openssl
-	cd ..
 fi
 
 
