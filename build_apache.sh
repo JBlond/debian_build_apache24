@@ -68,15 +68,6 @@ then
 	mv apr-${APR_VERSION} apr
 fi
 
-if [[ ! -f "${APRU_FILE}" ]]
-then
-	echo -e " \e[32mDownload APR-UTIL\e[0m"
-	echo
-	wget https://www.apache.org/dist/apr/${APRU_FILE}
-	tar xvfz ${APRU_FILE}
-	mv apr-util-${APRU_VERSION} apr-util
-fi
-
 if [[ ! -f "${APRI_FILE}" ]]
 then
 	echo -e " \e[32mDownload APR-ICONV\e[0m"
@@ -85,6 +76,19 @@ then
 	tar xvfz ${APRI_FILE}
 	mv apr-iconv-${APRI_VERSION} apr-iconv
 fi
+
+if [[ ! -f "${APRU_FILE}" ]]
+then
+	echo -e " \e[32mDownload APR-UTIL\e[0m"
+	echo
+	wget https://www.apache.org/dist/apr/${APRU_FILE}
+	tar xvfz ${APRU_FILE}
+	mv apr-util-${APRU_VERSION} apr-util
+	cd apr-util
+	./configure --with-apr=../apr --with-apr-iconv=../apr-iconv --with-crypto --with-openssl=/opt/openssl
+	cd ..
+fi
+
 
 if [[ ! -f "${ZLIB_FILE}" ]]
 then
