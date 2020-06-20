@@ -118,7 +118,7 @@ sudo make install
 currentver="$(cat /etc/debian_version)"
 requiredver="9.0"
 if [[ "$(printf "$requiredver\n$currentver" | sort -V | head -n1)" == "$currentver" ]] && [[ "$currentver" != "$requiredver" ]]; then
-	echo -e " \e[33mMod_brotli requires Debian 9"
+	echo -e " \e[33mMod_brotli requires Debian 9 or newer"
 else
 	echo -e " \e[32mBuild brotli\e[0m"
 	echo
@@ -133,7 +133,7 @@ else
 fi
 
 cd "${HOME}/apache24/mod_fcgid"
-echo -e " \e[32mBuild brotli\e[0m"
+echo -e " \e[32mBuild mod_fcgid\e[0m"
 echo
 svn up
 APXS=/opt/apache2/bin/apxs ./configure.apxs
