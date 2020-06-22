@@ -9,6 +9,7 @@ APRI_VERSION="1.2.2"
 ZLIB_VERSION="1.2.11"
 PCRE_VERSION="8.44"
 HTTP2_VERSION="1.41.0"
+MOD_SEC_VERSION="2.9.3"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -18,6 +19,7 @@ APRI_FILE="apr-iconv-${APRI_VERSION}.tar.gz"
 ZLIB_FILE="zlib-${ZLIB_VERSION}.tar.gz"
 PCRE_FILE="pcre-${PCRE_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
+MOD_SEC_FILE="modsecurity-${MOD_SEC_VERSION}.tar.gz"
 
 if [[ ! -f "${SSL_FILE}" ]]
 then
@@ -123,7 +125,7 @@ else
 	echo -e " \e[32mBuild brotli\e[0m"
 	echo
 	cd "${HOME}/apache24"
-	sudo aptitude -y install brotli
+	sudo apt-get -y install brotli
 	git clone --depth=1 --recursive https://github.com/kjdev/apache-mod-brotli.git mod_brotli
 	cd mod_brotli
 	./autogen.sh
@@ -140,3 +142,28 @@ APXS=/opt/apache2/bin/apxs ./configure.apxs
 make
 sudo make install
 make clean
+
+echo -e " \e[32mBuild mod_security\e[0m"
+cd "${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre"
+./configure
+make
+
+cd "${HOME}/apache24"
+
+sudo apt-get -y install libcurl4-openssl-dev libyajl-dev
+
+if [[ ! -f "${MOD_SEC_FILE}" ]]
+then
+	wget https://github.com/SpiderLabs/ModSecurity/releases/download/v${MOD_SEC_VERSION}/${MOD_SEC_FILE}
+
+	tar xvfz ${MOD_SEC_FILE}
+	cd mod-security-${MOD_SEC_VERSION}
+	./autogen.sh
+	./configure --enable-htaccess-config --prefix=/opt/apache2 --libdir=/opt/apache2/modules --with-apxs=/opt/apache2/bin/apxs \
+		--with-pcre=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre \
+		--with-apr=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr \
+		--with-apu=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util
+	make
+	sudo make install
+	sudo chmod 0755 /opt/apache2/modules/mod_security2.so
+fi
