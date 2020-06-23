@@ -160,7 +160,7 @@ then
 	wget https://github.com/SpiderLabs/ModSecurity/releases/download/v${MOD_SEC_VERSION}/${MOD_SEC_FILE}
 
 	tar xvfz ${MOD_SEC_FILE}
-	cd mod-security-${MOD_SEC_VERSION}
+	cd modsecurity-${MOD_SEC_VERSION}
 	./autogen.sh
 	./configure --enable-htaccess-config --prefix=/opt/apache2 --libdir=/opt/apache2/modules --with-apxs=/opt/apache2/bin/apxs \
 		--with-pcre=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre \
