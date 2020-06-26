@@ -11,7 +11,7 @@ which apt  > /dev/null 2>&1 && {
 # centos
 which yum  > /dev/null 2>&1 && {
 	sudo yum groupinstall "Development Tools" "Development Libraries"
-	sudo yum install libtool lua-devel patch pcre-devel python-devel wget zlib-devel expat-devel svn wget
+	sudo yum install libtool lua-devel patch pcre-devel python-devel wget zlib-devel expat-devel svn wget make autoconf gcc
 }
 
 # opensuse
