@@ -5,13 +5,13 @@ cd $HOME/apache24
 # debian
 which apt  > /dev/null 2>&1 && {
 	sudo apt update || echo apt update hit problems but continuing anyway...
-	sudo apt -y install wget build-essential zlib1g-dev liblua5.1-dev autoconf libtool libpcre3-dev libxml2-dev subversion libexpat1-dev
+	sudo apt -y install wget build-essential zlib1g-dev liblua5.1-dev autoconf libtool libpcre3-dev libxml2-dev subversion libexpat1-dev libcurl4-openssl-dev libyajl-dev brotli
 }
 
 # centos
 which yum  > /dev/null 2>&1 && {
 	sudo yum groupinstall "Development Tools" "Development Libraries"
-	sudo yum install libtool lua-devel patch pcre-devel python-devel wget zlib-devel expat-devel
+	sudo yum install libtool lua-devel patch pcre-devel python-devel wget zlib-devel expat-devel svn wget
 }
 
 # opensuse

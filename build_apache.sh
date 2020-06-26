@@ -128,7 +128,6 @@ else
 	echo -e " \e[32mBuild brotli\e[0m"
 	echo
 	cd "${HOME}/apache24"
-	sudo apt-get -y install brotli
 	git clone --depth=1 --recursive https://github.com/kjdev/apache-mod-brotli.git mod_brotli
 	cd mod_brotli
 	./autogen.sh
@@ -153,12 +152,9 @@ make
 
 cd "${HOME}/apache24"
 
-sudo apt-get -y install libcurl4-openssl-dev libyajl-dev
-
 if [[ ! -f "${MOD_SEC_FILE}" ]]
 then
 	wget https://github.com/SpiderLabs/ModSecurity/releases/download/v${MOD_SEC_VERSION}/${MOD_SEC_FILE}
-
 	tar xvfz ${MOD_SEC_FILE}
 	cd modsecurity-${MOD_SEC_VERSION}
 	./autogen.sh
