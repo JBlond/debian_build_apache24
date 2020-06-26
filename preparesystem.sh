@@ -11,7 +11,8 @@ which apt  > /dev/null 2>&1 && {
 # centos
 which yum  > /dev/null 2>&1 && {
 	sudo dnf config-manager --enable PowerTools
-	sudo dnf install libtool lua-devel patch pcre-devel python-devel wget zlib-devel expat-devel svn wget make autoconf gcc zlib-devel pcre-devel lua-devel
+	sudo dnf install libtool lua-devel patch pcre-devel python-devel wget zlib-devel expat-devel svn wget make autoconf gcc zlib-devel pcre-devel lua-devel libtool expat-devel brotli-devel
+	dnf group install "Development Tools"
 }
 
 # opensuse
