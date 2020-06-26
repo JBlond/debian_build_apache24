@@ -18,7 +18,7 @@ which yum  > /dev/null 2>&1 && {
 # opensuse
 which zypper  > /dev/null 2>&1 && {
 	sudo zypper install --type pattern devel_basis
-	sudo zypper install autoconf wget libnghttp2-devel libtool libxml2-devel lua-devel pcre-devel python-devel subversion zlib-devel libexpat1-dev
+	sudo zypper install autoconf wget libnghttp2-devel libtool libxml2-devel lua-devel pcre-devel python-devel subversion zlib-devel libexpat-devel
 }
 
 
