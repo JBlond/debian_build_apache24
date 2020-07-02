@@ -29,6 +29,7 @@ remove the parameter `enable-ec_nistp_64_gcc_128` from build_apache.sh for opens
 And remove the parameter `--enable-nonportable-atomics=yes` from the configure for httpd.
 
 <details><summery></summery><br>
+
 ### OpenSSL
 enable-ec_nistp_64_gcc_128: Use on little endian platforms when GCC supports `__uint128_t`. ECDH is about 2 to 4 times faster. Not enabled by default because Configure can't determine it. Enable it if your compiler defines `__SIZEOF_INT128__`, the CPU is little endian and it tolerates unaligned data access. 
 
@@ -117,6 +118,8 @@ For download [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_
 
 This builds all available mpms. You can load them in httpd.conf. event mpm is loaded set in httpd.conf by this script. There can be only one mpm at the time. It is not advised to change the mpm during restart. For that stop and start apache.
 
+<details><summery>Local the MPM's</summery><br>
+
 ```
 LoadModule mpm_event_module modues/mod_mpm_event.so
 ```
@@ -128,7 +131,7 @@ LoadModule mpm_worker_module modues/mod_mpm_worker.so
 ```
 LoadModule mpm_prefork_module modues/mod_mpm_prefork.so
 ```
-
+</details>
 # mod_h[ttp]2
 
 ```
