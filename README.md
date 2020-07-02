@@ -28,11 +28,13 @@ This won't compile on 32 bit or arm based processor. If you want to use it on th
 remove the parameter `enable-ec_nistp_64_gcc_128` from build_apache.sh for openssl config script.
 And remove the parameter `--enable-nonportable-atomics=yes` from the configure for httpd.
 
+<details><summery></summery><br>
 ### OpenSSL
 enable-ec_nistp_64_gcc_128: Use on little endian platforms when GCC supports `__uint128_t`. ECDH is about 2 to 4 times faster. Not enabled by default because Configure can't determine it. Enable it if your compiler defines `__SIZEOF_INT128__`, the CPU is little endian and it tolerates unaligned data access. 
 
 ### Event MPM
 Event MPM depends on APR's atomic compare-and-swap operations for thread synchronization (`--enable-nonportable-atomics=yes`). This will cause APR to implement atomic operations using efficient opcodes not available in older CPUs.
+</details>
 
 ## Manage the Service
 
@@ -94,7 +96,7 @@ For download [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_
 
 ## Update && manage existing Installation
 
-<details><summery>Use the make script</summery>
+<details><summery>Use the make script</summery><br>
 
 ```
  make prepare       prepares the system for building
