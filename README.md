@@ -92,31 +92,24 @@ SSLOpenSSLConfCmd ClientSignatureAlgorithms rsa_pss_rsae_sha512:rsa_pss_rsae_sha
 ```
 For download [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/ssl.conf)
 
-## Update existing Installation
+## Update && manage existing Installation
 
-To update an existing installation just run
+<details><summery>Use the make script</summery>
 
-```BASH
-./update.sh
 ```
+ make prepare       prepares the system for building
+ make build         build from sources, but no daemon installation
+ make install       install as daemon
+ make uninstall     uninstall daemon
+ make install       run the deploy script
+ make update        update from the sources and install as daemon
+ make graceful      graceful apache restart
+ make stop          stops apache
+ make start         starts apache
+ make checksyntax   apache config syntax check
 
-or 
-
-```BASH
-make update
 ```
-
-## Install as daemon
-
-```BASH
-./install_as_daemon.sh
-```
-
-## Uninstall daemon
-
-```BASH
-./uninstall_daemon.sh
-```
+</details>
 
 # httpd apache MPMs
 
