@@ -97,7 +97,7 @@ For download [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_
 
 ## Update && manage existing Installation
 
-<details><summery>Use the make script</summery><br>
+Use the make script
 
 ```
  make prepare       prepares the system for building
@@ -112,7 +112,6 @@ For download [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_
  make checksyntax   apache config syntax check
 
 ```
-</details>
 
 # httpd apache MPMs
 
