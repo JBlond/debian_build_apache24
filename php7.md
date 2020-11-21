@@ -36,3 +36,8 @@ sudo apt-cache search php7
 
 
 [PHP Example config](php7_example.conf)
+
+
+```BASH
+sudo apt install php8.0-cgi php8.0-cli php8.0-common php8.0-curl php8.0-gd php-json php8.0-mbstring php8.0-mysql php8.0-opcache php8.0-readline php8.0-xml php8.0-zip php-redis
+```
