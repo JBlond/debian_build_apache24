@@ -146,15 +146,14 @@ make
 sudo make install
 make clean
 
-echo -e " \e[32mBuild mod_security\e[0m"
-cd "${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre"
-./configure
-make
-
-cd "${HOME}/apache24"
-
 if [[ ! -f "${MOD_SEC_FILE}" ]]
 then
+	echo -e " \e[32mBuild mod_security\e[0m"
+	cd "${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre"
+	./configure
+	make
+
+	cd "${HOME}/apache24"
 	wget https://github.com/SpiderLabs/ModSecurity/releases/download/v${MOD_SEC_VERSION}/${MOD_SEC_FILE}
 	tar xvfz ${MOD_SEC_FILE}
 	cd modsecurity-${MOD_SEC_VERSION}
