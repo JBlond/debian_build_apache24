@@ -154,6 +154,13 @@ then
 	make
 
 	cd "${HOME}/apache24"
+
+	wget https://github.com/curl/curl/releases/download/curl-7_76_1/curl-7.76.1.tar.gz
+	cd curl-7.76.1
+	./configure --prefix=/opt/curl --enable-optimize --disable-debug --with-nghttp2=/opt/nghttp2 --without-ssl
+	make
+	sudo make install
+
 	wget https://github.com/SpiderLabs/ModSecurity/releases/download/v${MOD_SEC_VERSION}/${MOD_SEC_FILE}
 	tar xvfz ${MOD_SEC_FILE}
 	cd modsecurity-${MOD_SEC_VERSION}
@@ -161,7 +168,8 @@ then
 	./configure --enable-htaccess-config --prefix=/opt/apache2 --libdir=/opt/apache2/modules --with-apxs=/opt/apache2/bin/apxs \
 		--with-pcre=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre \
 		--with-apr=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr \
-		--with-apu=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util
+		--with-apu=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
+		--with-curl=/opt/curl
 	make
 	sudo make install
 	sudo chmod 0755 /opt/apache2/modules/mod_security2.so
