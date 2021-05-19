@@ -10,6 +10,7 @@ ZLIB_VERSION="1.2.11"
 PCRE_VERSION="8.44"
 HTTP2_VERSION="1.43.0"
 MOD_SEC_VERSION="2.9.3"
+CURL_VERSION="7.76.1"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -20,6 +21,7 @@ ZLIB_FILE="zlib-${ZLIB_VERSION}.tar.gz"
 PCRE_FILE="pcre-${PCRE_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
 MOD_SEC_FILE="modsecurity-${MOD_SEC_VERSION}.tar.gz"
+CURL_PATH="7_76_1"
 
 if [[ ! -f "${SSL_FILE}" ]]
 then
@@ -155,11 +157,13 @@ then
 
 	cd "${HOME}/apache24"
 
-	wget https://github.com/curl/curl/releases/download/curl-7_76_1/curl-7.76.1.tar.gz
-	cd curl-7.76.1
+	wget https://github.com/curl/curl/releases/download/curl-${CURL_PATH}/curl-${CURL_VERSION}.tar.gz
+	cd curl-${CURL_VERSION}
 	./configure --prefix=/opt/curl --enable-optimize --disable-debug --with-nghttp2=/opt/nghttp2 --without-ssl
 	make
 	sudo make install
+
+	cd "${HOME}/apache24"
 
 	wget https://github.com/SpiderLabs/ModSecurity/releases/download/v${MOD_SEC_VERSION}/${MOD_SEC_FILE}
 	tar xvfz ${MOD_SEC_FILE}
