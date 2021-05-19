@@ -12,6 +12,8 @@ git clone https://github.com/JBlond/debian_build_apache24.git
 cd debian_build_apache24
 ```
 
+See also below the make file section.
+
 ```
 # on a fresh system
 ./preparesystem.sh
