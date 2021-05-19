@@ -9,6 +9,8 @@ APRI_VERSION="1.2.2"
 ZLIB_VERSION="1.2.11"
 PCRE_VERSION="8.44"
 HTTP2_VERSION="1.43.0"
+MOD_SEC_VERSION="2.9.3"
+CURL_VERSION="7.76.1"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -18,6 +20,8 @@ APRI_FILE="apr-iconv-${APRI_VERSION}.tar.gz"
 ZLIB_FILE="zlib-${ZLIB_VERSION}.tar.gz"
 PCRE_FILE="pcre-${PCRE_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
+MOD_SEC_FILE="modsecurity-${MOD_SEC_VERSION}.tar.gz"
+CURL_PATH="7_76_1"
 
 if [[ ! -f "${SSL_FILE}" ]]
 then
@@ -143,3 +147,34 @@ APXS=/opt/apache2/bin/apxs ./configure.apxs
 make
 sudo make install
 make clean
+
+if [[ ! -f "${MOD_SEC_FILE}" ]]
+then
+	echo -e " \e[32mBuild mod_security\e[0m"
+	cd "${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre"
+	./configure
+	make
+
+	cd "${HOME}/apache24"
+
+	wget https://github.com/curl/curl/releases/download/curl-${CURL_PATH}/curl-${CURL_VERSION}.tar.gz
+	cd curl-${CURL_VERSION}
+	./configure --prefix=/opt/curl --enable-optimize --disable-debug --with-nghttp2=/opt/nghttp2 --without-ssl
+	make
+	sudo make install
+
+	cd "${HOME}/apache24"
+
+	wget https://github.com/SpiderLabs/ModSecurity/releases/download/v${MOD_SEC_VERSION}/${MOD_SEC_FILE}
+	tar xvfz ${MOD_SEC_FILE}
+	cd modsecurity-${MOD_SEC_VERSION}
+	./autogen.sh
+	./configure --enable-htaccess-config --prefix=/opt/apache2 --libdir=/opt/apache2/modules --with-apxs=/opt/apache2/bin/apxs \
+		--with-pcre=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre \
+		--with-apr=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr \
+		--with-apu=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
+		--with-curl=/opt/curl
+	make
+	sudo make install
+	sudo chmod 0755 /opt/apache2/modules/mod_security2.so
+fi
