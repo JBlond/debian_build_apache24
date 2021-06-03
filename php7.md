@@ -7,7 +7,7 @@
 **Note: If you update your debian version, you need to re-run the  echo into the php.list file.**
 
 ```
-
+#/bin/bash
 if [ "$(whoami)" != "root" ]; then
     SUDO=sudo
 fi
