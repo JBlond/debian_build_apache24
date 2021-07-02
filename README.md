@@ -145,7 +145,7 @@ You can add this for the server in general or for specific vhosts.
 
 ```
 ProtocolsHonorOrder On
-Protocols h2c h2 http/1.1
+Protocols h2 h2c http/1.1
 H2Direct On 
 ```
 
