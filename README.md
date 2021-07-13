@@ -24,6 +24,14 @@ See also below the make file section.
 
 The new apache will be installed in /opt/apache2
 
+## pythong error
+
+if there is a python version error while configuring / compiling nghttp2, you need to change your default pathon version use this
+
+```bash
+sudo update-alternatives --config python
+```
+
 ## 32 bit and arm build
 
 This won't compile on 32 bit or arm based processor. If you want to use it on thoses systems like raspberry pi
