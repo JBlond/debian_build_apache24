@@ -10,7 +10,7 @@ ZLIB_VERSION="1.2.11"
 PCRE_VERSION="8.44"
 HTTP2_VERSION="1.43.0"
 MOD_SEC_VERSION="2.9.3"
-CURL_VERSION="7.76.1"
+CURL_VERSION="7.77.0"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -21,7 +21,7 @@ ZLIB_FILE="zlib-${ZLIB_VERSION}.tar.gz"
 PCRE_FILE="pcre-${PCRE_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
 MOD_SEC_FILE="modsecurity-${MOD_SEC_VERSION}.tar.gz"
-CURL_PATH="7_76_1"
+CURL_PATH="7_77_0"
 
 if [[ ! -f "${SSL_FILE}" ]]
 then
