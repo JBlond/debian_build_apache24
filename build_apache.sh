@@ -95,7 +95,7 @@ if [[ ! -f "${ZLIB_FILE}" ]]
 then
 	echo -e " \e[32mDownload ZLIB\e[0m"
 	echo
-	wget http://zlib.net/${ZLIB_FILE}
+	wget https://zlib.net/${ZLIB_FILE}
 	tar xvfz ${ZLIB_FILE}
 	mv zlib-${ZLIB_VERSION} zlib
 fi
