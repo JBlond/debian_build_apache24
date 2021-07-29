@@ -76,7 +76,7 @@ systemctl status apachectl
 ```XML
 <If "%{SERVER_PORT} == '443'">
     <IfModule mod_headers.c>
-        Header always set Strict-Transport-Security "max-age=15553000; preload"
+        Header always set Strict-Transport-Security "max-age=31536000; preload"
     </IfModule>
 </If>
 SSLUseStapling On
@@ -86,10 +86,10 @@ SSLOptions +StrictRequire +StdEnvVars -ExportCertData
 SSLProtocol -all +TLSv1.2 +TLSv1.3
 SSLCompression Off
 SSLHonorCipherOrder On
-SSLCipherSuite SSL ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384
+SSLCipherSuite SSL ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384
 SSLCipherSuite TLSv1.3 TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384
 
-SSLOpenSSLConfCmd ECDHParameters secp384r1
+SSLOpenSSLConfCmd ECDHParameters secp521r1
 SSLOpenSSLConfCmd Curves sect571r1:sect571k1:secp521r1:sect409k1:sect409r1:secp384r1
 
 SSLOpenSSLConfCmd SignatureAlgorithms rsa_pss_rsae_sha512:rsa_pss_rsae_sha256:ECDSA+SHA512:ECDSA+SHA256:RSA+SHA512:RSA+SHA256
@@ -112,7 +112,6 @@ Use the make script
  make stop          stops apache
  make start         starts apache
  make checksyntax   apache config syntax check
-
 ```
 
 # httpd apache MPMs
