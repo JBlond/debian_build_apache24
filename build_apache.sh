@@ -139,11 +139,12 @@ else
 	sudo install -p -m 755 -D .libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
 fi
 
+echo -e " \e[32msvn update mod_fcgid\e[0m"
 cd "${HOME}/apache24/mod_fcgid"
-echo -e " \e[32mBuild mod_fcgid\e[0m"
 echo
 svn up
 APXS=/opt/apache2/bin/apxs ./configure.apxs
+echo -e " \e[32mBuild mod_fcgid\e[0m"
 make
 sudo make install
 make clean
@@ -157,6 +158,7 @@ then
 
 	cd "${HOME}/apache24"
 
+	echo -e " \e[32mDownload CURL\e[0m"
 	wget https://github.com/curl/curl/releases/download/curl-${CURL_PATH}/curl-${CURL_VERSION}.tar.gz
 	cd curl-${CURL_VERSION}
 	./configure --prefix=/opt/curl --enable-optimize --disable-debug --with-nghttp2=/opt/nghttp2 --without-ssl
@@ -165,6 +167,7 @@ then
 
 	cd "${HOME}/apache24"
 
+	echo -e " \e[32mDownload mod security\e[0m"
 	wget https://github.com/SpiderLabs/ModSecurity/releases/download/v${MOD_SEC_VERSION}/${MOD_SEC_FILE}
 	tar xvfz ${MOD_SEC_FILE}
 	cd modsecurity-${MOD_SEC_VERSION}
