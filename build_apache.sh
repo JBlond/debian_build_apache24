@@ -129,7 +129,7 @@ export LDFLAGS="-Wl,-rpath,/opt/openssl/lib"
 	--enable-headers --enable-expires --with-curl=/opt/curl --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-proxy-http2 \
 	--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --with-crypto --enable-module=ssl \
 	--with-apr-util=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
-	--enable-mpms-shared=all --with-mpm=event --enable-rewrite --enable-md --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid \
+	--enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid \
 	--with-included-apr --enable-nonportable-atomics=yes
 make
 sudo make install
