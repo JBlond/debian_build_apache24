@@ -34,6 +34,23 @@ If you need more php extenstions look at the output of
 sudo apt-cache search php7
 ```
 
+mod_fcgid requires mod_unixd to be loaded before it in the configuration!
+
+```
+LoadModule unixd_module modules/mod_unixd.so
+LoadModule fcgid_module modules/mod_fcgid.so
+```
+
+The default socket for mod_fcgid is in /opt/apache2/logs. So the logs directory needs to be writeable for the apache. 
+
+```xml
+<IfModule unixd_module>
+        User www-data
+        Group www-data
+</IfModule>
+```
+
+This user must exist on the system. Do not use the root user.
 
 [PHP Example config](php7_example.conf)
 
