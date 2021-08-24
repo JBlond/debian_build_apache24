@@ -1,7 +1,7 @@
 #!/bin/bash
 cd "${HOME}/apache24"
 
-SSL_VERSION="1.1.1k"
+SSL_VERSION="1.1.1l"
 HTTPD_VERSION="2.4.48"
 APR_VERSION="1.7.0"
 APRU_VERSION="1.6.1"
