@@ -30,7 +30,7 @@ then
 	wget https://www.openssl.org/source/${SSL_FILE}
 	tar xfz ${SSL_FILE}
 	cd openssl-${SSL_VERSION}
-	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-des no-weak-ssl-ciphers enable-ec_nistp_64_gcc_128 threads zlib-dynamic shared
+	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-des no-weak-ssl-ciphers threads zlib-dynamic shared enable-ec_nistp_64_gcc_128
 	make depend
 	make
 	sudo make install_sw
