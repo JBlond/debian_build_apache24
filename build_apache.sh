@@ -33,7 +33,8 @@ then
 	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-des no-weak-ssl-ciphers enable-ec_nistp_64_gcc_128 threads zlib-dynamic shared
 	make depend
 	make
-	sudo make install
+	sudo make install_sw
+	sudo make install_ssldirs
 fi
 
 cd "${HOME}/apache24"
