@@ -23,6 +23,8 @@ HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
 MOD_SEC_FILE="modsecurity-${MOD_SEC_VERSION}.tar.gz"
 CURL_PATH="7_77_0"
 
+arch=$(uname -m)
+
 if [[ ! -f "${SSL_FILE}" ]]
 then
 	echo -e " \e[32mOpenSSL\e[0m"
@@ -30,7 +32,11 @@ then
 	wget https://www.openssl.org/source/${SSL_FILE}
 	tar xfz ${SSL_FILE}
 	cd openssl-${SSL_VERSION}
-	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-des no-weak-ssl-ciphers threads zlib-dynamic shared enable-ec_nistp_64_gcc_128
+	if [[ $arch = "x86_64" ]]; then
+		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-des no-weak-ssl-ciphers threads zlib-dynamic shared enable-ec_nistp_64_gcc_128
+	else
+		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-des no-weak-ssl-ciphers threads zlib-dynamic shared 
+	fi
 	make depend
 	make
 	sudo make install_sw
@@ -127,12 +133,23 @@ echo
 ./buildconf
 export LD_LIBRARY_PATH=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr:${LD_LIBRARY_PATH}
 export LDFLAGS="-Wl,-rpath,/opt/openssl/lib"
+
+if [[ $arch = "x86_64" ]]; then
 ./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --enable-lua --enable-deflate \
 	--enable-headers --enable-expires --with-curl=/opt/curl --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-proxy-http2 \
 	--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --with-crypto --enable-module=ssl \
 	--with-apr-util=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
 	--enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid \
 	--with-included-apr --enable-nonportable-atomics=yes
+else
+./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --enable-lua --enable-deflate \
+	--enable-headers --enable-expires --with-curl=/opt/curl --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-proxy-http2 \
+	--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --with-crypto --enable-module=ssl \
+	--with-apr-util=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
+	--enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid \
+	--with-included-apr
+fi
+
 make
 sudo make install
 

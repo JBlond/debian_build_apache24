@@ -26,9 +26,7 @@ The new apache will be installed in /opt/apache2
 
 ## 32 bit and arm build
 
-This won't compile on 32 bit or arm based processor. If you want to use it on thoses systems like raspberry pi
-remove the parameter `enable-ec_nistp_64_gcc_128` from build_apache.sh for openssl config script.
-And remove the parameter `--enable-nonportable-atomics=yes` from the configure for httpd.
+A 32 bit or arm based processor don't support little endianm and APR's atomic compare-and-swap operations.
 
 <details><summery></summery><br>
 
