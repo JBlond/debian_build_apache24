@@ -33,9 +33,9 @@ then
 	tar xfz ${SSL_FILE}
 	cd openssl-${SSL_VERSION}
 	if [[ $arch = "x86_64" ]]; then
-		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-des no-weak-ssl-ciphers threads zlib-dynamic shared enable-ec_nistp_64_gcc_128
+		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-des no-weak-ssl-ciphers threads no-psk zlib-dynamic shared enable-ec_nistp_64_gcc_128
 	else
-		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-des no-weak-ssl-ciphers threads zlib-dynamic shared 
+		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-des no-weak-ssl-ciphers threads no-psk zlib-dynamic shared 
 	fi
 	make depend
 	make
