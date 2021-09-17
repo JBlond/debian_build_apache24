@@ -112,7 +112,7 @@ Use the make script
  make checksyntax   apache config syntax check
 ```
 
-# httpd apache MPMs
+## httpd apache MPMs
 
 This builds all available mpms. You can load them in httpd.conf. event mpm is loaded set in httpd.conf by this script. There can be only one mpm at the time. It is not advised to change the mpm during restart. For that stop and start apache.
 
@@ -131,7 +131,13 @@ LoadModule mpm_prefork_module modues/mod_mpm_prefork.so
 ```
 </details>
 
-# mod_h[ttp]2
+## Third party modules
+
+- mod_brotli
+- mod_fcgid
+- mod_security 2
+
+## mod_h[ttp]2
 
 ```
 LoadModule http2_module modules/mod_http2.so
@@ -148,7 +154,7 @@ H2Direct On
 
 For more information see https://icing.github.io/mod_h2/howto.html
 
-# mod_brotli
+## mod_brotli
 
 brotli compression with deflate as fallback
 
@@ -159,5 +165,5 @@ AddOutputFilterByType BROTLI;DEFLATE application/javascript application/rss+xml
 DeflateCompressionLevel 9
 ```
 
-# PHP 7 setup
+## PHP 7 setup
 [PHP7 setup](php7.md)
