@@ -39,25 +39,18 @@ Event MPM depends on APR's atomic compare-and-swap operations for thread synchro
 
 ## Manage the Service
 
-To start apache
-
 ```BASH
+# To start apache
 sudo /opt/apache2/bin/httpd -k start
-```
 
-To stop apache
-
-```BASH
+# To stop apache
 sudo /opt/apache2/bin/httpd -k stop
-```
 
-To restart apache
-
-```BASH
+# To restart apache
 sudo /opt/apache2/bin/httpd -k graceful
 ```
 
-troubleshooting apache config
+# troubleshooting apache config
 
 ```BASH
 sudo /opt/apache2/bin/httpd -S
@@ -135,7 +128,7 @@ LoadModule mpm_prefork_module modues/mod_mpm_prefork.so
 
 - mod_brotli
 - mod_fcgid
-- mod_security 2
+- mod_security 2 [example config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/1_security_mod_security.conf)
 
 ## mod_h[ttp]2
 
