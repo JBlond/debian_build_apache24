@@ -33,9 +33,9 @@ then
 	tar xfz ${SSL_FILE}
 	cd openssl-${SSL_VERSION}
 	if [[ $arch = "x86_64" ]]; then
-		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-des no-weak-ssl-ciphers threads no-psk zlib-dynamic shared enable-ec_nistp_64_gcc_128
+		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic shared enable-ec_nistp_64_gcc_128
 	else
-		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-des no-weak-ssl-ciphers threads no-psk zlib-dynamic shared 
+		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic shared 
 	fi
 	make depend
 	make
@@ -64,7 +64,7 @@ echo -e " \e[32mDownload CURL\e[0m"
 wget https://github.com/curl/curl/releases/download/curl-${CURL_PATH}/curl-${CURL_VERSION}.tar.gz
 tar xvfz curl-${CURL_VERSION}.tar.gz
 cd curl-${CURL_VERSION}
-./configure --prefix=/opt/curl --enable-optimize --disable-debug --with-nghttp2=/opt/nghttp2 --without-ssl
+./configure --prefix=/opt/curl --enable-optimize --disable-debug --with-nghttp2=/opt/nghttp2 --with-openssl=/opt/openssl
 make
 sudo make install
 
