@@ -169,12 +169,14 @@ else
 	sudo install -p -m 755 -D .libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
 fi
 
-echo -e " \e[32msvn update mod_fcgid\e[0m"
-cd "${HOME}/apache24/mod_fcgid"
+echo -e " \e[32mmod_fcgid\e[0m"
+cd "${HOME}/apache24"
 echo
-svn up
-APXS=/opt/apache2/bin/apxs ./configure.apxs
+wget wget https://github.com/apache/httpd-mod_fcgid/archive/refs/heads/trunk.zip
+unzip trunk.zip
+cd httpd-mod_fcgid-trunk
 echo -e " \e[32mBuild mod_fcgid\e[0m"
+APXS=/opt/apache2/bin/apxs ./configure.apxs
 make
 sudo make install
 make clean
