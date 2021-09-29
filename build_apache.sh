@@ -11,6 +11,8 @@ PCRE_VERSION="8.44"
 HTTP2_VERSION="1.42.0"
 MOD_SEC_VERSION="2.9.3"
 CURL_VERSION="7.77.0"
+JANSON_VERSION="2.14"
+MD_VERSION="2.4.7"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -204,3 +206,17 @@ then
 	sudo make install
 	sudo chmod 0755 /opt/apache2/modules/mod_security2.so
 fi
+
+wget https://github.com/akheron/jansson/releases/download/v${JANSON_VERSION}/jansson-${JANSON_VERSION}.tar.gz
+tar xvfz jansson-${JANSON_VERSION}.tar.gz
+cd jansson-${JANSON_VERSION}
+./configure --prefix=/opt/jansson
+make
+sudo make install
+cd ..
+
+wget https://github.com/icing/mod_md/releases/download/v${MD_VERSION}/mod_md-${MD_VERSION}.tar.gz
+tar xvfz mod_md-${MD_VERSION}.tar.gz
+cd mod_md-${MD_VERSION}
+./configure --enable-werror --with-apxs=/opt/apache2/bin/apxs --with-jansson=/opt/jansson --with-curl=/opt/curl
+make
