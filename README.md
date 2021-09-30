@@ -133,4 +133,4 @@ DeflateCompressionLevel 9
 ```
 
 ## PHP setup
-[PHP setup](php7.md)
+[PHP setup](php.md)
