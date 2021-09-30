@@ -64,29 +64,7 @@ systemctl status apachectl
 
 ## Bulltet proof SSL Configuration
 
-```XML
-<If "%{SERVER_PORT} == '443'">
-    <IfModule mod_headers.c>
-        Header always set Strict-Transport-Security "max-age=31536000; preload"
-    </IfModule>
-</If>
-SSLUseStapling On
-SSLSessionCache shmcb:/opt/apache2/logs/ssl_gcache_data(512000)
-SSLStaplingCache shmcb:/opt/apache2/logs/ssl_stapling_data(512000)
-SSLOptions +StrictRequire +StdEnvVars -ExportCertData
-SSLProtocol -all +TLSv1.2 +TLSv1.3
-SSLCompression Off
-SSLHonorCipherOrder On
-SSLCipherSuite SSL ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES256-GCM-SHA384
-SSLCipherSuite TLSv1.3 TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384
-
-SSLOpenSSLConfCmd ECDHParameters secp521r1
-SSLOpenSSLConfCmd Curves sect571r1:sect571k1:secp521r1:sect409k1:sect409r1:secp384r1
-
-SSLOpenSSLConfCmd SignatureAlgorithms rsa_pss_rsae_sha512:rsa_pss_rsae_sha256:ECDSA+SHA512:ECDSA+SHA256:RSA+SHA512:RSA+SHA256
-SSLOpenSSLConfCmd ClientSignatureAlgorithms rsa_pss_rsae_sha512:rsa_pss_rsae_sha256:ECDSA+SHA512:ECDSA+SHA256:RSA+SHA512:RSA+SHA256
-```
-For download [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/ssl.conf)
+[SSL config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/ssl.conf)
 
 ## Update && manage existing Installation
 
@@ -113,13 +91,9 @@ This builds all available mpms. You can load them in httpd.conf. event mpm is lo
 
 ```
 LoadModule mpm_event_module modues/mod_mpm_event.so
-```
 
-```
 LoadModule mpm_worker_module modues/mod_mpm_worker.so
-```
 
-```
 LoadModule mpm_prefork_module modues/mod_mpm_prefork.so
 ```
 </details>
@@ -158,5 +132,5 @@ AddOutputFilterByType BROTLI;DEFLATE application/javascript application/rss+xml
 DeflateCompressionLevel 9
 ```
 
-## PHP 7 setup
-[PHP7 setup](php7.md)
+## PHP setup
+[PHP setup](php7.md)
