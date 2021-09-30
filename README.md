@@ -102,6 +102,7 @@ LoadModule mpm_prefork_module modues/mod_mpm_prefork.so
 
 - mod_brotli
 - mod_fcgid
+- mod_md
 - mod_security 2 [example config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/1_security_mod_security.conf)
 
 ## mod_h[ttp]2
