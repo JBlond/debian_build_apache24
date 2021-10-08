@@ -2,7 +2,7 @@
 cd "${HOME}/apache24"
 
 SSL_VERSION="1.1.1l"
-HTTPD_VERSION="2.4.50"
+HTTPD_VERSION="2.4.51"
 APR_VERSION="1.7.0"
 APRU_VERSION="1.6.1"
 APRI_VERSION="1.2.2"
@@ -77,7 +77,7 @@ if [[ ! -f "${HTTPD_FILE}" ]]
 then
 	echo -e " \e[32mDownload httpd\e[0m"
 	echo
-	wget https://dlcdn.apache.org/httpd//${HTTPD_FILE}
+	wget https://dlcdn.apache.org/httpd/${HTTPD_FILE}
 	tar xvfz ${HTTPD_FILE}
 fi
 
