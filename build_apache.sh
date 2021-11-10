@@ -207,6 +207,8 @@ then
 	sudo chmod 0755 /opt/apache2/modules/mod_security2.so
 fi
 
+cd "${HOME}/apache24"
+echo -e " \e[32JANSON\e[0m"
 wget https://github.com/akheron/jansson/releases/download/v${JANSON_VERSION}/jansson-${JANSON_VERSION}.tar.gz
 tar xvfz jansson-${JANSON_VERSION}.tar.gz
 cd jansson-${JANSON_VERSION}
@@ -215,6 +217,7 @@ make
 sudo make install
 cd ..
 
+echo -e " \e[32mod_md\e[0m"
 wget https://github.com/icing/mod_md/releases/download/v${MD_VERSION}/mod_md-${MD_VERSION}.tar.gz
 tar xvfz mod_md-${MD_VERSION}.tar.gz
 cd mod_md-${MD_VERSION}
