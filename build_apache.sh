@@ -12,7 +12,7 @@ HTTP2_VERSION="1.42.0"
 MOD_SEC_VERSION="2.9.3"
 CURL_VERSION="7.77.0"
 JANSON_VERSION="2.14"
-MD_VERSION="2.4.7"
+MD_VERSION="2.4.9"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -174,7 +174,7 @@ fi
 echo -e " \e[32mmod_fcgid\e[0m"
 cd "${HOME}/apache24"
 echo
-wget wget https://github.com/apache/httpd-mod_fcgid/archive/refs/heads/trunk.zip
+wget https://github.com/apache/httpd-mod_fcgid/archive/refs/heads/trunk.zip
 unzip trunk.zip
 cd httpd-mod_fcgid-trunk
 echo -e " \e[32mBuild mod_fcgid\e[0m"
