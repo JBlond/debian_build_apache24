@@ -12,7 +12,6 @@ HTTP2_VERSION="1.42.0"
 MOD_SEC_VERSION="2.9.3"
 CURL_VERSION="7.77.0"
 JANSON_VERSION="2.14"
-MD_VERSION="2.4.9"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -70,6 +69,14 @@ cd curl-${CURL_VERSION}
 make
 sudo make install
 
+cd "${HOME}/apache24"
+echo -e " \e[32JANSON\e[0m"
+wget https://github.com/akheron/jansson/releases/download/v${JANSON_VERSION}/jansson-${JANSON_VERSION}.tar.gz
+tar xvfz jansson-${JANSON_VERSION}.tar.gz
+cd jansson-${JANSON_VERSION}
+./configure --prefix=/opt/jansson
+make
+sudo make install
 
 cd "${HOME}/apache24"
 
@@ -142,6 +149,7 @@ if [[ $arch = "x86_64" ]]; then
 	--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --with-crypto --enable-module=ssl \
 	--with-apr-util=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
 	--enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid \
+	--with-jansson=/opt/jansson/ --enable-md \
 	--with-included-apr --enable-nonportable-atomics=yes
 else
 ./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --enable-lua --enable-deflate \
@@ -149,6 +157,7 @@ else
 	--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --with-crypto --enable-module=ssl \
 	--with-apr-util=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
 	--enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid \
+	--with-jansson=/opt/jansson/ --enable-md \
 	--with-included-apr
 fi
 
@@ -206,20 +215,3 @@ then
 	sudo make install
 	sudo chmod 0755 /opt/apache2/modules/mod_security2.so
 fi
-
-cd "${HOME}/apache24"
-echo -e " \e[32JANSON\e[0m"
-wget https://github.com/akheron/jansson/releases/download/v${JANSON_VERSION}/jansson-${JANSON_VERSION}.tar.gz
-tar xvfz jansson-${JANSON_VERSION}.tar.gz
-cd jansson-${JANSON_VERSION}
-./configure --prefix=/opt/jansson
-make
-sudo make install
-cd ..
-
-echo -e " \e[32mod_md\e[0m"
-wget https://github.com/icing/mod_md/releases/download/v${MD_VERSION}/mod_md-${MD_VERSION}.tar.gz
-tar xvfz mod_md-${MD_VERSION}.tar.gz
-cd mod_md-${MD_VERSION}
-./configure --enable-werror --with-apxs=/opt/apache2/bin/apxs --with-jansson=/opt/jansson --with-curl=/opt/curl
-make
