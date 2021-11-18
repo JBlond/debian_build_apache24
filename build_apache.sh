@@ -1,4 +1,5 @@
 #!/bin/bash
+mkdir -p "${HOME}/apache24"
 cd "${HOME}/apache24"
 
 SSL_VERSION="1.1.1l"
@@ -10,8 +11,10 @@ ZLIB_VERSION="1.2.11"
 PCRE_VERSION="8.44"
 HTTP2_VERSION="1.42.0"
 MOD_SEC_VERSION="2.9.3"
-CURL_VERSION="7.80.0"
 JANSON_VERSION="2.14"
+
+CURL_VERSION="7.80.0"
+CURL_PATH="7_80_0"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -22,7 +25,6 @@ ZLIB_FILE="zlib-${ZLIB_VERSION}.tar.gz"
 PCRE_FILE="pcre-${PCRE_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
 MOD_SEC_FILE="modsecurity-${MOD_SEC_VERSION}.tar.gz"
-CURL_PATH="7_80_0"
 
 arch=$(uname -m)
 
@@ -65,7 +67,7 @@ echo -e " \e[32mDownload CURL\e[0m"
 wget https://github.com/curl/curl/releases/download/curl-${CURL_PATH}/curl-${CURL_VERSION}.tar.gz
 tar xvfz curl-${CURL_VERSION}.tar.gz
 cd curl-${CURL_VERSION}
-./configure --prefix=/opt/curl --enable-optimize --disable-manual --disable-debug --with-nghttp2=/opt/nghttp2 --with-openssl=/opt/openssl
+./configure --prefix=/opt/curl --enable-optimize --disable-manual --disable-debug --with-nghttp2=/opt/nghttp2 --without-ssl
 make
 sudo make install
 
