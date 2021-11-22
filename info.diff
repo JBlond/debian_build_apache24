@@ -1,0 +1,10 @@
+--- server/main.c.orig  2021-11-22 10:56:33.319488036 +0100
++++ server/main.c       2021-11-22 10:59:09.830628911 +0100
+@@ -95,6 +95,7 @@
+ {
+     printf("Server version: %s\n", ap_get_server_description());
+     printf("Server built:   %s\n", ap_get_server_built());
++    printf("Distributed by: https://github.com/JBlond/debian_build_apache24\n");
+     printf("Server's Module Magic Number: %u:%u\n",
+            MODULE_MAGIC_NUMBER_MAJOR, MODULE_MAGIC_NUMBER_MINOR);
+ #if APR_MAJOR_VERSION >= 2

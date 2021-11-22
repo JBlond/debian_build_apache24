@@ -170,6 +170,7 @@ else
 	--with-included-apr
 fi
 
+patch server/main.c < ~/debian_build_apache24/info.diff
 make
 sudo make install
 
