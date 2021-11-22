@@ -185,8 +185,11 @@ fi
 echo -e " \e[32mmod_fcgid\e[0m"
 cd "${HOME}/apache24"
 echo
-wget https://github.com/apache/httpd-mod_fcgid/archive/refs/heads/trunk.zip
-unzip trunk.zip
+if [[ ! -f "trunk.zip" ]]
+then
+	wget https://github.com/apache/httpd-mod_fcgid/archive/refs/heads/trunk.zip
+	unzip trunk.zip
+fi
 cd httpd-mod_fcgid-trunk
 echo -e " \e[32mBuild mod_fcgid\e[0m"
 APXS=/opt/apache2/bin/apxs ./configure.apxs
