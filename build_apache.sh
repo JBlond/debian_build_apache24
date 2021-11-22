@@ -189,11 +189,11 @@ else
 	sudo install -p -m 755 -D .libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
 fi
 
-echo -e " \e[32mmod_fcgid\e[0m"
 cd "${HOME}/apache24"
 echo
 if [[ ! -f "trunk.zip" ]]
 then
+	echo -e " \e[32mmod_fcgid\e[0m"
 	wget https://github.com/apache/httpd-mod_fcgid/archive/refs/heads/trunk.zip
 	unzip trunk.zip
 	cd httpd-mod_fcgid-trunk
