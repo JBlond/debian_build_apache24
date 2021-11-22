@@ -22,7 +22,7 @@ APR_FILE="apr-${APR_VERSION}.tar.gz"
 APRU_FILE="apr-util-${APRU_VERSION}.tar.gz"
 APRI_FILE="apr-iconv-${APRI_VERSION}.tar.gz"
 ZLIB_FILE="zlib-${ZLIB_VERSION}.tar.gz"
-PCRE_FILE="pcre-${PCRE_VERSION}.tar.gz"
+PCRE_FILE="${PCRE_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
 MOD_SEC_FILE="modsecurity-${MOD_SEC_VERSION}.tar.gz"
 
@@ -140,7 +140,7 @@ if [[ ! -f "${PCRE_FILE}" ]]
 then
 	echo -e " \e[32mDownload PCRE\e[0m"
 	echo
-	wget https://downloads.sourceforge.net/project/pcre/pcre/${PCRE_VERSION}/${PCRE_FILE}
+	wget https://github.com/JBlond/pcre/archive/refs/tags/${PCRE_FILE}
 	tar xvfz ${PCRE_FILE}
 	mv pcre-${PCRE_VERSION} pcre
 fi
