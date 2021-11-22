@@ -63,22 +63,29 @@ fi
 
 cd "${HOME}/apache24"
 
-echo -e " \e[32mDownload CURL\e[0m"
-wget https://github.com/curl/curl/releases/download/curl-${CURL_PATH}/curl-${CURL_VERSION}.tar.gz
-tar xvfz curl-${CURL_VERSION}.tar.gz
-cd curl-${CURL_VERSION}
-./configure --prefix=/opt/curl --enable-optimize --disable-manual --disable-debug --with-nghttp2=/opt/nghttp2 --without-ssl
-make
-sudo make install
+if [[ ! -f "curl-${CURL_VERSION}.tar.gz" ]]
+then
+	echo -e " \e[32mDownload CURL\e[0m"
+	wget https://github.com/curl/curl/releases/download/curl-${CURL_PATH}/curl-${CURL_VERSION}.tar.gz
+	tar xvfz curl-${CURL_VERSION}.tar.gz
+	cd curl-${CURL_VERSION}
+	./configure --prefix=/opt/curl --enable-optimize --disable-manual --disable-debug --with-nghttp2=/opt/nghttp2 --without-ssl
+	make
+	sudo make install
+fi
 
 cd "${HOME}/apache24"
-echo -e " \e[32JANSON\e[0m"
-wget https://github.com/akheron/jansson/releases/download/v${JANSON_VERSION}/jansson-${JANSON_VERSION}.tar.gz
-tar xvfz jansson-${JANSON_VERSION}.tar.gz
-cd jansson-${JANSON_VERSION}
-./configure --prefix=/opt/jansson
-make
-sudo make install
+
+if [[ ! -f "jansson-${JANSON_VERSION}.tar.gz" ]]
+then
+	echo -e " \e[32JANSON\e[0m"
+	wget https://github.com/akheron/jansson/releases/download/v${JANSON_VERSION}/jansson-${JANSON_VERSION}.tar.gz
+	tar xvfz jansson-${JANSON_VERSION}.tar.gz
+	cd jansson-${JANSON_VERSION}
+	./configure --prefix=/opt/jansson
+	make
+	sudo make install
+fi
 
 cd "${HOME}/apache24"
 
