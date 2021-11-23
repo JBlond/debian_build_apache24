@@ -21,3 +21,4 @@ which zypper  > /dev/null 2>&1 && {
 	sudo zypper install autoconf wget libnghttp2-devel libtool libxml2-devel lua-devel pcre-devel python-devel zlib-devel libexpat-devel
 }
 
+exit 0
