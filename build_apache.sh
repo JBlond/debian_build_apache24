@@ -179,24 +179,28 @@ requiredver="9.0"
 if [[ "$(printf "$requiredver\n$currentver" | sort -V | head -n1)" == "$currentver" ]] && [[ "$currentver" != "$requiredver" ]]; then
 	echo -e " \e[33mMod_brotli requires Debian 9 or newer"
 else
-	echo -e " \e[32mBuild brotli\e[0m"
-	echo
 	cd "${HOME}/apache24"
-	git clone --depth=1 --recursive https://github.com/kjdev/apache-mod-brotli.git mod_brotli
-	cd mod_brotli
-	./autogen.sh
-	./configure --with-apxs=/opt/apache2/bin --with-apr=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr
-	make
-	sudo install -p -m 755 -D .libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
+	if [[ ! -f "/opt/apache2/modules/mod_brotli.so" ]]
+	then
+		echo -e " \e[32mBuild brotli\e[0m"
+		echo
+		git clone --depth=1 --recursive https://github.com/kjdev/apache-mod-brotli.git mod_brotli
+		cd mod_brotli
+		./autogen.sh
+		./configure --with-apxs=/opt/apache2/bin --with-apr=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr
+		make
+		sudo install -p -m 755 -D .libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
+	fi
 fi
 
 cd "${HOME}/apache24"
 echo
-if [[ ! -f "trunk.zip" ]]
+if [[ ! -f "mod_fcgid.zip" ]]
 then
 	echo -e " \e[32mmod_fcgid\e[0m"
 	wget https://github.com/apache/httpd-mod_fcgid/archive/refs/heads/trunk.zip
-	unzip trunk.zip
+	mv trunk.zip mod_fcgid.zip
+	unzip mod_fcgid.zip
 	cd httpd-mod_fcgid-trunk
 	echo -e " \e[32mBuild mod_fcgid\e[0m"
 	APXS=/opt/apache2/bin/apxs ./configure.apxs
