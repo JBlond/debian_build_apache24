@@ -211,6 +211,7 @@ fi
 
 cd "${HOME}/apache24"
 if [[ ! -f "0.1.0.tar.gz" ]]
+then
 	wget https://github.com/JBlond/mod_bikeshed/archive/refs/tags/0.1.0.tar.gz
 	cd mod_bikeshed-0.1.0/
 	sudo /opt/apache2/bin/apxs -cia mod_bikeshed.c
