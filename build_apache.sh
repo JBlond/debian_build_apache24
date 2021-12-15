@@ -2,7 +2,7 @@
 mkdir -p "${HOME}/apache24"
 cd "${HOME}/apache24"
 
-SSL_VERSION="1.1.1l"
+SSL_VERSION="1.1.1m"
 HTTPD_VERSION="2.4.51"
 APR_VERSION="1.7.0"
 APRU_VERSION="1.6.1"
