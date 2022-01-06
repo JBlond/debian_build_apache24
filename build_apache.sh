@@ -212,9 +212,9 @@ fi
 cd "${HOME}/apache24"
 if [[ ! -f "0.1.0.tar.gz" ]]
 then
-	wget https://github.com/JBlond/mod_bikeshed/archive/refs/tags/0.1.0.tar.gz
-	tar xvfz 0.1.0.tar.gz
-	cd mod_bikeshed-0.1.0/
+	wget https://github.com/JBlond/mod_bikeshed/archive/refs/tags/1.0.0.tar.gz
+	tar xvfz 1.0.0.tar.gz
+	cd mod_bikeshed-1.0.0/
 	sudo /opt/apache2/bin/apxs -ci mod_bikeshed.c
 fi
 
