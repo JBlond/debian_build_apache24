@@ -8,13 +8,6 @@ which apt  > /dev/null 2>&1 && {
 	sudo apt -y install wget build-essential zlib1g-dev liblua5.1-dev autoconf libtool libpcre3-dev libxml2-dev libexpat1-dev libcurl4-openssl-dev libyajl-dev brotli python unzip
 }
 
-# centos
-which yum  > /dev/null 2>&1 && {
-	sudo dnf config-manager --enable PowerTools
-	sudo dnf install libtool lua-devel patch pcre-devel python-devel wget zlib-devel expat-devel wget make autoconf gcc zlib-devel pcre-devel lua-devel libtool expat-devel brotli-devel wget
-	sudo dnf group install "Development Tools"
-}
-
 # opensuse
 which zypper  > /dev/null 2>&1 && {
 	sudo zypper install --type pattern devel_basis
