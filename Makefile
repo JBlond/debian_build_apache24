@@ -3,6 +3,8 @@ help:
 	@echo ""
 	@echo " make build         build from sources, but no daemon installation"
 	@echo ""
+	@echo make clean           clear build artifacts
+	@echo ""
 	@echo " make install       install as daemon"
 	@echo ""
 	@echo " make uninstall     uninstall daemon"
@@ -27,6 +29,9 @@ prepare:
 build:
 	@echo "Build"
 	@./build_apache.sh
+
+clean:
+	@./clean.sh
 
 install:
 	@echo "Install as daemon"
