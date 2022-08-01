@@ -233,7 +233,7 @@ cd "${HOME}/apache24"
 if [[ ! -f "${MOD_SEC_FILE}" ]]
 then
 	echo -e " \e[32mBuild mod_security\e[0m"
-	cd "${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre"
+	cd "${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre1"
 	./configure
 	make
 
