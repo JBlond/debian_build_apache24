@@ -2,7 +2,7 @@
 mkdir -p "${HOME}/apache24"
 cd "${HOME}/apache24"
 
-SSL_VERSION="1.1.1q"
+SSL_VERSION="3.0.5"
 HTTPD_VERSION="2.4.54"
 APR_VERSION="1.7.0"
 APRU_VERSION="1.6.1"
@@ -40,7 +40,6 @@ then
 	else
 		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic shared 
 	fi
-	make depend
 	make
 	sudo make install_sw
 	sudo make install_ssldirs
