@@ -1,5 +1,5 @@
 #!/bin/bash
-rm -rf "${HOME}/apache24"
+sudo rm -rf "${HOME}/apache24"
 git pull
 ./uninstall_daemon.sh
 ./preparesystem.sh
