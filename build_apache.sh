@@ -10,7 +10,7 @@ APRI_VERSION="1.2.2"
 ZLIB_VERSION="1.2.12"
 PCRE_VERSION="8.45"
 PCRE2_VERSION="10.40"
-HTTP2_VERSION="1.42.0"
+HTTP2_VERSION="1.48.0"
 MOD_SEC_VERSION="2.9.5"
 JANSON_VERSION="2.14"
 
@@ -57,7 +57,7 @@ then
 	tar xfz ${HTTP2_FILE}
 	cd nghttp2-${HTTP2_VERSION}
 	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib"
-	./configure --prefix=/opt/nghttp2
+	./configure --prefix=/opt/nghttp2  --disable-python-bindings
 	make
 	sudo make install
 fi
