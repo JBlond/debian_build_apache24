@@ -9,6 +9,7 @@ APRU_VERSION="1.6.1"
 APRI_VERSION="1.2.2"
 ZLIB_VERSION="1.2.12"
 PCRE_VERSION="8.45"
+PCRE2_VERSION="10.40"
 HTTP2_VERSION="1.42.0"
 MOD_SEC_VERSION="2.9.5"
 JANSON_VERSION="2.14"
@@ -23,6 +24,7 @@ APRU_FILE="apr-util-${APRU_VERSION}.tar.gz"
 APRI_FILE="apr-iconv-${APRI_VERSION}.tar.gz"
 ZLIB_FILE="zlib-${ZLIB_VERSION}.tar.gz"
 PCRE_FILE="${PCRE_VERSION}.tar.gz"
+PCRE2_FILE="pcre2-${PCRE_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
 MOD_SEC_FILE="modsecurity-${MOD_SEC_VERSION}.tar.gz"
 
@@ -36,9 +38,9 @@ then
 	tar xfz ${SSL_FILE}
 	cd openssl-${SSL_VERSION}
 	if [[ $arch = "x86_64" ]]; then
-		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic shared enable-ec_nistp_64_gcc_128
+		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic shared enable-ec_nistp_64_gcc_128 sctp
 	else
-		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic shared 
+		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic shared sctp
 	fi
 	make depend
 	make
@@ -136,13 +138,22 @@ then
 	mv zlib-${ZLIB_VERSION} zlib
 fi
 
+if [[ ! -f "${PCRE2_FILE}" ]]
+then
+	echo -e " \e[32mDownload PCRE2\e[0m"
+	echo
+	wget https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${PCRE_VERSION}/${PCRE2_FILE}
+	tar xvfz ${PCRE2_FILE}
+	mv pcre2-${PCRE2_VERSION} pcre
+fi
+
 if [[ ! -f "${PCRE_FILE}" ]]
 then
 	echo -e " \e[32mDownload PCRE\e[0m"
 	echo
 	wget https://github.com/JBlond/pcre/archive/refs/tags/${PCRE_FILE}
 	tar xvfz ${PCRE_FILE}
-	mv pcre-${PCRE_VERSION} pcre
+	mv pcre-${PCRE_VERSION} pcre1
 fi
 
 cd ..
@@ -223,7 +234,7 @@ cd "${HOME}/apache24"
 if [[ ! -f "${MOD_SEC_FILE}" ]]
 then
 	echo -e " \e[32mBuild mod_security\e[0m"
-	cd "${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre"
+	cd "${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre1"
 	./configure
 	make
 
@@ -235,7 +246,7 @@ then
 	cd modsecurity-${MOD_SEC_VERSION}
 	./autogen.sh
 	./configure --enable-htaccess-config --prefix=/opt/apache2 --libdir=/opt/apache2/modules --with-apxs=/opt/apache2/bin/apxs \
-		--with-pcre=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre \
+		--with-pcre=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre1 \
 		--with-apr=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr \
 		--with-apu=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
 		--with-curl=/opt/curl
