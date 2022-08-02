@@ -104,7 +104,7 @@ if [[ ! -f "${APR_FILE}" ]]
 then
 	echo -e " \e[32mDownload APR\e[0m"
 	echo
-	wget https://downloads.apache.org/apr/${APR_FILE}
+	wget https://dlcdn.apache.org/apr/${APR_FILE}
 	tar xvfz ${APR_FILE}
 	mv apr-${APR_VERSION} apr
 fi
@@ -113,7 +113,7 @@ if [[ ! -f "${APRI_FILE}" ]]
 then
 	echo -e " \e[32mDownload APR-ICONV\e[0m"
 	echo
-	wget https://downloads.apache.org/apr/${APRI_FILE}
+	wget https://dlcdn.apache.org/apr/${APRI_FILE}
 	tar xvfz ${APRI_FILE}
 	mv apr-iconv-${APRI_VERSION} apr-iconv
 fi
@@ -122,7 +122,7 @@ if [[ ! -f "${APRU_FILE}" ]]
 then
 	echo -e " \e[32mDownload APR-UTIL\e[0m"
 	echo
-	wget https://downloads.apache.org/apr/${APRU_FILE}
+	wget https://dlcdn.apache.org/apr/${APRU_FILE}
 	tar xvfz ${APRU_FILE}
 	mv apr-util-${APRU_VERSION} apr-util
 fi
