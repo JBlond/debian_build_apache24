@@ -142,7 +142,7 @@ if [[ ! -f "${PCRE2_FILE}" ]]
 then
 	echo -e " \e[32mDownload PCRE2\e[0m"
 	echo
-	wget https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${PCRE_VERSION}/${PCRE2_FILE}
+	wget https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${PCRE2_VERSION}/${PCRE2_FILE}
 	tar xvfz ${PCRE2_FILE}
 	mv pcre2-${PCRE2_VERSION} pcre
 fi
