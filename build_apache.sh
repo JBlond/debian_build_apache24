@@ -45,6 +45,8 @@ then
 	make
 	sudo make install_sw
 	sudo make install_ssldirs
+	cd /opt/openssl/lib64
+	sudo cp -r * /usr/local/lib
 fi
 
 cd "${HOME}/apache24"
