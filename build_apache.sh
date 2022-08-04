@@ -45,6 +45,9 @@ then
 	make
 	sudo make install_sw
 	sudo make install_ssldirs
+	sudo make INSTALL_LIBS
+	sudo make INSTALL_SHLIBS
+	sudo make INSTALL_SHLIB_INFO
 fi
 
 cd "${HOME}/apache24"
