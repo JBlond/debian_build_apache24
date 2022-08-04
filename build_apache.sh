@@ -56,7 +56,7 @@ then
 	wget https://github.com/tatsuhiro-t/nghttp2/releases/download/v${HTTP2_VERSION}/${HTTP2_FILE}
 	tar xfz ${HTTP2_FILE}
 	cd nghttp2-${HTTP2_VERSION}
-	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib"
+	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
 	./configure --prefix=/opt/nghttp2  --disable-python-bindings
 	make
 	sudo make install
@@ -160,7 +160,7 @@ echo -e " \e[32mBuild httpd\e[0m"
 echo
 ./buildconf
 export LD_LIBRARY_PATH=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr:${LD_LIBRARY_PATH}
-export LDFLAGS="-Wl,-rpath,/opt/openssl/lib"
+export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
 
 if [[ $arch = "x86_64" ]]; then
 ./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --disable-access-compat --enable-lua --enable-luajit --enable-deflate \
