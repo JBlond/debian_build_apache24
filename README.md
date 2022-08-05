@@ -1,8 +1,6 @@
 # Build last apache2.4.x + mod fcgid + last OpenSSL + mod_security
 
-Build apache 2.4 on debian from scratch with a semi automatic setup.
-
-This works also on openSUSE / SUSE
+Build apache 2.4 on debian from scratch with a semi automatic setup. Since OpenSSL 3.0.x this works only on x86_64 Systems. 32 bit is no longer supported.
 
 ```
 #clone
@@ -20,6 +18,7 @@ Use the make script
  make install       install as daemon
  make uninstall     uninstall daemon
  make clean         cleans the build files
+ make purge         removes everything from this on your system. Including Your config. Maybe also your document root.
  make install       run the deploy script
  make update        update from the sources and install as daemon
  make graceful      graceful apache restart

@@ -5,6 +5,8 @@ help:
 	@echo ""
 	@echo make clean           clear build artifacts
 	@echo ""
+	@echo make purge           Removes everything from this on the system.
+	@echo ""
 	@echo " make install       install as daemon"
 	@echo ""
 	@echo " make uninstall     uninstall daemon"
