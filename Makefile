@@ -35,6 +35,9 @@ build:
 clean:
 	@./clean.sh
 
+purge:
+	@./purge.sh
+
 install:
 	@echo "Install as daemon"
 	@./install_as_daemon.sh
