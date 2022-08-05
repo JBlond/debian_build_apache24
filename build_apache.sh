@@ -163,7 +163,7 @@ export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
 
 ./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --disable-access-compat --enable-lua --enable-luajit --enable-deflate \
 	--enable-headers --enable-expires --with-curl=/opt/curl --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-proxy-http2 \
-	--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --with-crypto --enable-module=ssl \
+	--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --enable-module=ssl \
 	--with-apr-util=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
 	--enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid \
 	--with-jansson=/opt/jansson/ --enable-md \
