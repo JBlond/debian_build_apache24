@@ -28,8 +28,6 @@ PCRE2_FILE="pcre2-${PCRE2_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
 MOD_SEC_FILE="modsecurity-${MOD_SEC_VERSION}.tar.gz"
 
-arch=$(uname -m)
-
 if [[ ! -f "${SSL_FILE}" ]]
 then
 	echo -e " \e[32mOpenSSL\e[0m"
@@ -41,9 +39,6 @@ then
 	make
 	sudo make install_sw
 	sudo make install_ssldirs
-	cd /opt/openssl/lib64
-	sudo cp libcrypto.a libcrypto.so libcrypto.so.3 libssl.a libssl.so libssl.so.3 /usr/local/lib/openssl/
-	sudo ldconfig
 fi
 
 cd "${HOME}/apache24"
