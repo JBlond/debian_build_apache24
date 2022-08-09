@@ -237,3 +237,12 @@ then
 	sudo make install
 	sudo chmod 0755 /opt/apache2/modules/mod_security2.so
 fi
+
+cd "${HOME}/apache24"
+if [[ ! -d "mod_xsendfile" ]]
+then
+	mkdir mod_xsendfile
+	cd mod_xsendfile
+	wget https://raw.githubusercontent.com/nmaier/mod_xsendfile/master/mod_xsendfile.c
+	sudo /opt/apache2/bin/apxs -ci mod_xsendfile.c
+fi
