@@ -39,6 +39,8 @@ then
 	make
 	sudo make install_sw
 	sudo make install_ssldirs
+	sudo cp libcrypto.a libcrypto.so libcrypto.so.3 libssl.a libssl.so libssl.so.3 /usr/local/lib/openssl/
+	sudo ldconfig
 fi
 
 cd "${HOME}/apache24"
