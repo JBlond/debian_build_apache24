@@ -1,8 +1,6 @@
 # Build last apache2.4.x + mod fcgid + last OpenSSL + mod_security
 
-Build apache 2.4 on debian from scratch with a semi automatic setup.
-
-This works also on openSUSE / SUSE
+Build apache 2.4 on debian from scratch with a semi automatic setup. Since OpenSSL 3.0.x this works only on x86_64 Systems. 32 bit is no longer supported.
 
 ```
 #clone
@@ -10,30 +8,26 @@ git clone https://github.com/JBlond/debian_build_apache24.git
 cd debian_build_apache24
 ```
 
-See also below the make file section.
+## Inastall && Update && manage existing Installation
+
+Use the make script
 
 ```
-# on a fresh system
-./preparesystem.sh
-
-#then
-./build_apache.sh
+ make prepare       prepares the system for building
+ make build         build from sources, but no daemon installation
+ make install       install as daemon
+ make uninstall     uninstall daemon
+ make clean         cleans the build files
+ make purge         removes everything from this on your system. Including Your config. Maybe also your document root.
+ make install       run the deploy script
+ make update        update from the sources and install as daemon
+ make graceful      graceful apache restart
+ make stop          stops apache
+ make start         starts apache
+ make checksyntax   apache config syntax check
 ```
 
 The new apache will be installed in /opt/apache2
-
-## 32 bit and arm build
-
-A 32 bit or arm based processor don't support little endianm and APR's atomic compare-and-swap operations.
-
-<details><summery></summery><br>
-
-### OpenSSL
-enable-ec_nistp_64_gcc_128: Use on little endian platforms when GCC supports `__uint128_t`. ECDH is about 2 to 4 times faster. Not enabled by default because Configure can't determine it. Enable it if your compiler defines `__SIZEOF_INT128__`, the CPU is little endian and it tolerates unaligned data access. 
-
-### Event MPM
-Event MPM depends on APR's atomic compare-and-swap operations for thread synchronization (`--enable-nonportable-atomics=yes`). This will cause APR to implement atomic operations using efficient opcodes not available in older CPUs.
-</details>
 
 ## Manage the Service
 
@@ -64,23 +58,6 @@ systemctl status apachectl
 
 [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/ssl.conf)
 
-## Update && manage existing Installation
-
-Use the make script
-
-```
- make prepare       prepares the system for building
- make build         build from sources, but no daemon installation
- make install       install as daemon
- make uninstall     uninstall daemon
- make install       run the deploy script
- make update        update from the sources and install as daemon
- make graceful      graceful apache restart
- make stop          stops apache
- make start         starts apache
- make checksyntax   apache config syntax check
-```
-
 ## httpd apache MPMs
 
 This builds all available mpms. You can load them in httpd.conf. event mpm is loaded set in httpd.conf by this script. There can be only one mpm at the time. It is not advised to change the mpm during restart. For that stop and start apache.
@@ -95,6 +72,9 @@ LoadModule mpm_worker_module modues/mod_mpm_worker.so
 LoadModule mpm_prefork_module modues/mod_mpm_prefork.so
 ```
 </details>
+
+### Event MPM
+Event MPM depends on APR's atomic compare-and-swap operations for thread synchronization (`--enable-nonportable-atomics=yes`). This will cause APR to implement atomic operations using efficient opcodes not available in older CPUs.
 
 ## Third party modules
 

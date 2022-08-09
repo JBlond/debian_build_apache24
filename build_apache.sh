@@ -2,7 +2,7 @@
 mkdir -p "${HOME}/apache24"
 cd "${HOME}/apache24"
 
-SSL_VERSION="1.1.1q"
+SSL_VERSION="3.0.5"
 HTTPD_VERSION="2.4.54"
 APR_VERSION="1.7.0"
 APRU_VERSION="1.6.1"
@@ -28,8 +28,6 @@ PCRE2_FILE="pcre2-${PCRE2_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
 MOD_SEC_FILE="modsecurity-${MOD_SEC_VERSION}.tar.gz"
 
-arch=$(uname -m)
-
 if [[ ! -f "${SSL_FILE}" ]]
 then
 	echo -e " \e[32mOpenSSL\e[0m"
@@ -37,12 +35,7 @@ then
 	wget https://www.openssl.org/source/${SSL_FILE}
 	tar xfz ${SSL_FILE}
 	cd openssl-${SSL_VERSION}
-	if [[ $arch = "x86_64" ]]; then
-		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic shared enable-ec_nistp_64_gcc_128
-	else
-		./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic shared
-	fi
-	make depend
+	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic shared enable-ec_nistp_64_gcc_128
 	make
 	sudo make install_sw
 	sudo make install_ssldirs
@@ -57,7 +50,7 @@ then
 	wget https://github.com/tatsuhiro-t/nghttp2/releases/download/v${HTTP2_VERSION}/${HTTP2_FILE}
 	tar xfz ${HTTP2_FILE}
 	cd nghttp2-${HTTP2_VERSION}
-	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib"
+	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
 	./configure --prefix=/opt/nghttp2  --disable-python-bindings
 	make
 	sudo make install
@@ -105,7 +98,7 @@ if [[ ! -f "${APR_FILE}" ]]
 then
 	echo -e " \e[32mDownload APR\e[0m"
 	echo
-	wget https://downloads.apache.org/apr/${APR_FILE}
+	wget https://dlcdn.apache.org/apr/${APR_FILE}
 	tar xvfz ${APR_FILE}
 	mv apr-${APR_VERSION} apr
 fi
@@ -114,7 +107,7 @@ if [[ ! -f "${APRI_FILE}" ]]
 then
 	echo -e " \e[32mDownload APR-ICONV\e[0m"
 	echo
-	wget https://downloads.apache.org/apr/${APRI_FILE}
+	wget https://dlcdn.apache.org/apr/${APRI_FILE}
 	tar xvfz ${APRI_FILE}
 	mv apr-iconv-${APRI_VERSION} apr-iconv
 fi
@@ -123,7 +116,7 @@ if [[ ! -f "${APRU_FILE}" ]]
 then
 	echo -e " \e[32mDownload APR-UTIL\e[0m"
 	echo
-	wget https://downloads.apache.org/apr/${APRU_FILE}
+	wget https://dlcdn.apache.org/apr/${APRU_FILE}
 	tar xvfz ${APRU_FILE}
 	mv apr-util-${APRU_VERSION} apr-util
 fi
@@ -161,25 +154,15 @@ echo -e " \e[32mBuild httpd\e[0m"
 echo
 ./buildconf
 export LD_LIBRARY_PATH=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr:${LD_LIBRARY_PATH}
-export LDFLAGS="-Wl,-rpath,/opt/openssl/lib"
+export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
 
-if [[ $arch = "x86_64" ]]; then
 ./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --disable-access-compat --enable-lua --enable-luajit --enable-deflate \
 	--enable-headers --enable-expires --with-curl=/opt/curl --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-proxy-http2 \
-	--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --with-crypto --enable-module=ssl \
+	--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --enable-module=ssl \
 	--with-apr-util=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
 	--enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid \
 	--with-jansson=/opt/jansson/ --enable-md \
 	--with-included-apr --enable-nonportable-atomics=yes
-else
-./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --disable-access-compat --enable-lua --enable-luajit --enable-deflate \
-	--enable-headers --enable-expires --with-curl=/opt/curl --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-proxy-http2 \
-	--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --with-crypto --enable-module=ssl \
-	--with-apr-util=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
-	--enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid \
-	--with-jansson=/opt/jansson/ --enable-md \
-	--with-included-apr
-fi
 
 patch server/main.c < ~/debian_build_apache24/info.diff
 make
