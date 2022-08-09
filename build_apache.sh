@@ -246,5 +246,5 @@ then
 	mkdir mod_xsendfile
 	cd mod_xsendfile
 	wget https://raw.githubusercontent.com/nmaier/mod_xsendfile/master/mod_xsendfile.c
-	sudo /opt/apache2/bin/apxs -ci mod_xsendfile.c
+	sudo /opt/apache2/bin/apxs -cia mod_xsendfile.c
 fi

@@ -82,6 +82,7 @@ Event MPM depends on APR's atomic compare-and-swap operations for thread synchro
 - mod_fcgid
 - mod_md
 - mod_security 2 [example config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/1_security_mod_security.conf)
+- mod_xsendfiles [code](https://github.com/nmaier/mod_xsendfile)
 
 ## mod_h[ttp]2
 
