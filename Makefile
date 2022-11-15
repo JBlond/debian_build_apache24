@@ -3,15 +3,13 @@ help:
 	@echo ""
 	@echo " make build         build from sources, but no daemon installation"
 	@echo ""
-	@echo make clean           clear build artifacts
+	@echo " make clean         clear build artifacts"
 	@echo ""
-	@echo make purge           Removes everything from this on the system.
+	@echo " make purge         Removes everything from this on the system."
 	@echo ""
 	@echo " make install       install as daemon"
 	@echo ""
 	@echo " make uninstall     uninstall daemon"
-	@echo ""
-	@echo " make install       run the deploy script"
 	@echo ""
 	@echo " make update        update from the sources and install as daemon"
 	@echo ""

@@ -15,11 +15,10 @@ Use the make script
 ```
  make prepare       prepares the system for building
  make build         build from sources, but no daemon installation
+ make clean         clear build artifacts
+ make purge         Removes everything from this on the system.
  make install       install as daemon
  make uninstall     uninstall daemon
- make clean         cleans the build files
- make purge         removes everything from this on your system. Including Your config. Maybe also your document root.
- make install       run the deploy script
  make update        update from the sources and install as daemon
  make graceful      graceful apache restart
  make stop          stops apache
