@@ -28,6 +28,22 @@ Use the make script
 
 The new apache will be installed in /opt/apache2
 
+
+### Raspberry PI note
+
+<details><summery>Changes needed</summery>
+
+In order to get this build working on a raspberry pi your need to delete two parameters in build_apache.sh
+
+in the openssl config options delete `enable-ec_nistp_64_gcc_128`
+
+in the httpd configure option delete `--enable-nonportable-atomics=yes`
+
+note that 32 bit do not work with the OpenSSL 3!
+
+Patches are more than welcome to have that in a single script. Fork this repo and open a PR.
+</details>
+
 ## Manage the Service
 
 ```BASH
@@ -61,7 +77,7 @@ systemctl status apachectl
 
 This builds all available mpms. You can load them in httpd.conf. event mpm is loaded set in httpd.conf by this script. There can be only one mpm at the time. It is not advised to change the mpm during restart. For that stop and start apache.
 
-<details><summery>Local the MPM's</summery><br>
+<br>
 
 ```
 LoadModule mpm_event_module modues/mod_mpm_event.so
