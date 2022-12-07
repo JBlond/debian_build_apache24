@@ -29,7 +29,7 @@ Use the make script
 The new apache will be installed in /opt/apache2
 
 
-### Raspberry PI note
+### Raspberry PI note or 32bit / x86 builds
 
 <details><summery>Changes needed</summery>
 
@@ -39,7 +39,8 @@ in the openssl config options delete `enable-ec_nistp_64_gcc_128`
 
 in the httpd configure option delete `--enable-nonportable-atomics=yes`
 
-note that 32 bit do not work with the OpenSSL 3!
+look for several /opt/openssl/lib64 in the ldflags and remove the 64 
+
 
 Patches are more than welcome to have that in a single script. Fork this repo and open a PR.
 </details>
