@@ -25,7 +25,7 @@ sudo apt install php8.0-cgi php8.0-cli php8.0-common php8.0-curl php8.0-gd php-j
 ## or even more
 sudo apt install php8.1-cgi php8.1-cli php8.1-common php8.1-curl php8.1-gd php-json php8.1-mbstring php8.1-mysql php8.1-opcache php8.1-readline php8.1-xml php8.1-zip php8.1-redis
 ## or even more
-sudo apt install php8.2-cgi php8.1-cli php8.2-common php8.2-curl php8.1-gd php-json php8.2-mbstring php8.2-mysql php8.2-opcache php8.2-readline php8.2-xml php8.1-zip php8.2redis
+sudo apt install php8.3-cgi php8.3-cli php8.3-common php8.3-curl php8.3-gd php-json php8.3-mbstring php8.3-mysql php8.3-opcache php8.3-readline php8.3-xml php8.3-zip php8.3-redis
 ```
 
 #### Change the default interpreter for composer after this!
