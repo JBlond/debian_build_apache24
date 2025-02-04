@@ -24,6 +24,8 @@ sudo apt install php7.4-cgi php7.4-cli php7.4-common php7.4-curl php7.4-gd php7.
 sudo apt install php8.0-cgi php8.0-cli php8.0-common php8.0-curl php8.0-gd php-json php8.0-mbstring php8.0-mysql php8.0-opcache php8.0-readline php8.0-xml php8.0-zip php8.0-redis
 ## or even more
 sudo apt install php8.1-cgi php8.1-cli php8.1-common php8.1-curl php8.1-gd php-json php8.1-mbstring php8.1-mysql php8.1-opcache php8.1-readline php8.1-xml php8.1-zip php8.1-redis
+## or even more
+sudo apt install php8.2-cgi php8.1-cli php8.2-common php8.2-curl php8.1-gd php-json php8.2-mbstring php8.2-mysql php8.2-opcache php8.2-readline php8.2-xml php8.1-zip php8.2redis
 ```
 
 #### Change the default interpreter for composer after this!
@@ -34,13 +36,13 @@ sudo update-alternatives --config php
 sudo update-alternatives --config php-cgi
 ```
 
-### If you need more php extenstions look at the output of 
+### If you need more php extensions look at the output of 
 
 ```bash
 sudo apt-cache search php8
 ```
 
-mod_fcgid requires mod_unixd to be loaded before it in the configuration!
+mod_fcgid requires mod_unixd to be loaded before it is in the configuration!
 
 ```xml
 LoadModule unixd_module modules/mod_unixd.so
