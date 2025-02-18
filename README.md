@@ -2,7 +2,7 @@
 
 Build apache 2.4 on debian from scratch with a semi automatic setup. Since OpenSSL 3.0.x this works only on x86_64 Systems. 32 bit is no longer supported.
 
-```
+```bash
 #clone
 git clone https://github.com/JBlond/debian_build_apache24.git
 cd debian_build_apache24
@@ -12,7 +12,7 @@ cd debian_build_apache24
 
 Use the make script
 
-```
+```ini
  make prepare       prepares the system for building
  make build         build from sources, but no daemon installation
  make clean         clear build artifacts
@@ -28,7 +28,6 @@ Use the make script
 
 The new apache will be installed in /opt/apache2
 
-
 ### Raspberry PI note or 32bit / x86 builds
 
 <details><summery>Changes needed</summery>
@@ -39,7 +38,7 @@ in the openssl config options delete `enable-ec_nistp_64_gcc_128`
 
 in the httpd configure option delete `--enable-nonportable-atomics=yes`
 
-look for several /opt/openssl/lib64 in the ldflags and remove the 64 
+look for several /opt/openssl/lib64 in the ldflags and remove the 64
 
 
 Patches are more than welcome to have that in a single script. Fork this repo and open a PR.
@@ -72,7 +71,8 @@ systemctl status apachectl
 
 ## Bulltet proof SSL Configuration
 
-[SSL config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/ssl.conf)
+- [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/ssl.conf)
+- [SSL TR-03116-4 Apache config from Bundesamts für Sicherheit in der Informationstechnik (BSI)](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/ssl-bsi-tr-03116-4.conf)
 
 ## httpd apache MPMs
 
@@ -80,16 +80,18 @@ This builds all available mpms. You can load them in httpd.conf. event mpm is lo
 
 <details><summery>Local the MPM's</summery><br>
 
-```
+```ini
 LoadModule mpm_event_module modues/mod_mpm_event.so
 
 LoadModule mpm_worker_module modues/mod_mpm_worker.so
 
 LoadModule mpm_prefork_module modues/mod_mpm_prefork.so
 ```
+
 </details>
 
 ### Event MPM
+
 Event MPM depends on APR's atomic compare-and-swap operations for thread synchronization (`--enable-nonportable-atomics=yes`). This will cause APR to implement atomic operations using efficient opcodes not available in older CPUs.
 
 ## Third party modules
@@ -102,17 +104,17 @@ Event MPM depends on APR's atomic compare-and-swap operations for thread synchro
 
 ## mod_h[ttp]2
 
-```
+```ini
 LoadModule http2_module modules/mod_http2.so
 ```
 
 By default, the HTTP/2 protocol is not enabled anywhere in your server.
 You can add this for the server in general or for specific vhosts.
 
-```
+```ini
 ProtocolsHonorOrder On
 Protocols h2 h2c http/1.1
-H2Direct On 
+H2Direct On
 ```
 
 For more information see https://icing.github.io/mod_h2/howto.html
@@ -121,7 +123,7 @@ For more information see https://icing.github.io/mod_h2/howto.html
 
 brotli compression with deflate as fallback
 
-```
+```ini
 LoadModule brotli_module modules/mod_brotli.so
 AddOutputFilterByType BROTLI;DEFLATE text/html text/plain text/xml text/php text/css text/js text/javascript text/javascript-x application/x-javascript font/truetype
 AddOutputFilterByType BROTLI;DEFLATE application/javascript application/rss+xml
@@ -129,4 +131,5 @@ DeflateCompressionLevel 9
 ```
 
 ## PHP setup
+
 [PHP setup](php.md)
