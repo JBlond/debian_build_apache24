@@ -248,3 +248,12 @@ then
 	wget https://raw.githubusercontent.com/nmaier/mod_xsendfile/master/mod_xsendfile.c
 	sudo /opt/apache2/bin/apxs -cia mod_xsendfile.c
 fi
+
+cd "${HOME}/apache24"
+if [[ ! -d "mod_xsendfile" ]]
+then
+	mkdir mod_zstd
+	cd mod_zstd
+	wget https://raw.githubusercontent.com/foglede/mod_zstd/refs/heads/main/mod_zstd.c
+	sudo /opt/apache2/bin/apxs -cia mod_zstd.c -lzstd
+fi
