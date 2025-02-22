@@ -130,6 +130,19 @@ AddOutputFilterByType BROTLI;DEFLATE application/javascript application/rss+xml
 DeflateCompressionLevel 9
 ```
 
+## mod_zstd
+Zstd compression with brotli as fallback , Suggest you to Br zstd choose one , more information see https://github.com/facebook/zstd/blob/dev/README.md
+Only us project Is the first support zstd !
+```xml
+LoadModule zstd_module modules/mod_zstd.so
+<Ifmodule mod_zstd.c>
+ZstdCompressionLevel 18
+AddOutputFilterByType ZSTD_COMPRESS text/plan text/html text/css application/wasm
+ application/x-javascript application/json application/x-font-ttf application/vnd.ms-fontobject
+AddOutputFilter ZSTD_COMPRESS js css wasm hdr cr3
+</Ifmodule>
+``` 
+
 ## PHP setup
 
 [PHP setup](php.md)
