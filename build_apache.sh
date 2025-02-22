@@ -250,7 +250,7 @@ then
 fi
 
 cd "${HOME}/apache24"
-if [[ ! -d "mod_xsendfile" ]]
+if [[ ! -d "mod_zstd" ]]
 then
 	mkdir mod_zstd
 	cd mod_zstd
