@@ -215,6 +215,21 @@ then
 	sudo /opt/apache2/bin/apxs -i mod_bikeshed.c
 fi
 
+if [[ ! -f "mod_zstd.zip" ]]
+then
+echo -e " \e[32mmod_zstd\e[0m"
+	wget https://github.com/foglede/mod_zstd/archive/refs/heads/main.zip
+	mv main.zip mod_zstd.zip
+	unzip mod_zstd.zip
+	cd mod_zstd
+	echo -e " \e[32mBuild mod_zstd\e[0m"
+	APXS=/opt/apache2/bin/apxs
+ 	/opt/apache2/bin/apxs -c mod_zstd.c -lzstd
+	sudo /opt/apache2/bin/apxs -c mod_zstd.c -lzstd
+ 	/opt/apache2/bin/apxs -i mod_zstd.la
+	sudo /opt/apache2/bin/apxs -i mod_zstd.la
+fi
+
 cd "${HOME}/apache24"
 if [[ ! -f "${MOD_SEC_FILE}" ]]
 then
