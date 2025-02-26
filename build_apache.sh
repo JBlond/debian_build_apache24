@@ -243,6 +243,7 @@ fi
 cd "${HOME}/apache24"
 if [[ ! -d "mod_xsendfile" ]]
 then
+	echo -e " \e[32mBuild mod_xsendfile\e[0m"
 	mkdir mod_xsendfile
 	cd mod_xsendfile
 	wget https://raw.githubusercontent.com/nmaier/mod_xsendfile/master/mod_xsendfile.c
@@ -252,6 +253,7 @@ fi
 cd "${HOME}/apache24"
 if [[ ! -d "mod_zstd" ]]
 then
+	echo -e " \e[32mBuild mod_zstd\e[0m"
 	mkdir mod_zstd
 	cd mod_zstd
 	wget https://raw.githubusercontent.com/foglede/mod_zstd/refs/heads/main/mod_zstd.c
