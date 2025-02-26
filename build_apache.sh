@@ -256,6 +256,7 @@ then
 	echo -e " \e[32mBuild mod_zstd\e[0m"
 	mkdir mod_zstd
 	cd mod_zstd
+	wget https://raw.githubusercontent.com/foglede/mod_zstd/refs/heads/main/mod_zstd.h
 	wget https://raw.githubusercontent.com/foglede/mod_zstd/refs/heads/main/mod_zstd.c
 	sudo /opt/apache2/bin/apxs -cia mod_zstd.c -lzstd
 fi
