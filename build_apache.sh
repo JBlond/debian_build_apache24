@@ -251,12 +251,12 @@ then
 fi
 
 cd "${HOME}/apache24"
-if [[ ! -d "mod_zstd" ]]
+if [[ ! -d "mod_zstd-main" ]]
 then
 	echo -e " \e[32mBuild mod_zstd\e[0m"
-	mkdir mod_zstd
-	cd mod_zstd
-	wget https://raw.githubusercontent.com/foglede/mod_zstd/refs/heads/main/mod_zstd.h
-	wget https://raw.githubusercontent.com/foglede/mod_zstd/refs/heads/main/mod_zstd.c
+	wget https://github.com/foglede/mod_zstd/archive/refs/heads/main.zip
+	mv main.zip mod_zstd.zip
+    unzip mod_zstd.zip
+	cd mod_zstd-main
 	sudo /opt/apache2/bin/apxs -cia mod_zstd.c -lzstd
 fi
