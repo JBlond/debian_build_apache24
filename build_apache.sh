@@ -2,7 +2,7 @@
 mkdir -p "${HOME}/apache24"
 cd "${HOME}/apache24"
 
-SSL_VERSION="3.0.16"
+SSL_VERSION="3.3.3"
 HTTPD_VERSION="2.4.63"
 APR_VERSION="1.7.6"
 APRU_VERSION="1.6.3"
@@ -39,8 +39,6 @@ then
 	make
 	sudo make install_sw
 	sudo make install_ssldirs
-	sudo cp libcrypto.a libcrypto.so libcrypto.so.3 libssl.a libssl.so libssl.so.3 /usr/local/lib
-	sudo ldconfig
 fi
 
 cd "${HOME}/apache24"
