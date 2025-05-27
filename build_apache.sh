@@ -26,7 +26,7 @@ ZLIB_FILE="zlib-${ZLIB_VERSION}.tar.gz"
 PCRE_FILE="${PCRE_VERSION}.tar.gz"
 PCRE2_FILE="pcre2-${PCRE2_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
-MOD_SEC_FILE="modsecurity-${MOD_SEC_VERSION}.tar.gz"
+MOD_SEC_FILE="modsecurity-v${MOD_SEC_VERSION}.tar.gz"
 
 if [[ ! -f "${SSL_FILE}" ]]
 then
