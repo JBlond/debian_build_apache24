@@ -32,7 +32,7 @@ if [[ ! -f "${SSL_FILE}" ]]
 then
 	echo -e " \e[32mOpenSSL\e[0m"
 	echo
-	wget https://www.openssl.org/source/${SSL_FILE}
+	wget https://github.com/openssl/openssl/releases/download/openssl-${SSL_VERSION}/${SSL_FILE}
 	tar xfz ${SSL_FILE}
 	cd openssl-${SSL_VERSION}
 	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic shared enable-ec_nistp_64_gcc_128
