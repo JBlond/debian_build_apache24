@@ -11,7 +11,7 @@ ZLIB_VERSION="1.3.1"
 PCRE_VERSION="8.45"
 PCRE2_VERSION="10.44"
 HTTP2_VERSION="1.65.0"
-MOD_SEC_VERSION="2.9.8"
+MOD_SEC_VERSION="2.9.9"
 JANSON_VERSION="2.14"
 
 CURL_VERSION="8.12.1"
@@ -226,7 +226,7 @@ then
 	cd "${HOME}/apache24"
 
 	echo -e " \e[32mDownload mod security\e[0m"
-	wget https://github.com/SpiderLabs/ModSecurity/releases/download/v${MOD_SEC_VERSION}/${MOD_SEC_FILE}
+	wget https://github.com/owasp-modsecurity/ModSecurity/releases/download/v${MOD_SEC_VERSION}/${MOD_SEC_FILE}
 	tar xvfz ${MOD_SEC_FILE}
 	cd modsecurity-${MOD_SEC_VERSION}
 	./autogen.sh
