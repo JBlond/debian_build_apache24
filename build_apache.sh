@@ -228,7 +228,7 @@ then
 	echo -e " \e[32mDownload mod security\e[0m"
 	wget https://github.com/owasp-modsecurity/ModSecurity/releases/download/v${MOD_SEC_VERSION}/${MOD_SEC_FILE}
 	tar xvfz ${MOD_SEC_FILE}
-	cd modsecurity-${MOD_SEC_VERSION}
+	cd modsecurity-v${MOD_SEC_VERSION}
 	./autogen.sh
 	./configure --enable-htaccess-config --prefix=/opt/apache2 --libdir=/opt/apache2/modules --with-apxs=/opt/apache2/bin/apxs \
 		--with-pcre=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre1 \
