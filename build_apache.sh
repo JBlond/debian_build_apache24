@@ -35,7 +35,7 @@ then
 	wget https://github.com/openssl/openssl/releases/download/openssl-${SSL_VERSION}/${SSL_FILE}
 	tar xfz ${SSL_FILE}
 	cd openssl-${SSL_VERSION}
-	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic shared enable-ec_nistp_64_gcc_128
+	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic no-shared enable-ec_nistp_64_gcc_128
 	make
 	sudo make install_sw
 	sudo make install_ssldirs
