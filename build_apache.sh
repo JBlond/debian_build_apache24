@@ -41,6 +41,8 @@ then
 	sudo make install_ssldirs
 	sudo cp libcrypto.a libcrypto.so libcrypto.so.3 libssl.a libssl.so libssl.so.3 /usr/local/lib
 	sudo ldconfig
+else
+	echo -e "✅ \e[32mOpenSSL\e[0m"
 fi
 
 cd "${HOME}/apache24"
@@ -56,6 +58,8 @@ then
 	./configure --prefix=/opt/nghttp2  --disable-python-bindings
 	make
 	sudo make install
+else
+	echo -e "✅ \e[32mnghttp2\e[0m"
 fi
 
 cd "${HOME}/apache24"
@@ -69,6 +73,8 @@ then
 	./configure --prefix=/opt/curl --enable-optimize --disable-manual --disable-debug --with-nghttp2=/opt/nghttp2 --without-ssl
 	make
 	sudo make install
+else
+	echo -e "✅ \e[32mCURL\e[0m"
 fi
 
 cd "${HOME}/apache24"
@@ -82,6 +88,8 @@ then
 	./configure --prefix=/opt/jansson
 	make
 	sudo make install
+else
+	echo -e "✅ \e[32mjansson\e[0m"
 fi
 
 cd "${HOME}/apache24"
@@ -92,6 +100,8 @@ then
 	echo
 	wget https://dlcdn.apache.org/httpd/${HTTPD_FILE}
 	tar xvfz ${HTTPD_FILE}
+else
+	echo -e "✅ \e[32mhttpd\e[0m"
 fi
 
 cd httpd-${HTTPD_VERSION}/srclib
@@ -103,6 +113,8 @@ then
 	wget https://dlcdn.apache.org/apr/${APR_FILE}
 	tar xvfz ${APR_FILE}
 	mv apr-${APR_VERSION} apr
+else
+	echo -e "✅ \e[32mAPR\e[0m"
 fi
 
 if [[ ! -f "${APRI_FILE}" ]]
@@ -112,6 +124,8 @@ then
 	wget https://dlcdn.apache.org/apr/${APRI_FILE}
 	tar xvfz ${APRI_FILE}
 	mv apr-iconv-${APRI_VERSION} apr-iconv
+else
+	echo -e "✅ \e[32mAPRI\e[0m"
 fi
 
 if [[ ! -f "${APRU_FILE}" ]]
@@ -121,6 +135,8 @@ then
 	wget https://dlcdn.apache.org/apr/${APRU_FILE}
 	tar xvfz ${APRU_FILE}
 	mv apr-util-${APRU_VERSION} apr-util
+else
+	echo -e "✅ \e[32mAPRU\e[0m"
 fi
 
 
@@ -131,6 +147,8 @@ then
 	wget https://zlib.net/${ZLIB_FILE}
 	tar xvfz ${ZLIB_FILE}
 	mv zlib-${ZLIB_VERSION} zlib
+else
+	echo -e "✅ \e[32mzlib\e[0m"
 fi
 
 if [[ ! -f "${PCRE2_FILE}" ]]
@@ -140,6 +158,8 @@ then
 	wget https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${PCRE2_VERSION}/${PCRE2_FILE}
 	tar xvfz ${PCRE2_FILE}
 	mv pcre2-${PCRE2_VERSION} pcre
+else
+	echo -e "✅ \e[32mPCRE2\e[0m"
 fi
 
 if [[ ! -f "${PCRE_FILE}" ]]
@@ -149,6 +169,8 @@ then
 	wget https://github.com/JBlond/pcre/archive/refs/tags/${PCRE_FILE}
 	tar xvfz ${PCRE_FILE}
 	mv pcre-${PCRE_VERSION} pcre1
+else
+	echo -e "✅ \e[32mAPCRE-1\e[0m"
 fi
 
 cd ..
@@ -203,6 +225,8 @@ then
 	make
 	sudo make install
 	make clean
+else
+	echo -e "✅ \e[32mmod_fcgid\e[0m"
 fi
 
 cd "${HOME}/apache24"
@@ -213,6 +237,8 @@ then
 	cd mod_bikeshed-1.0.0/
 	/opt/apache2/bin/apxs -i mod_bikeshed.c
 	sudo /opt/apache2/bin/apxs -i mod_bikeshed.c
+else
+	echo -e "✅ \e[32mmod_mikeshed\e[0m"
 fi
 
 cd "${HOME}/apache24"
@@ -238,6 +264,8 @@ then
 	make
 	sudo make install
 	sudo chmod 0755 /opt/apache2/modules/mod_security2.so
+else
+	echo -e "✅ \e[32mmod_security\e[0m"
 fi
 
 cd "${HOME}/apache24"
@@ -248,6 +276,8 @@ then
 	cd mod_xsendfile
 	wget https://raw.githubusercontent.com/nmaier/mod_xsendfile/master/mod_xsendfile.c
 	sudo /opt/apache2/bin/apxs -cia mod_xsendfile.c
+else
+	echo -e "✅ \e[32mmod_xsendfile\e[0m"
 fi
 
 cd "${HOME}/apache24"
@@ -256,7 +286,9 @@ then
 	echo -e " \e[32mBuild mod_zstd\e[0m"
 	wget https://github.com/foglede/mod_zstd/archive/refs/heads/main.zip
 	mv main.zip mod_zstd.zip
-    unzip mod_zstd.zip
+	unzip mod_zstd.zip
 	cd mod_zstd-main
 	sudo /opt/apache2/bin/apxs -cia mod_zstd.c -lzstd
+else
+	echo -e "✅ \e[32mAmod_zstd\e[0m"
 fi
