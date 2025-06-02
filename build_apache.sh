@@ -209,8 +209,7 @@ then
 	wget https://github.com/JBlond/mod_bikeshed/archive/refs/tags/1.0.0.tar.gz
 	tar xvfz 1.0.0.tar.gz
 	cd mod_bikeshed-1.0.0/
-	/opt/apache2/bin/apxs -i mod_bikeshed.c
-	sudo /opt/apache2/bin/apxs -i mod_bikeshed.c
+	sudo /opt/apache2/bin/apxs -cia mod_bikeshed.c
 fi
 
 cd "${HOME}/apache24"
