@@ -2,7 +2,7 @@
 mkdir -p "${HOME}/apache24"
 cd "${HOME}/apache24"
 
-SSL_VERSION="3.0.16"
+SSL_VERSION="3.3.3"
 HTTPD_VERSION="2.4.63"
 APR_VERSION="1.7.6"
 APRU_VERSION="1.6.3"
@@ -35,12 +35,10 @@ then
 	wget https://github.com/openssl/openssl/releases/download/openssl-${SSL_VERSION}/${SSL_FILE}
 	tar xfz ${SSL_FILE}
 	cd openssl-${SSL_VERSION}
-	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic shared enable-ec_nistp_64_gcc_128
+	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic no-shared enable-ec_nistp_64_gcc_128
 	make
 	sudo make install_sw
 	sudo make install_ssldirs
-	sudo cp libcrypto.a libcrypto.so libcrypto.so.3 libssl.a libssl.so libssl.so.3 /usr/local/lib
-	sudo ldconfig
 else
 	echo -e "✅ \e[32mOpenSSL\e[0m"
 fi
@@ -285,7 +283,7 @@ then
 	echo -e " \e[32mBuild mod_zstd\e[0m"
 	wget https://github.com/foglede/mod_zstd/archive/refs/heads/main.zip
 	mv main.zip mod_zstd.zip
-	unzip mod_zstd.zip
+    unzip mod_zstd.zip
 	cd mod_zstd-main
 	sudo /opt/apache2/bin/apxs -cia mod_zstd.c -lzstd
 else
