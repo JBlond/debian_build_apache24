@@ -13,6 +13,7 @@ PCRE2_VERSION="10.44"
 HTTP2_VERSION="1.66.0"
 MOD_SEC_VERSION="2.9.9"
 JANSON_VERSION="2.14"
+ZSTD_VERSION="1.0.3"
 
 CURL_VERSION="8.14.0"
 CURL_PATH="8_14_0"
@@ -278,13 +279,13 @@ else
 fi
 
 cd "${HOME}/apache24"
-if [[ ! -d "mod_zstd-main" ]]
+if [[ ! -d "mod_zstd" ]]
 then
 	echo -e " \e[32mBuild mod_zstd\e[0m"
-	wget https://github.com/foglede/mod_zstd/archive/refs/heads/main.zip
-	mv main.zip mod_zstd.zip
-    unzip mod_zstd.zip
-	cd mod_zstd-main
+	wget https://github.com/nono303/mod_zstd/archive/refs/tags/${ZSTD_VERSION}.tar.gz
+	tar xvfz mod_zstd-${ZSTD_VERSION}.tar.gz
+	mv mod_zstd-${ZSTD_VERSION} mod_zstd
+	cd mod_zstd
 	sudo /opt/apache2/bin/apxs -cia mod_zstd.c -lzstd
 else
 	echo -e "✅ \e[32mAmod_zstd\e[0m"
