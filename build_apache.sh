@@ -283,7 +283,7 @@ if [[ ! -d "mod_zstd" ]]
 then
 	echo -e " \e[32mBuild mod_zstd\e[0m"
 	wget https://github.com/nono303/mod_zstd/archive/refs/tags/${ZSTD_VERSION}.tar.gz
-	tar xvfz mod_zstd-${ZSTD_VERSION}.tar.gz
+	tar xvfz ${ZSTD_VERSION}.tar.gz
 	mv mod_zstd-${ZSTD_VERSION} mod_zstd
 	cd mod_zstd
 	sudo /opt/apache2/bin/apxs -cia mod_zstd.c -lzstd
