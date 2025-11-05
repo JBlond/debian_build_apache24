@@ -96,7 +96,6 @@ Event MPM depends on APR's atomic compare-and-swap operations for thread synchro
 
 ## Third party modules
 
-- mod_brotli
 - mod_fcgid
 - mod_md
 - mod_security 2 [example config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/1_security_mod_security.conf)
@@ -121,12 +120,14 @@ For more information see https://icing.github.io/mod_h2/howto.html
 
 ## mod_brotli
 
+> NOTE: AddOutputFilterByType BROTLI has changed to AddOutputFilterByType BROTLI_COMPRESS
+
 brotli compression with deflate as fallback
 
 ```ini
 LoadModule brotli_module modules/mod_brotli.so
-AddOutputFilterByType BROTLI;DEFLATE text/html text/plain text/xml text/php text/css text/js text/javascript text/javascript-x application/x-javascript font/truetype
-AddOutputFilterByType BROTLI;DEFLATE application/javascript application/rss+xml
+AddOutputFilterByType BROTLI_COMPRESS;DEFLATE text/html text/plain text/xml text/php text/css text/js text/javascript text/javascript-x application/x-javascript font/truetype
+AddOutputFilterByType BROTLI_COMPRESS;DEFLATE application/javascript application/rss+xml
 DeflateCompressionLevel 9
 ```
 
@@ -142,6 +143,19 @@ AddOutputFilterByType ZSTD_COMPRESS text/plan text/html text/css application/was
 AddOutputFilter ZSTD_COMPRESS js css wasm hdr cr3
 </Ifmodule>
 ``` 
+
+### all combined
+
+```xml
+Addtype font/truetype .ttf
+AddType image/x-icon .ico
+<IfModule mod_deflate.c>
+        AddOutputFilterByType ZSTD_COMPRESS;BROTLI_COMPRESS;DEFLATE text/html text/plain text/xml text/php text/css text/js text/javascript text/javascript-x application/x-javascript font/truetype
+        AddOutputFilterByType ZSTD_COMPRESS;BROTLI_COMPRESS;DEFLATE application/javascript
+        AddOutputfilterByType ZSTD_COMPRESS;BROTLI_COMPRESS;DEFLATE application/vnd.mozilla.xul+xml
+        DeflateCompressionLevel 9
+</IfModule>
+```
 
 ## PHP setup
 
