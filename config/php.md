@@ -4,7 +4,7 @@
 
 **Note: If you update your debian version, you need to re-run the  echo into the php.list file.**
 
-```
+```bash
 #!/bin/bash
 if [ "$(whoami)" != "root" ]; then
     SUDO=sudo
@@ -28,7 +28,7 @@ sudo apt install php8.1-cgi php8.1-cli php8.1-common php8.1-curl php8.1-gd php-j
 sudo apt install php8.3-cgi php8.3-cli php8.3-common php8.3-curl php8.3-gd php-json php8.3-mbstring php8.3-mysql php8.3-opcache php8.3-readline php8.3-xml php8.3-zip php8.3-redis
 ```
 
-#### Change the default interpreter for composer after this!
+#### Change the default interpreter for composer after that
 
 ```bash
 sudo update-alternatives --config php
@@ -36,7 +36,7 @@ sudo update-alternatives --config php
 sudo update-alternatives --config php-cgi
 ```
 
-### If you need more php extensions look at the output of 
+### If you need more php extensions look at the output of
 
 ```bash
 sudo apt-cache search php8
@@ -55,7 +55,7 @@ Also in your php.ini enable fix pathinfo
 cgi.fix_pathinfo=1
 ```
 
-The default socket for mod_fcgid is in /opt/apache2/logs. So the logs directory needs to be writeable for the apache. 
+The default socket for mod_fcgid is in /opt/apache2/logs. So the logs directory needs to be writeable for the apache.
 
 ```xml
 <IfModule unixd_module>

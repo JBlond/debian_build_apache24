@@ -57,7 +57,7 @@ sudo /opt/apache2/bin/httpd -k stop
 sudo /opt/apache2/bin/httpd -k graceful
 ```
 
-# troubleshooting apache config
+## troubleshooting apache config
 
 ```BASH
 sudo /opt/apache2/bin/httpd -S
@@ -71,8 +71,8 @@ systemctl status apachectl
 
 ## Bulltet proof SSL Configuration
 
-- [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/ssl.conf)
-- [SSL TR-03116-4 Apache config from Bundesamts für Sicherheit in der Informationstechnik (BSI)](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/ssl-bsi-tr-03116-4.conf)
+- [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/config/ssl.conf)
+- [SSL TR-03116-4 Apache config from Bundesamts für Sicherheit in der Informationstechnik (BSI)](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/config/ssl-bsi-tr-03116-4.conf)
 
 ## httpd apache MPMs
 
@@ -98,7 +98,7 @@ Event MPM depends on APR's atomic compare-and-swap operations for thread synchro
 
 - mod_fcgid
 - mod_md
-- mod_security 2 [example config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/1_security_mod_security.conf)
+- mod_security 2 [example config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/config/1_security_mod_security.conf)
 - mod_xsendfiles [code](https://github.com/nmaier/mod_xsendfile)
 
 ## mod_h[ttp]2
@@ -116,7 +116,7 @@ Protocols h2 h2c http/1.1
 H2Direct On
 ```
 
-For more information see https://icing.github.io/mod_h2/howto.html
+For more information see <https://icing.github.io/mod_h2/howto.html>
 
 ## mod_brotli
 
@@ -132,8 +132,10 @@ DeflateCompressionLevel 9
 ```
 
 ## mod_zstd
-Zstd compression with brotli as fallback , Suggest you to Br zstd choose one , more information see https://github.com/facebook/zstd/blob/dev/README.md
+
+Zstd compression with brotli as fallback , Suggest you to Br zstd choose one , more information see <https://github.com/facebook/zstd/blob/dev/README.md>
 Only us project Is the first support zstd !
+
 ```xml
 LoadModule zstd_module modules/mod_zstd.so
 <Ifmodule mod_zstd.c>
@@ -142,7 +144,7 @@ AddOutputFilterByType ZSTD_COMPRESS text/plan text/html text/css application/was
  application/x-javascript application/json application/x-font-ttf application/vnd.ms-fontobject
 AddOutputFilter ZSTD_COMPRESS js css wasm hdr cr3
 </Ifmodule>
-``` 
+```
 
 ### all combined
 
@@ -157,6 +159,8 @@ AddType image/x-icon .ico
 </IfModule>
 ```
 
+[compression.conf](compression.conf)
+
 ## PHP setup
 
-[PHP setup](php.md)
+[PHP setup](config/php.md)
