@@ -201,7 +201,8 @@ then
 	./autogen.sh
 	./configure --with-apxs=/opt/apache2/bin --with-apr=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr
 	make
-	sudo install -p -m 755 -D .libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
+	sudo cp ./libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
+	sudo chmod 0755 /opt/apache2/modules/mod_brotli.so
 else
 	echo -e "✅ \e[32mmod_brotli\e[0m"
 fi
