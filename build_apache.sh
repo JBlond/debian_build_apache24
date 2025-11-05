@@ -191,22 +191,12 @@ patch server/main.c < ~/debian_build_apache24/info.diff
 make
 sudo make install
 
-if [[ -r /etc/os-release ]]; then
-	currentver="$(. /etc/os-release && echo "$VERSION_ID")"
-else
-	# Fallback: /etc/debian_version
-	currentver="$(cut -d/ -f1 < /etc/debian_version)"
-	# Falls kein numerischer Wert (z.B. "sid"), als "99.0" interpretieren
-	if ! [[ "$currentver" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
-		currentver="99.0"
-	fi
-fi
-
+currentver="$(. /etc/os-release && echo "$VERSION_ID")"
 requiredver="9.0"
 
-# Vergleich: ist currentver >= requiredver?
 if [[ "$(printf "%s\n%s\n" "$requiredver" "$currentver" | sort -V | head -n1)" == "$requiredver" ]]; then
-	echo -e " \e[33mMod_brotli requires Debian 9 or newer\e[0m"
+	echo -e " \e[33mMod_brotli requires Debian 9 or newer"
+else
 	cd "${HOME}/apache24"
 	if [[ ! -f "/opt/apache2/modules/mod_brotli.so" ]]
 	then
