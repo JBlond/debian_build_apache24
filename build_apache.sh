@@ -288,5 +288,5 @@ then
 	cd mod_zstd
 	sudo /opt/apache2/bin/apxs -cia mod_zstd.c -lzstd
 else
-	echo -e "✅ \e[32mAmod_zstd\e[0m"
+	echo -e "✅ \e[32mmod_zstd\e[0m"
 fi
