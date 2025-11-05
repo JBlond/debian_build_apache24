@@ -191,9 +191,9 @@ patch server/main.c < ~/debian_build_apache24/info.diff
 make
 sudo make install
 
-currentver="$(cat /etc/debian_version)"
+currentver="$(. /etc/os-release && echo "$VERSION_ID")"
 requiredver="9.0"
-if [[ "$(printf "$requiredver\n$currentver" | sort -V | head -n1)" == "$currentver" ]] && [[ "$currentver" != "$requiredver" ]]; then
+if [[ "$(printf "%s\n%s\n" "$requiredver" "$currentver" | sort -V | head -n1)" == "$requiredver" ]]; then
 	echo -e " \e[33mMod_brotli requires Debian 9 or newer"
 else
 	cd "${HOME}/apache24"
