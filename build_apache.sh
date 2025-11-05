@@ -191,25 +191,19 @@ patch server/main.c < ~/debian_build_apache24/info.diff
 make
 sudo make install
 
-currentver="$(. /etc/os-release && echo "$VERSION_ID")"
-requiredver="9.0"
-
-if [[ "$(printf "%s\n%s\n" "$requiredver" "$currentver" | sort -V | head -n1)" == "$requiredver" ]]; then
-	echo -e " \e[33mMod_brotli requires Debian 9 or newer"
-else
-	cd "${HOME}/apache24"
-	if [[ ! -f "/opt/apache2/modules/mod_brotli.so" ]]
-	then
-		echo -e " \e[32mBuild brotli\e[0m"
-		echo
-		git clone --depth=1 --recursive https://github.com/kjdev/apache-mod-brotli.git mod_brotli
-		cd mod_brotli
-		./autogen.sh
-		./configure --with-apxs=/opt/apache2/bin --with-apr=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr
-		make
-		sudo install -p -m 755 -D .libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
-	fi
+cd "${HOME}/apache24"
+if [[ ! -f "/opt/apache2/modules/mod_brotli.so" ]]
+then
+	echo -e " \e[32mBuild brotli\e[0m"
+	echo
+	git clone --depth=1 --recursive https://github.com/kjdev/apache-mod-brotli.git mod_brotli
+	cd mod_brotli
+	./autogen.sh
+	./configure --with-apxs=/opt/apache2/bin --with-apr=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr
+	make
+	sudo install -p -m 755 -D .libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
 fi
+
 
 cd "${HOME}/apache24"
 echo
