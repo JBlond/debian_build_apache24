@@ -169,7 +169,7 @@ then
 	tar xvfz ${PCRE_FILE}
 	mv pcre-${PCRE_VERSION} pcre1
 else
-	echo -e "✅ \e[32mAPCRE-1\e[0m"
+	echo -e "✅ \e[32mPCRE-1\e[0m"
 fi
 
 cd ..
@@ -202,6 +202,8 @@ then
 	./configure --with-apxs=/opt/apache2/bin --with-apr=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr
 	make
 	sudo install -p -m 755 -D .libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
+else
+	echo -e "✅ \e[32mmod_brotli\e[0m"
 fi
 
 
