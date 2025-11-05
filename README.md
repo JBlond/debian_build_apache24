@@ -71,7 +71,7 @@ systemctl status apachectl
 
 ## Bulltet proof SSL Configuration
 
-- [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/config/ssl.conf)
+- [SSL config](https://raw.githubusercontent.com/JBlond/debian_build_apache24/refs/heads/master/config/ssl.conf)
 - [SSL TR-03116-4 Apache config from Bundesamts für Sicherheit in der Informationstechnik (BSI)](https://raw.githubusercontent.com/JBlond/debian_build_apache24/master/config/ssl-bsi-tr-03116-4.conf)
 
 ## httpd apache MPMs
