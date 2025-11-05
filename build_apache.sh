@@ -180,7 +180,7 @@ export LD_LIBRARY_PATH=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr:${LD_LIBRARY
 export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
 
 ./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --disable-access-compat  --enable-lua --enable-deflate \
-	--enable-headers --enable-expires --with-curl=/opt/curl --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-proxy-http2 \
+	--enable-headers --enable-expires --with-curl=/opt/curl --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-proxy-http2 --enable-brotli \
 	--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --enable-module=ssl \
 	--with-apr-util=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
 	--enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid \
@@ -190,19 +190,6 @@ export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
 patch server/main.c < ~/debian_build_apache24/info.diff
 make
 sudo make install
-
-cd "${HOME}/apache24"
-echo -e " \e[32mBuild brotli\e[0m"
-echo
-git clone --depth=1 --recursive https://github.com/kjdev/apache-mod-brotli.git mod_brotli
-cd mod_brotli
-./autogen.sh
-./configure --with-apxs=/opt/apache2/bin --with-apr=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr
-make
-sudo cp .libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
-sudo chmod 0755 /opt/apache2/modules/mod_brotli.so
-echo -e "✅ \e[32mmod_brotli\e[0m"
-
 
 cd "${HOME}/apache24"
 echo
