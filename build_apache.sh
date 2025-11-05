@@ -192,20 +192,16 @@ make
 sudo make install
 
 cd "${HOME}/apache24"
-if [[ ! -f "/opt/apache2/modules/mod_brotli.so" ]]
-then
-	echo -e " \e[32mBuild brotli\e[0m"
-	echo
-	git clone --depth=1 --recursive https://github.com/kjdev/apache-mod-brotli.git mod_brotli
-	cd mod_brotli
-	./autogen.sh
-	./configure --with-apxs=/opt/apache2/bin --with-apr=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr
-	make
-	sudo cp ./libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
-	sudo chmod 0755 /opt/apache2/modules/mod_brotli.so
-else
-	echo -e "✅ \e[32mmod_brotli\e[0m"
-fi
+echo -e " \e[32mBuild brotli\e[0m"
+echo
+git clone --depth=1 --recursive https://github.com/kjdev/apache-mod-brotli.git mod_brotli
+cd mod_brotli
+./autogen.sh
+./configure --with-apxs=/opt/apache2/bin --with-apr=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr
+make
+sudo cp ./libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
+sudo chmod 0755 /opt/apache2/modules/mod_brotli.so
+echo -e "✅ \e[32mmod_brotli\e[0m"
 
 
 cd "${HOME}/apache24"
