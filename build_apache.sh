@@ -199,7 +199,7 @@ cd mod_brotli
 ./autogen.sh
 ./configure --with-apxs=/opt/apache2/bin --with-apr=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr
 make
-sudo cp ./libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
+sudo cp .libs/mod_brotli.so /opt/apache2/modules/mod_brotli.so
 sudo chmod 0755 /opt/apache2/modules/mod_brotli.so
 echo -e "✅ \e[32mmod_brotli\e[0m"
 
