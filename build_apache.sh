@@ -11,10 +11,8 @@ ZLIB_VERSION="1.3.1"
 PCRE_VERSION="8.45"
 PCRE2_VERSION="10.44"
 HTTP2_VERSION="1.68.0"
-MOD_SEC_VERSION="2.9.9"
 JANSON_VERSION="2.14"
 ZSTD_VERSION="1.0.3"
-
 CURL_VERSION="8.17.0"
 CURL_PATH="8_17_0"
 
@@ -27,7 +25,6 @@ ZLIB_FILE="zlib-${ZLIB_VERSION}.tar.gz"
 PCRE_FILE="${PCRE_VERSION}.tar.gz"
 PCRE2_FILE="pcre2-${PCRE2_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
-MOD_SEC_FILE="modsecurity-v${MOD_SEC_VERSION}.tar.gz"
 
 if [[ ! -f "${SSL_FILE}" ]]
 then
@@ -112,11 +109,6 @@ then
 	wget https://dlcdn.apache.org/apr/${APR_FILE}
 	tar xvfz ${APR_FILE}
 	mv apr-${APR_VERSION} apr
-	cd apt
-	./configure --prefix=/opt/apache2
-	make
-	sudo make install
-	cd ..
 else
 	echo -e "✅ \e[32mAPR\e[0m"
 fi
@@ -139,11 +131,6 @@ then
 	wget https://dlcdn.apache.org/apr/${APRU_FILE}
 	tar xvfz ${APRU_FILE}
 	mv apr-util-${APRU_VERSION} apr-util
-	cd apr-util
-	./configure --prefix=/opt/apache2 --with-apr=/opt/apache2
-	make
-	sudo make install
-	cd ..
 else
 	echo -e "✅ \e[32mAPRU\e[0m"
 fi
@@ -228,33 +215,6 @@ then
 	sudo /opt/apache2/bin/apxs -cia mod_bikeshed.c
 else
 	echo -e "✅ \e[32mmod_mikeshed\e[0m"
-fi
-
-cd "${HOME}/apache24"
-if [[ ! -f "${MOD_SEC_FILE}" ]]
-then
-	echo -e " \e[32mBuild mod_security\e[0m"
-	cd "${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre1"
-	./configure
-	make
-
-	cd "${HOME}/apache24"
-
-	echo -e " \e[32mDownload mod security\e[0m"
-	wget https://github.com/owasp-modsecurity/ModSecurity/releases/download/v${MOD_SEC_VERSION}/${MOD_SEC_FILE}
-	tar xvfz ${MOD_SEC_FILE}
-	cd modsecurity-v${MOD_SEC_VERSION}
-	./autogen.sh
-	./configure --enable-htaccess-config --prefix=/opt/apache2 --libdir=/opt/apache2/modules --with-apxs=/opt/apache2/bin/apxs \
-		--with-pcre=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre \
-		--with-apr=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr \
-		--with-apu=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
-		--with-curl=/opt/curl
-	make
-	sudo make install
-	sudo chmod 0755 /opt/apache2/modules/mod_security2.so
-else
-	echo -e "✅ \e[32mmod_security\e[0m"
 fi
 
 cd "${HOME}/apache24"
