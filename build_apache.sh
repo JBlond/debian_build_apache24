@@ -112,6 +112,11 @@ then
 	wget https://dlcdn.apache.org/apr/${APR_FILE}
 	tar xvfz ${APR_FILE}
 	mv apr-${APR_VERSION} apr
+	cd apt
+	./configure --prefix=/opt/apache2
+	make
+	sudo make install
+	cd ..
 else
 	echo -e "✅ \e[32mAPR\e[0m"
 fi
@@ -134,6 +139,11 @@ then
 	wget https://dlcdn.apache.org/apr/${APRU_FILE}
 	tar xvfz ${APRU_FILE}
 	mv apr-util-${APRU_VERSION} apr-util
+	cd apr-util
+	./configure --prefix=/opt/apache2 --with-apr=/opt/apache2
+	make
+	sudo make install
+	cd ..
 else
 	echo -e "✅ \e[32mAPRU\e[0m"
 fi
@@ -236,7 +246,7 @@ then
 	cd modsecurity-v${MOD_SEC_VERSION}
 	./autogen.sh
 	./configure --enable-htaccess-config --prefix=/opt/apache2 --libdir=/opt/apache2/modules --with-apxs=/opt/apache2/bin/apxs \
-		--with-pcre=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre1 \
+		--with-pcre=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre \
 		--with-apr=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr \
 		--with-apu=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
 		--with-curl=/opt/curl
