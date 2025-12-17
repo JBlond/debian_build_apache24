@@ -1,4 +1,4 @@
-# Build last apache2.4.x + mod fcgid + last OpenSSL + mod_security
+# Build last apache2.4.x + mod fcgid + last OpenSSL
 
 Build apache 2.4 on debian from scratch with a semi automatic setup. Since OpenSSL 3.0.x this works only on x86_64 Systems. 32 bit is no longer supported.
 
