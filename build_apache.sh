@@ -8,7 +8,6 @@ APR_VERSION="1.7.6"
 APRU_VERSION="1.6.3"
 APRI_VERSION="1.2.2"
 ZLIB_VERSION="1.3.1"
-PCRE_VERSION="8.45"
 PCRE2_VERSION="10.44"
 HTTP2_VERSION="1.68.0"
 JANSON_VERSION="2.14"
@@ -22,7 +21,6 @@ APR_FILE="apr-${APR_VERSION}.tar.gz"
 APRU_FILE="apr-util-${APRU_VERSION}.tar.gz"
 APRI_FILE="apr-iconv-${APRI_VERSION}.tar.gz"
 ZLIB_FILE="zlib-${ZLIB_VERSION}.tar.gz"
-PCRE_FILE="${PCRE_VERSION}.tar.gz"
 PCRE2_FILE="pcre2-${PCRE2_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
 
@@ -156,17 +154,6 @@ then
 	mv pcre2-${PCRE2_VERSION} pcre
 else
 	echo -e "✅ \e[32mPCRE2\e[0m"
-fi
-
-if [[ ! -f "${PCRE_FILE}" ]]
-then
-	echo -e " \e[32mDownload PCRE\e[0m"
-	echo
-	wget https://github.com/JBlond/pcre/archive/refs/tags/${PCRE_FILE}
-	tar xvfz ${PCRE_FILE}
-	mv pcre-${PCRE_VERSION} pcre1
-else
-	echo -e "✅ \e[32mPCRE-1\e[0m"
 fi
 
 cd ..
