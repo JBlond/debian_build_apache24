@@ -97,7 +97,6 @@ Event MPM depends on APR's atomic compare-and-swap operations for thread synchro
 ## Third party modules
 
 - mod_fcgid
-- mod_md
 - mod_xsendfiles [code](https://github.com/nmaier/mod_xsendfile)
 - mod_zstd
 
