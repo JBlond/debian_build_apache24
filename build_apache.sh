@@ -210,7 +210,7 @@ then
 	echo -e " \e[32mBuild mod_xsendfile\e[0m"
 	mkdir mod_xsendfile
 	cd mod_xsendfile
-	wget https://raw.githubusercontent.com/nmaier/mod_xsendfile/master/mod_xsendfile.c
+	wget https://raw.githubusercontent.com/JBlond/mod_xsendfile/master/mod_xsendfile.c
 	sudo /opt/apache2/bin/apxs -cia mod_xsendfile.c
 else
 	echo -e "✅ \e[32mmod_xsendfile\e[0m"
