@@ -194,11 +194,11 @@ else
 fi
 
 cd "${HOME}/apache24"
-if [[ ! -f "1.0.0.tar.gz" ]]
+if [[ ! -f "1.0.1.tar.gz" ]]
 then
-	wget https://github.com/JBlond/mod_bikeshed/archive/refs/tags/1.0.0.tar.gz
-	tar xvfz 1.0.0.tar.gz
-	cd mod_bikeshed-1.0.0/
+	wget https://github.com/JBlond/mod_bikeshed/archive/refs/tags/1.0.1.tar.gz
+	tar xvfz 1.0.1.tar.gz
+	cd mod_bikeshed-1.0.1/
 	sudo /opt/apache2/bin/apxs -cia mod_bikeshed.c
 else
 	echo -e "✅ \e[32mmod_mikeshed\e[0m"
