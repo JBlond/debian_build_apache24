@@ -1,11 +1,11 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help 
 ##help: Shows this list
+.PHONY: help
 help:
-	@grep -E '\#\#[a-zA-Z\.\-]+:.*$$' $(MAKEFILE_LIST) \
-		| tr -d '##' \
-		| awk 'BEGIN {FS = ": "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' \
+	@grep -E '##[a-zA-Z.\-]+:.*$$' $(MAKEFILE_LIST) \
+		| sed 's/^##//' \
+		| awk 'BEGIN {FS = ": "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: prepare
 ##prepare: prepares the system for building
