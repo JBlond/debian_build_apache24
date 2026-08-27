@@ -75,7 +75,7 @@ if [[ ! -f "${HTTP3_FILE}" ]]
 then
 	echo -e " \e[32nghttp3\e[0m"
 	echo
-	wget https://github.com/ngtcp2/nghttp3/releases/download/v${HTTP3_VERSION}/${HTTP3_FILE}
+	wget https://github.com/ngtcp2/nghttp3/releases/download/v${HTTP3_VERSION}/${HTTP3_FILE}.tar.gz
 	tar xfz ${HTTP3_FILE}
 	cd nghttp3-${HTTP3_VERSION}
 	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
