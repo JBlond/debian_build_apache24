@@ -5,7 +5,7 @@ cd "${HOME}/apache24"
 SSL_VERSION="3.6.4"
 HTTPD_VERSION="2.4.68"
 APR_VERSION="1.7.6"
-APRU_VERSION="1.6.3"
+APRU_VERSION="1.6.5"
 APRI_VERSION="1.2.2"
 ZLIB_VERSION="1.3.2"
 PCRE2_VERSION="10.47"
@@ -37,7 +37,7 @@ then
 	cd openssl-${SSL_VERSION}
 	export CC="ccache gcc"
 	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic enable-ec_nistp_64_gcc_128 no-tests
-	make
+	make -j2
 	sudo make install_sw
 	sudo make install_ssldirs
 else
