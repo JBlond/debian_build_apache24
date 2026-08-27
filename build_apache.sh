@@ -278,5 +278,7 @@ else
 fi
 
 printf '\nBuild finished: %s\n' "$(date '+%F %T')"
-printf 'Logfile: %s\n\n' "$LOG_FILE"
-cat "$LOG_FILE"
+if [[ -n "${LOG_FILE:-}" && -f "$LOG_FILE" ]]; then
+	printf 'Logfile: %s\n\n' "$LOG_FILE"
+	cat "$LOG_FILE"
+fi
