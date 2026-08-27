@@ -20,7 +20,7 @@ APRI_VERSION="1.2.2"
 ZLIB_VERSION="1.3.2"
 PCRE2_VERSION="10.47"
 HTTP2_VERSION="1.70.0"
-HTTP3_VERSION="1.70.0"
+HTTP3_VERSION="1.18.0"
 NGTCP2_VERSION="1.25.0"
 JANSON_VERSION="2.15.1"
 ZSTD_VERSION="1.0.3"
@@ -75,7 +75,7 @@ if [[ ! -f "${HTTP3_FILE}" ]]
 then
 	echo -e " \e[32nghttp3\e[0m"
 	echo
-	wget https://github.com/ngtcp2/nghttp3/releases/download/v${HTTP3_VERSION}/${HTTP3_FILE}.tar.gz
+	wget https://github.com/ngtcp2/nghttp3/releases/download/v${HTTP3_VERSION}/${HTTP3_FILE}
 	tar xfz ${HTTP3_FILE}
 	cd nghttp3-${HTTP3_VERSION}
 	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
