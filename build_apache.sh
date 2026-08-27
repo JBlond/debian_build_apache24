@@ -114,7 +114,7 @@ then
 	wget https://github.com/curl/curl/releases/download/curl-${CURL_PATH}/curl-${CURL_VERSION}.tar.gz
 	tar xvfz curl-${CURL_VERSION}.tar.gz
 	cd curl-${CURL_VERSION}
-	./configure --prefix=/opt/curl --enable-optimize --disable-manual --disable-debug --with-nghttp2=/opt/nghttp2 --with-nghttp3=/opt/nghttp3
+	./configure --prefix=/opt/curl --enable-libcurl-option --enable-optimize --disable-manual --disable-debug --with-nghttp2=/opt/nghttp2 --with-nghttp3=/opt/nghttp3 --with-openssl=/opt/openssl
 	make
 	sudo make install
 else
