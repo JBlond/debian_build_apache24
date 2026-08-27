@@ -35,7 +35,7 @@ APRI_FILE="apr-iconv-${APRI_VERSION}.tar.gz"
 ZLIB_FILE="zlib-${ZLIB_VERSION}.tar.gz"
 PCRE2_FILE="pcre2-${PCRE2_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
-HTTP3_FILE="nghttp3-${HTTP2_VERSION}.tar.gz"
+HTTP3_FILE="nghttp3-${HTTP3_VERSION}.tar.gz"
 NGTCP2_FILE="ngtcp2-${NGTCP2_VERSION}.tar.gz"
 
 export CC="ccache gcc"
