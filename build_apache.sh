@@ -1,6 +1,16 @@
 #!/bin/bash
+
+set -Eeuo pipefail
+
 mkdir -p "${HOME}/apache24"
+
 cd "${HOME}/apache24"
+
+LOG_FILE="build-$(date '+%Y%m%d-%H%M%S').log"
+exec > >(tee -a "$LOG_FILE") 2>&1
+trap 'rc=$?; printf "\nERROR: Line %s, Exit-Code %s, command: %s\n" "$LINENO" "$rc" "$BASH_COMMAND"; printf "Logfile: %s\n" "$LOG_FILE"; exit "$rc"' ERR
+printf 'Build start: %s\n' "$(date '+%F %T')"
+printf 'Logfile: %s\n\n' "$LOG_FILE"
 
 SSL_VERSION="3.6.4"
 HTTPD_VERSION="2.4.68"
@@ -266,3 +276,7 @@ then
 else
 	echo -e "✅ \e[32mmod_zstd\e[0m"
 fi
+
+printf '\nBuild finished: %s\n' "$(date '+%F %T')"
+printf 'Logfile: %s\n\n' "$LOG_FILE"
+cat "$LOG_FILE"
