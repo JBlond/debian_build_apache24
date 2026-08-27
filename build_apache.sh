@@ -53,7 +53,7 @@ then
 	tar xvfz jansson-${JANSON_VERSION}.tar.gz
 	cd jansson-${JANSON_VERSION}
 	./configure --prefix=/opt/jansson
-	make
+	make -j2
 	sudo make install
 else
 	echo -e "✅ \e[32mjansson\e[0m"
@@ -68,7 +68,7 @@ then
 	cd nghttp3-${HTTP3_VERSION}
 	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
 	./configure --prefix=/opt/nghttp3
-	make
+	make -j2
 	sudo make install
 else
 	echo -e "✅ \e[32nghttp3\e[0m"
@@ -86,7 +86,7 @@ then
 	export PKG_CONFIG_PATH="/opt/openssl/lib64/pkgconfig"
 	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
 	./configure --prefix=/opt/nghttp2 --with-jansson=/opt/jansson  --enable-http3=/opt/nghttp3
-	make
+	make -j2
 	sudo make install
 else
 	echo -e "✅ \e[32mnghttp2\e[0m"
@@ -101,7 +101,7 @@ then
 	cd ngtcp2-${NGTCP2_VERSION}
 	export PKG_CONFIG_PATH="/opt/openssl/lib64/pkgconfig:/opt/nghttp3/lib/pkgconfig"
 	./configure --prefix=/opt/ngtcp2 --with-openssl --with-nghttp3=/opt/nghttp3
-	make
+	make -j2
 	sudo make install
 else
 	echo -e "✅ \e[32ngtcp2\e[0m"
@@ -116,7 +116,7 @@ then
 	tar xvfz curl-${CURL_VERSION}.tar.gz
 	cd curl-${CURL_VERSION}
 	./configure --prefix=/opt/curl --enable-libcurl-option --enable-optimize --disable-manual --disable-debug --with-nghttp2=/opt/nghttp2 --with-nghttp3=/opt/nghttp3 --with-openssl=/opt/openssl --with-ngtcp2=/opt/ngtcp2
-	make
+	make -j2
 	sudo make install
 else
 	echo -e "✅ \e[32mCURL\e[0m"
@@ -208,7 +208,7 @@ export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
 	--with-included-apr --enable-nonportable-atomics=yes
 
 patch server/main.c < ~/debian_build_apache24/info.diff
-make
+make -j2
 sudo make install
 
 cd "${HOME}/apache24"
@@ -222,7 +222,7 @@ then
 	cd httpd-mod_fcgid-trunk
 	echo -e " \e[32mBuild mod_fcgid\e[0m"
 	APXS=/opt/apache2/bin/apxs ./configure.apxs
-	make
+	make -j2
 	sudo make install
 	make clean
 else
