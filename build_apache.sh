@@ -10,6 +10,8 @@ APRI_VERSION="1.2.2"
 ZLIB_VERSION="1.3.2"
 PCRE2_VERSION="10.47"
 HTTP2_VERSION="1.70.0"
+HTTP3_VERSION="1.70.0"
+NGTCP2_VERSION="1.25.0"
 JANSON_VERSION="2.15.1"
 ZSTD_VERSION="1.0.3"
 CURL_VERSION="8.21.0"
@@ -23,6 +25,8 @@ APRI_FILE="apr-iconv-${APRI_VERSION}.tar.gz"
 ZLIB_FILE="zlib-${ZLIB_VERSION}.tar.gz"
 PCRE2_FILE="pcre2-${PCRE2_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
+HTTP3_FILE="nghttp3-${HTTP2_VERSION}.tar.gz"
+NGTCP2_FILE="ngtcp2-${NGTCP2_VERSION}.tar.gz"
 
 if [[ ! -f "${SSL_FILE}" ]]
 then
@@ -41,38 +45,6 @@ fi
 
 cd "${HOME}/apache24"
 
-if [[ ! -f "${HTTP2_FILE}" ]]
-then
-	echo -e " \e[32mnghttp2\e[0m"
-	echo
-	wget https://github.com/tatsuhiro-t/nghttp2/releases/download/v${HTTP2_VERSION}/${HTTP2_FILE}
-	tar xfz ${HTTP2_FILE}
-	cd nghttp2-${HTTP2_VERSION}
-	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
-	./configure --prefix=/opt/nghttp2  --disable-python-bindings
-	make
-	sudo make install
-else
-	echo -e "✅ \e[32mnghttp2\e[0m"
-fi
-
-cd "${HOME}/apache24"
-
-if [[ ! -f "curl-${CURL_VERSION}.tar.gz" ]]
-then
-	echo -e " \e[32mDownload CURL\e[0m"
-	wget https://github.com/curl/curl/releases/download/curl-${CURL_PATH}/curl-${CURL_VERSION}.tar.gz
-	tar xvfz curl-${CURL_VERSION}.tar.gz
-	cd curl-${CURL_VERSION}
-	./configure --prefix=/opt/curl --enable-optimize --disable-manual --disable-debug --with-nghttp2=/opt/nghttp2 --without-ssl
-	make
-	sudo make install
-else
-	echo -e "✅ \e[32mCURL\e[0m"
-fi
-
-cd "${HOME}/apache24"
-
 if [[ ! -f "jansson-${JANSON_VERSION}.tar.gz" ]]
 then
 	echo -e " \e[32JANSON\e[0m"
@@ -84,6 +56,69 @@ then
 	sudo make install
 else
 	echo -e "✅ \e[32mjansson\e[0m"
+fi
+
+if [[ ! -f "${HTTP3_FILE}" ]]
+then
+	echo -e " \e[32nghttp3\e[0m"
+	echo
+	wget https://github.com/ngtcp2/nghttp3/releases/download/v${HTTP3_VERSION}/${HTTP3_FILE}
+	tar xfz ${HTTP3_FILE}
+	cd nghttp3-${HTTP3_VERSION}
+	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
+	./configure --prefix=/opt/nghttp3
+	make
+	sudo make install
+else
+	echo -e "✅ \e[32nghttp3\e[0m"
+fi
+
+cd "${HOME}/apache24"
+
+if [[ ! -f "${HTTP2_FILE}" ]]
+then
+	echo -e " \e[32mnghttp2\e[0m"
+	echo
+	wget https://github.com/nghttp2/nghttp2/releases/download/v${HTTP2_VERSION}/${HTTP2_FILE}
+	tar xfz ${HTTP2_FILE}
+	cd nghttp2-${HTTP2_VERSION}
+	export PKG_CONFIG_PATH="/opt/openssl/lib64/pkgconfig"
+	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
+	./configure --prefix=/opt/nghttp2 --with-jansson=/opt/jansson  --enable-http3=/opt/nghttp3
+	make
+	sudo make install
+else
+	echo -e "✅ \e[32mnghttp2\e[0m"
+fi
+
+if [[ ! -f "${NGTCP2_FILE}" ]]
+then
+	echo -e " \e[32ngtcp2\e[0m"
+	echo
+	wget https://github.com/ngtcp2/ngtcp2/releases/download/v${NGTCP2_VERSION}/${NGTCP2_FILE}
+	tar xfz ${NGTCP2_FILE}
+	cd ngtcp2-${NGTCP2_VERSION}
+	export PKG_CONFIG_PATH="/opt/openssl/lib64/pkgconfig:/opt/nghttp3/lib/pkgconfig"
+	./configure --prefix=/opt/ngtcp2 --with-openssl --with-nghttp3=/opt/nghttp3
+	make
+	sudo make install
+else
+	echo -e "✅ \e[32ngtcp2\e[0m"
+fi
+
+cd "${HOME}/apache24"
+
+if [[ ! -f "curl-${CURL_VERSION}.tar.gz" ]]
+then
+	echo -e " \e[32mDownload CURL\e[0m"
+	wget https://github.com/curl/curl/releases/download/curl-${CURL_PATH}/curl-${CURL_VERSION}.tar.gz
+	tar xvfz curl-${CURL_VERSION}.tar.gz
+	cd curl-${CURL_VERSION}
+	./configure --prefix=/opt/curl --enable-optimize --disable-manual --disable-debug --with-nghttp2=/opt/nghttp2 --with-nghttp3=/opt/nghttp3
+	make
+	sudo make install
+else
+	echo -e "✅ \e[32mCURL\e[0m"
 fi
 
 cd "${HOME}/apache24"
