@@ -28,6 +28,9 @@ HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
 HTTP3_FILE="nghttp3-${HTTP2_VERSION}.tar.gz"
 NGTCP2_FILE="ngtcp2-${NGTCP2_VERSION}.tar.gz"
 
+export CC="ccache gcc"
+export CXX="ccache g++"
+
 if [[ ! -f "${SSL_FILE}" ]]
 then
 	echo -e " \e[32mOpenSSL\e[0m"
@@ -35,7 +38,6 @@ then
 	wget https://github.com/openssl/openssl/releases/download/openssl-${SSL_VERSION}/${SSL_FILE}
 	tar xfz ${SSL_FILE}
 	cd openssl-${SSL_VERSION}
-	export CC="ccache gcc"
 	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic enable-ec_nistp_64_gcc_128 no-tests
 	make -j2
 	sudo make install_sw
