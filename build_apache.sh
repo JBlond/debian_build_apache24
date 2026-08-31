@@ -200,6 +200,9 @@ then
 	wget https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${PCRE2_VERSION}/${PCRE2_FILE}
 	tar xvfz ${PCRE2_FILE}
 	mv pcre2-${PCRE2_VERSION} pcre
+	cd pcre
+	./configure
+	cd ..
 else
 	echo -e "✅ \e[32mPCRE2\e[0m"
 fi
@@ -214,7 +217,7 @@ export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
 ./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --disable-access-compat  --enable-lua --enable-deflate \
 	--enable-headers --enable-expires --with-curl=/opt/curl --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-proxy-http2 --enable-brotli \
 	--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --enable-module=ssl \
-	--with-apr-util=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util \
+	--with-apr-util=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util --with-pcre=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre \
 	--enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid \
 	--with-jansson=/opt/jansson/ --enable-md \
 	--with-included-apr --enable-nonportable-atomics=yes
