@@ -12,7 +12,7 @@ trap 'rc=$?; printf "\nERROR: Line %s, Exit-Code %s, command: %s\n" "$LINENO" "$
 printf 'Build start: %s\n' "$(date '+%F %T')"
 printf 'Logfile: %s\n\n' "$LOG_FILE"
 
-SSL_VERSION="3.6.4"
+SSL_VERSION="3.5.8"
 HTTPD_VERSION="2.4.68"
 APR_VERSION="1.7.6"
 APRU_VERSION="1.6.5"
