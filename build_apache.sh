@@ -13,7 +13,7 @@ printf 'Build start: %s\n' "$(date '+%F %T')"
 printf 'Logfile: %s\n\n' "$LOG_FILE"
 
 SSL_VERSION="3.5.9"
-HTTPD_VERSION="2.4.70"
+HTTPD_VERSION="2.4.71"
 APR_VERSION="1.7.6"
 APRU_VERSION="1.6.6"
 APRI_VERSION="1.2.2"
