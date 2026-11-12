@@ -43,182 +43,184 @@ BROTLI_FILE="brotli-${BROTLI_VERSION}.tar.gz"
 export CC="ccache gcc"
 export CXX="ccache g++"
 
-if [[ ! -f "${SSL_FILE}" ]]
+# Granular builds: a component is (re)built only when no ".installed-<name>-<version>"
+# marker exists (i.e. its pinned version changed or it never finished installing).
+# A rebuilt dependency forces its dependents and finally httpd to be recompiled.
+needs_build() { [[ ! -f "${HOME}/apache24/.installed-$1-$2" ]]; }
+mark_built() { touch "${HOME}/apache24/.installed-$1-$2"; }
+fetch() { [[ -f "$2" ]] || wget -O "$2" "$1"; [[ -d "$3" ]] || tar xfz "$2"; }
+SSL_CHANGED=0
+HTTP3_CHANGED=0
+JANSON_CHANGED=0
+LIBS_CHANGED=0
+
+if needs_build openssl "${SSL_VERSION}"
 then
+	SSL_CHANGED=1
+	LIBS_CHANGED=1
 	echo -e " \e[32mOpenSSL\e[0m"
 	echo
-	wget https://github.com/openssl/openssl/releases/download/openssl-${SSL_VERSION}/${SSL_FILE}
-	tar xfz ${SSL_FILE}
+	fetch https://github.com/openssl/openssl/releases/download/openssl-${SSL_VERSION}/${SSL_FILE} ${SSL_FILE} openssl-${SSL_VERSION}
 	cd openssl-${SSL_VERSION}
 	./config --prefix=/opt/openssl --openssldir=/opt/openssl no-ssl3 no-ec2m no-rc5 no-idea no-camellia no-weak-ssl-ciphers threads no-psk zlib-dynamic enable-ec_nistp_64_gcc_128 no-tests
 	make -j2
 	sudo make install_sw
 	sudo make install_ssldirs
+	mark_built openssl "${SSL_VERSION}"
 else
 	echo -e "✅ \e[32mOpenSSL\e[0m"
 fi
 
 cd "${HOME}/apache24"
 
-if [[ ! -f "jansson-${JANSON_VERSION}.tar.gz" ]]
+if needs_build jansson "${JANSON_VERSION}"
 then
-	echo -e " \e[32JANSON\e[0m"
-	wget https://github.com/akheron/jansson/releases/download/v${JANSON_VERSION}/jansson-${JANSON_VERSION}.tar.gz
-	tar xvfz jansson-${JANSON_VERSION}.tar.gz
+	LIBS_CHANGED=1
+	JANSON_CHANGED=1
+	echo -e " \e[32mJANSON\e[0m"
+	fetch https://github.com/akheron/jansson/releases/download/v${JANSON_VERSION}/jansson-${JANSON_VERSION}.tar.gz jansson-${JANSON_VERSION}.tar.gz jansson-${JANSON_VERSION}
 	cd jansson-${JANSON_VERSION}
 	./configure --prefix=/opt/jansson
 	make -j2
 	sudo make install
+	mark_built jansson "${JANSON_VERSION}"
 else
 	echo -e "✅ \e[32mjansson\e[0m"
 fi
 
-if [[ ! -f "${HTTP3_FILE}" ]]
+if needs_build nghttp3 "${HTTP3_VERSION}"
 then
-	echo -e " \e[32nghttp3\e[0m"
+	HTTP3_CHANGED=1
+	LIBS_CHANGED=1
+	echo -e " \e[32mnghttp3\e[0m"
 	echo
-	wget https://github.com/ngtcp2/nghttp3/releases/download/v${HTTP3_VERSION}/${HTTP3_FILE}
-	tar xfz ${HTTP3_FILE}
+	fetch https://github.com/ngtcp2/nghttp3/releases/download/v${HTTP3_VERSION}/${HTTP3_FILE} ${HTTP3_FILE} nghttp3-${HTTP3_VERSION}
 	cd nghttp3-${HTTP3_VERSION}
 	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
 	./configure --prefix=/opt/nghttp3
 	make -j2
 	sudo make install
+	mark_built nghttp3 "${HTTP3_VERSION}"
 else
 	echo -e "✅ \e[32nghttp3\e[0m"
 fi
 
 cd "${HOME}/apache24"
 
-if [[ ! -f "${HTTP2_FILE}" ]]
+if (( SSL_CHANGED || HTTP3_CHANGED || JANSON_CHANGED )) || needs_build nghttp2 "${HTTP2_VERSION}"
 then
+	LIBS_CHANGED=1
 	echo -e " \e[32mnghttp2\e[0m"
 	echo
-	wget https://github.com/nghttp2/nghttp2/releases/download/v${HTTP2_VERSION}/${HTTP2_FILE}
-	tar xfz ${HTTP2_FILE}
+	fetch https://github.com/nghttp2/nghttp2/releases/download/v${HTTP2_VERSION}/${HTTP2_FILE} ${HTTP2_FILE} nghttp2-${HTTP2_VERSION}
 	cd nghttp2-${HTTP2_VERSION}
 	export PKG_CONFIG_PATH="/opt/openssl/lib64/pkgconfig"
 	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
 	./configure --prefix=/opt/nghttp2 --with-jansson=/opt/jansson  --enable-http3=/opt/nghttp3
 	make -j2
 	sudo make install
+	mark_built nghttp2 "${HTTP2_VERSION}"
 else
 	echo -e "✅ \e[32mnghttp2\e[0m"
 fi
 
-if [[ ! -f "${NGTCP2_FILE}" ]]
+cd "${HOME}/apache24"
+
+if (( SSL_CHANGED || HTTP3_CHANGED )) || needs_build ngtcp2 "${NGTCP2_VERSION}"
 then
+	LIBS_CHANGED=1
 	echo -e " \e[32ngtcp2\e[0m"
 	echo
-	wget https://github.com/ngtcp2/ngtcp2/releases/download/v${NGTCP2_VERSION}/${NGTCP2_FILE}
-	tar xfz ${NGTCP2_FILE}
+	fetch https://github.com/ngtcp2/ngtcp2/releases/download/v${NGTCP2_VERSION}/${NGTCP2_FILE} ${NGTCP2_FILE} ngtcp2-${NGTCP2_VERSION}
 	cd ngtcp2-${NGTCP2_VERSION}
 	export PKG_CONFIG_PATH="/opt/openssl/lib64/pkgconfig:/opt/nghttp3/lib/pkgconfig"
 	./configure --prefix=/opt/ngtcp2 --with-openssl --with-nghttp3=/opt/nghttp3
 	make -j2
 	sudo make install
+	mark_built ngtcp2 "${NGTCP2_VERSION}"
 else
 	echo -e "✅ \e[32ngtcp2\e[0m"
 fi
 
 cd "${HOME}/apache24"
 
-if [[ ! -f "curl-${CURL_VERSION}.tar.gz" ]]
+if (( LIBS_CHANGED )) || needs_build curl "${CURL_VERSION}"
 then
+	LIBS_CHANGED=1
 	echo -e " \e[32mDownload CURL\e[0m"
-	wget https://github.com/curl/curl/releases/download/curl-${CURL_PATH}/curl-${CURL_VERSION}.tar.gz
-	tar xvfz curl-${CURL_VERSION}.tar.gz
+	fetch https://github.com/curl/curl/releases/download/curl-${CURL_PATH}/curl-${CURL_VERSION}.tar.gz curl-${CURL_VERSION}.tar.gz curl-${CURL_VERSION}
 	cd curl-${CURL_VERSION}
 	./configure --prefix=/opt/curl --enable-libcurl-option --enable-optimize --disable-manual --disable-debug --with-nghttp2=/opt/nghttp2 --with-nghttp3=/opt/nghttp3 --with-openssl=/opt/openssl --with-ngtcp2=/opt/ngtcp2
 	make -j2
 	sudo make install
+	mark_built curl "${CURL_VERSION}"
 else
 	echo -e "✅ \e[32mCURL\e[0m"
 fi
 
 cd "${HOME}/apache24"
 
-if [[ ! -f "${BROTLI_FILE}" ]]
+if needs_build brotli "${BROTLI_VERSION}"
 then
+	LIBS_CHANGED=1
 	echo -e " \e[32mbrotli\e[0m"
 	echo
-	wget -O ${BROTLI_FILE} https://github.com/google/brotli/archive/refs/tags/v${BROTLI_VERSION}.tar.gz
-	tar xfz ${BROTLI_FILE}
-	cd brotli-${BROTLI_VERSION}
+	fetch https://github.com/google/brotli/archive/refs/tags/v${BROTLI_VERSION}.tar.gz ${BROTLI_FILE} brotli-${BROTLI_VERSION}
 	mkdir -p out
 	cd out
 	cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/brotli -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_RPATH=/opt/brotli/lib ..
 	cmake --build . --config Release -j2
 	sudo cmake --install . --config Release
+	mark_built brotli "${BROTLI_VERSION}"
 else
 	echo -e "✅ \e[32mbrotli\e[0m"
 fi
 
 cd "${HOME}/apache24"
 
-if [[ ! -f "${HTTPD_FILE}" ]]
+HTTPD_CHANGED=0
+if needs_build httpd "${HTTPD_VERSION}"
 then
+	HTTPD_CHANGED=1
 	echo -e " \e[32mDownload httpd\e[0m"
 	echo
-	wget https://dlcdn.apache.org/httpd/${HTTPD_FILE}
-	tar xvfz ${HTTPD_FILE}
+	fetch https://dlcdn.apache.org/httpd/${HTTPD_FILE} ${HTTPD_FILE} httpd-${HTTPD_VERSION}
 else
 	echo -e "✅ \e[32mhttpd\e[0m"
 fi
 
 cd httpd-${HTTPD_VERSION}/srclib
 
-if [[ ! -f "${APR_FILE}" ]]
-then
-	echo -e " \e[32mDownload APR\e[0m"
-	echo
-	wget https://dlcdn.apache.org/apr/${APR_FILE}
-	tar xvfz ${APR_FILE}
-	mv apr-${APR_VERSION} apr
-else
-	echo -e "✅ \e[32mAPR\e[0m"
-fi
+# Replace a bundled srclib component when its pinned version changed.
+srclib_update() {
+	local label="$1" file="$2" url="$3" dir="$4" extracted="$5"
+	if [[ ! -f "${file}" || ! -d "${dir}" ]]
+	then
+		HTTPD_CHANGED=1
+		echo -e " \e[32mDownload ${label}\e[0m"
+		echo
+		rm -rf "${dir}"
+		[[ -f "${file}" ]] || wget -O "${file}" "${url}"
+		tar xfz "${file}"
+		mv "${extracted}" "${dir}"
+		return 0
+	fi
+	echo -e "✅ \e[32m${label}\e[0m"
+}
 
-if [[ ! -f "${APRI_FILE}" ]]
-then
-	echo -e " \e[32mDownload APR-ICONV\e[0m"
-	echo
-	wget https://dlcdn.apache.org/apr/${APRI_FILE}
-	tar xvfz ${APRI_FILE}
-	mv apr-iconv-${APRI_VERSION} apr-iconv
-else
-	echo -e "✅ \e[32mAPRI\e[0m"
-fi
+srclib_update APR "${APR_FILE}" https://dlcdn.apache.org/apr/${APR_FILE} apr apr-${APR_VERSION}
+srclib_update APR-ICONV "${APRI_FILE}" https://dlcdn.apache.org/apr/${APRI_FILE} apr-iconv apr-iconv-${APRI_VERSION}
+srclib_update APR-UTIL "${APRU_FILE}" https://dlcdn.apache.org/apr/${APRU_FILE} apr-util apr-util-${APRU_VERSION}
+srclib_update ZLIB "${ZLIB_FILE}" https://zlib.net/${ZLIB_FILE} zlib zlib-${ZLIB_VERSION}
 
-if [[ ! -f "${APRU_FILE}" ]]
+if [[ ! -f "${PCRE2_FILE}" || ! -d pcre ]]
 then
-	echo -e " \e[32mDownload APR-UTIL\e[0m"
-	echo
-	wget https://dlcdn.apache.org/apr/${APRU_FILE}
-	tar xvfz ${APRU_FILE}
-	mv apr-util-${APRU_VERSION} apr-util
-else
-	echo -e "✅ \e[32mAPRU\e[0m"
-fi
-
-
-if [[ ! -f "${ZLIB_FILE}" ]]
-then
-	echo -e " \e[32mDownload ZLIB\e[0m"
-	echo
-	wget https://zlib.net/${ZLIB_FILE}
-	tar xvfz ${ZLIB_FILE}
-	mv zlib-${ZLIB_VERSION} zlib
-else
-	echo -e "✅ \e[32mzlib\e[0m"
-fi
-
-if [[ ! -f "${PCRE2_FILE}" ]]
-then
+	HTTPD_CHANGED=1
 	echo -e " \e[32mDownload PCRE2\e[0m"
 	echo
-	wget https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${PCRE2_VERSION}/${PCRE2_FILE}
-	tar xvfz ${PCRE2_FILE}
+	rm -rf pcre
+	[[ -f "${PCRE2_FILE}" ]] || wget https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${PCRE2_VERSION}/${PCRE2_FILE}
+	tar xfz ${PCRE2_FILE}
 	mv pcre2-${PCRE2_VERSION} pcre
 	cd pcre
 	./configure
@@ -228,32 +230,41 @@ else
 fi
 
 cd ..
-echo -e " \e[32mBuild httpd\e[0m"
-echo
-./buildconf
-export LD_LIBRARY_PATH=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr:${LD_LIBRARY_PATH:-}
-export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64 -Wl,-rpath,/opt/brotli/lib"
+if (( HTTPD_CHANGED || LIBS_CHANGED ))
+then
+	HTTPD_CHANGED=1
+	echo -e " \e[32mBuild httpd\e[0m"
+	echo
+	[[ ! -f Makefile ]] || make distclean || true
+	./buildconf
+	export LD_LIBRARY_PATH=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr:${LD_LIBRARY_PATH:-}
+	export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64 -Wl,-rpath,/opt/brotli/lib"
 
-./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --disable-access-compat  --enable-lua --enable-deflate \
-	--enable-headers --enable-expires --with-curl=/opt/curl --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-proxy-http2 --enable-brotli --with-brotli=/opt/brotli \
-	--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --enable-module=ssl \
-	--with-apr-util=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util --with-pcre=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre \
-	--enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid \
-	--with-jansson=/opt/jansson/ --enable-md \
-	--with-included-apr --enable-nonportable-atomics=yes
+	./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --disable-access-compat  --enable-lua --enable-deflate \
+		--enable-headers --enable-expires --with-curl=/opt/curl --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-proxy-http2 --enable-brotli --with-brotli=/opt/brotli \
+		--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --enable-module=ssl \
+		--with-apr-util=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util --with-pcre=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre \
+		--enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid \
+		--with-jansson=/opt/jansson/ --enable-md \
+		--with-included-apr --enable-nonportable-atomics=yes
 
-patch server/main.c < ~/debian_build_apache24/info.diff
-make -j2
-sudo make install
+	patch -R -s -f --dry-run server/main.c < ~/debian_build_apache24/info.diff >/dev/null 2>&1 || patch server/main.c < ~/debian_build_apache24/info.diff
+	make -j2
+	sudo make install
+	mark_built httpd "${HTTPD_VERSION}"
+else
+	echo -e "✅ \e[32mhttpd is up to date, nothing to compile\e[0m"
+fi
 
+# Third-party modules are built against httpd, so they are rebuilt whenever httpd was.
 cd "${HOME}/apache24"
 echo
-if [[ ! -f "mod_fcgid.zip" ]]
+if (( HTTPD_CHANGED )) || [[ ! -f "mod_fcgid.zip" ]]
 then
 	echo -e " \e[32mmod_fcgid\e[0m"
-	wget https://github.com/apache/httpd-mod_fcgid/archive/refs/heads/trunk.zip
-	mv trunk.zip mod_fcgid.zip
-	unzip mod_fcgid.zip
+	rm -rf httpd-mod_fcgid-trunk
+	[[ -f mod_fcgid.zip ]] || { wget https://github.com/apache/httpd-mod_fcgid/archive/refs/heads/trunk.zip; mv trunk.zip mod_fcgid.zip; }
+	unzip -q mod_fcgid.zip
 	cd httpd-mod_fcgid-trunk
 	echo -e " \e[32mBuild mod_fcgid\e[0m"
 	APXS=/opt/apache2/bin/apxs ./configure.apxs
@@ -265,10 +276,10 @@ else
 fi
 
 cd "${HOME}/apache24"
-if [[ ! -f "1.0.1.tar.gz" ]]
+if (( HTTPD_CHANGED )) || [[ ! -f "1.0.1.tar.gz" ]]
 then
-	wget https://github.com/JBlond/mod_bikeshed/archive/refs/tags/1.0.1.tar.gz
-	tar xvfz 1.0.1.tar.gz
+	[[ -f 1.0.1.tar.gz ]] || wget https://github.com/JBlond/mod_bikeshed/archive/refs/tags/1.0.1.tar.gz
+	tar xfz 1.0.1.tar.gz
 	cd mod_bikeshed-1.0.1/
 	sudo /opt/apache2/bin/apxs -cia mod_bikeshed.c
 else
@@ -276,23 +287,24 @@ else
 fi
 
 cd "${HOME}/apache24"
-if [[ ! -d "mod_xsendfile" ]]
+if (( HTTPD_CHANGED )) || [[ ! -d "mod_xsendfile" ]]
 then
 	echo -e " \e[32mBuild mod_xsendfile\e[0m"
-	mkdir mod_xsendfile
+	mkdir -p mod_xsendfile
 	cd mod_xsendfile
-	wget https://raw.githubusercontent.com/JBlond/mod_xsendfile/master/mod_xsendfile.c
+	wget -O mod_xsendfile.c https://raw.githubusercontent.com/JBlond/mod_xsendfile/master/mod_xsendfile.c
 	sudo /opt/apache2/bin/apxs -ci mod_xsendfile.c
 else
 	echo -e "✅ \e[32mmod_xsendfile\e[0m"
 fi
 
 cd "${HOME}/apache24"
-if [[ ! -d "mod_zstd" ]]
+if (( HTTPD_CHANGED )) || [[ ! -d "mod_zstd" ]]
 then
 	echo -e " \e[32mBuild mod_zstd\e[0m"
-	wget https://github.com/nono303/mod_zstd/archive/refs/tags/${ZSTD_VERSION}.tar.gz
-	tar xvfz ${ZSTD_VERSION}.tar.gz
+	[[ -f ${ZSTD_VERSION}.tar.gz ]] || wget https://github.com/nono303/mod_zstd/archive/refs/tags/${ZSTD_VERSION}.tar.gz
+	rm -rf mod_zstd
+	tar xfz ${ZSTD_VERSION}.tar.gz
 	mv mod_zstd-${ZSTD_VERSION} mod_zstd
 	cd mod_zstd
 	sudo /opt/apache2/bin/apxs -cia mod_zstd.c -lzstd
