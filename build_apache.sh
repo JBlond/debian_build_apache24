@@ -166,6 +166,7 @@ then
 	echo -e " \e[32mbrotli\e[0m"
 	echo
 	fetch https://github.com/google/brotli/archive/refs/tags/v${BROTLI_VERSION}.tar.gz ${BROTLI_FILE} brotli-${BROTLI_VERSION}
+	cd brotli-${BROTLI_VERSION}
 	mkdir -p out
 	cd out
 	cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/brotli -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_RPATH=/opt/brotli/lib ..
