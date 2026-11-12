@@ -6,6 +6,7 @@ if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
 	./uninstall_daemon.sh
 	./clean.sh
 	sudo rm -rf /opt/apache2/
+	sudo rm -rf /opt/brotli
 	sudo rm -rf /opt/curl
 	sudo rm -rf /opt/jansson
 	sudo rm -rf /opt/nghttp2

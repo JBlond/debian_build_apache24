@@ -26,6 +26,7 @@ JANSON_VERSION="2.15.1"
 ZSTD_VERSION="1.0.3"
 CURL_VERSION="8.23.0"
 CURL_PATH="8_23_0"
+BROTLI_VERSION="1.2.1"
 
 SSL_FILE="openssl-${SSL_VERSION}.tar.gz"
 HTTPD_FILE="httpd-${HTTPD_VERSION}.tar.gz"
@@ -37,6 +38,7 @@ PCRE2_FILE="pcre2-${PCRE2_VERSION}.tar.gz"
 HTTP2_FILE="nghttp2-${HTTP2_VERSION}.tar.gz"
 HTTP3_FILE="nghttp3-${HTTP3_VERSION}.tar.gz"
 NGTCP2_FILE="ngtcp2-${NGTCP2_VERSION}.tar.gz"
+BROTLI_FILE="brotli-${BROTLI_VERSION}.tar.gz"
 
 export CC="ccache gcc"
 export CXX="ccache g++"
@@ -136,6 +138,24 @@ fi
 
 cd "${HOME}/apache24"
 
+if [[ ! -f "${BROTLI_FILE}" ]]
+then
+	echo -e " \e[32mbrotli\e[0m"
+	echo
+	wget -O ${BROTLI_FILE} https://github.com/google/brotli/archive/refs/tags/v${BROTLI_VERSION}.tar.gz
+	tar xfz ${BROTLI_FILE}
+	cd brotli-${BROTLI_VERSION}
+	mkdir -p out
+	cd out
+	cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/brotli -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_RPATH=/opt/brotli/lib ..
+	cmake --build . --config Release -j2
+	sudo cmake --install . --config Release
+else
+	echo -e "✅ \e[32mbrotli\e[0m"
+fi
+
+cd "${HOME}/apache24"
+
 if [[ ! -f "${HTTPD_FILE}" ]]
 then
 	echo -e " \e[32mDownload httpd\e[0m"
@@ -212,10 +232,10 @@ echo -e " \e[32mBuild httpd\e[0m"
 echo
 ./buildconf
 export LD_LIBRARY_PATH=~/apache24/httpd-${HTTPD_VERSION}/srclib/apr:${LD_LIBRARY_PATH:-}
-export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64"
+export LDFLAGS="-Wl,-rpath,/opt/openssl/lib64 -Wl,-rpath,/opt/brotli/lib"
 
 ./configure --prefix=/opt/apache2 --enable-pie --enable-mods-shared=all --enable-so --disable-include --disable-access-compat  --enable-lua --enable-deflate \
-	--enable-headers --enable-expires --with-curl=/opt/curl --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-proxy-http2 --enable-brotli \
+	--enable-headers --enable-expires --with-curl=/opt/curl --enable-http2 --with-nghttp2=/opt/nghttp2 --enable-proxy-http2 --enable-brotli --with-brotli=/opt/brotli \
 	--enable-ssl=shared --with-ssl=/opt/openssl --with-openssl=/opt/openssl --enable-module=ssl \
 	--with-apr-util=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/apr-util --with-pcre=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/pcre \
 	--enable-mpms-shared=all --with-mpm=event --enable-rewrite --with-z=${HOME}/apache24/httpd-${HTTPD_VERSION}/srclib/zlib --enable-fcgid \
