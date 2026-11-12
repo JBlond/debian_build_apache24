@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo rm -rf "${HOME}/apache24"
+set -Eeuo pipefail
 git pull
 ./uninstall_daemon.sh
 ./preparesystem.sh
